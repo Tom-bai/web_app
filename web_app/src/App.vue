@@ -1,28 +1,32 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      <nut-button >
-    去结算
-  </nut-button>
-    </div>
-    <router-view/>
-  </div>
+	<div id="app">
+		<router-view/>
+		<Tabbar></Tabbar>
+	</div>
 </template>
+<script>
+	import Tabbar from './components/Tabbar '
+	export default {
+		name: "index",
+		components: {
+			Tabbar
+		},
+		props: [],
+		data () {
+		return {}
+		},
+		methods: {},
+		watch: {}
+	};
+</script>
 <style lang="stylus">
+body,html
+	margin 0
+	padding 0
 #app
-  font-family 'Avenir', Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-
-#nav
-  padding 30px
-  a
-    font-weight bold
-    color #2c3e50
-    &.router-link-exact-active
-      color #42b983
+	font-family 12px/1.5 Helvetica Neue,Helvetica,Arial,Hiragino Sans GB,tahoma,simsun,sans-serif
+	-webkit-font-smoothing antialiased
+	-moz-osx-font-smoothing grayscale
+	text-align center
+	color #2c3e50
 </style>
