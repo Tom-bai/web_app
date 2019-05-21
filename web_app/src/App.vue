@@ -23,6 +23,9 @@
 body,html
 	margin 0
 	padding 0
+body,html{
+    background-color #fafafa
+}
 #app
 	font-family 12px/1.5 Helvetica Neue,Helvetica,Arial,Hiragino Sans GB,tahoma,simsun,sans-serif
 	-webkit-font-smoothing antialiased
@@ -30,5 +33,5 @@ body,html
 	text-align center
 	color #2c3e50
 	max-width 640px
-	margin auto
+	margin 0 auto 70px auto 
 </style>

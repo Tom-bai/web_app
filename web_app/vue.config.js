@@ -4,10 +4,10 @@ module.exports = {
         '/api': {
             target: 'http://www.xfengle.com', //对应自己的接口
             changeOrigin: true,
-            ws: true,
+            ws: false,
             pathRewrite: {
                 '^/api': ''
-          }
+            }
         }
       }
     }

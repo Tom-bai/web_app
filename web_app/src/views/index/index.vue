@@ -8,15 +8,8 @@
 				<div class="tongzhi"><img src="../../assets/img/tz.png" alt=""><span>10</span></div>
 			</div>
 		</div>
-		<div class="swiper">
-			<div class="swiperBg"></div>
-			<swiper :options="swiperOption" v-if="bannerData.length>0">
-				<swiper-slide v-for="(slide, index) in bannerData" :key="index" class="swiperImg">
-					<img :src="imgUrl + slide.img" :alt="slide.alt">
-				</swiper-slide>
-				<div class="swiper-pagination" slot="pagination"></div>
-			</swiper>
-		</div>
+		<indexSwiper></indexSwiper>
+        <indexNav></indexNav>
 	</div>
 </template>
 
@@ -26,11 +19,15 @@ import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { get } from '@/axiosApi'
 import imgUrl from '@/imgUrl'
+import indexNav from './indexNav'
+import indexSwiper from './indexSwiper'
 export default {
 	name: "index",
 	components: {
 		swiper,
-    	swiperSlide
+        swiperSlide,
+        indexNav,
+        indexSwiper
 	},
 	props: [],
 	data () {
@@ -61,30 +58,12 @@ export default {
 	methods: {
 		getBanner () {
 			let that = this
-			get('http://www.xfengle.com/index.php/home/index/banner').then(res => {
+			get('/index.php/home/index/banner').then(res => {
 				that.bannerData = res
             }).catch(function (error) {
                 console.log(error)
             })
 		},
-		initSwiper () {
-			this.swiperOption = {
-				loop: true,
-				autoplay: {
-					delay: 3000,
-					disableOnInteraction: false,
-				},
-				pagination: {
-					el: '.swiper-pagination',
-					type: 'fraction',
-					renderFraction: function (currentClass, totalClass) {
-					return '<span class="' + currentClass + '"></span>' +
-							' / ' +
-							'<span class="' + totalClass + '"></span>';
-					},
-				}
-			}
-		}
 	},
 	watch: {}
 };
@@ -134,30 +113,4 @@ export default {
 					right -10px
 					text-align center
 					line-height .48rem
-	.swiper	
-		position relative
-		.swiperBg
-			position absolute;
-			width 100%
-			height 80%
-			left 0px
-			top 0px
-			background-color rgb(245, 219, 226)
-		.swiperImg
-			>img 
-				width 94%
-				border-radius 10px
-		.swiper-container
-			top 15px
-			.swiper-pagination
-				width 40px
-				background-image url('../../assets/img/z_banner_page.png')
-				text-align center
-				padding 2px 5px
-				border-radius: 10px;
-				background-repeat no-repeat
-				background-size 100% 100%
-				line-height 18px
-				color #fff
-				margin 0px 30px
 </style>
