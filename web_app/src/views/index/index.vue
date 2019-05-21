@@ -10,6 +10,7 @@
 		</div>
 		<indexSwiper></indexSwiper>
         <indexNav></indexNav>
+		<Nav></Nav>
 	</div>
 </template>
 
@@ -21,13 +22,15 @@ import { get } from '@/axiosApi'
 import imgUrl from '@/imgUrl'
 import indexNav from './indexNav'
 import indexSwiper from './indexSwiper'
+import Nav from '@/components/Nav'
 export default {
 	name: "index",
 	components: {
 		swiper,
         swiperSlide,
         indexNav,
-        indexSwiper
+		indexSwiper,
+		Nav
 	},
 	props: [],
 	data () {
