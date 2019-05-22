@@ -150,6 +150,10 @@ export default {
 <style lang="stylus" scoped>
 .NavTwo
     .navBox
+        position sticky
+        left 0
+        top 70px
+        z-index: 9
         .topic-list-inner 
             background #fff
             display flex

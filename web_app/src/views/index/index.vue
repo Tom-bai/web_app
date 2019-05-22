@@ -13,7 +13,11 @@
         <div class="newFuli"><img src="../../assets/img/yhq.gif" alt="" width="100%"></div>
         <indexBiqiang></indexBiqiang>
         <indexMiaosha></indexMiaosha>
+		<indexYiyuan></indexYiyuan>
         <indexLeftscroll></indexLeftscroll>
+		<div class="indexWaterFall">
+			<WaterFall></WaterFall>
+		</div>
 	</div>
 </template>
 
@@ -27,7 +31,9 @@ import indexNav from './indexNav'
 import indexSwiper from './indexSwiper'
 import indexBiqiang from './indexBiqiang'
 import indexMiaosha from './indexMiaosha'
+import indexYiyuan from './indexYiyuan'
 import indexLeftscroll from './indexLeftscroll'
+import WaterFall from '@/components/WaterFall'
 export default {
 	name: "index",
 	components: {
@@ -36,8 +42,10 @@ export default {
         indexNav,
         indexSwiper,
         indexBiqiang,
-        indexMiaosha,
-        indexLeftscroll
+		indexMiaosha,
+		indexYiyuan,
+		indexLeftscroll,
+		WaterFall
 	},
 	props: [],
 	data () {
@@ -52,13 +60,13 @@ export default {
 	watch: {}
 };
 </script>
-<style lang="stylus" scoped>
+<style lang="stylus">
 .index
 	.search-box
 		position sticky
 		width 100%
 		top 0
-		z-index 9
+		z-index 99
 		left 0
 		.search
 			display flex
@@ -97,4 +105,6 @@ export default {
 					right -10px
 					text-align center
 					line-height 18px
+	.indexWaterFall
+		position relative
 </style>
