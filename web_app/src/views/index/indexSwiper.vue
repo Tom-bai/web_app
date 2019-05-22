@@ -74,7 +74,7 @@ export default {
 			height 80%
 			left 0px
 			top 0px
-			background-color rgb(245, 219, 226)
+			background-color #cad9ae
 		.swiperImg
 			>img 
 				width 94%

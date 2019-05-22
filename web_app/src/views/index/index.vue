@@ -1,6 +1,6 @@
 <template>
 	<!-- 首页 -->
-	<div class="index">
+	<div class="index"> 
 		<div class="search-box">
 			<div class="search">
 				<div class="header"><img src="../../assets/img/nav.jpg" alt=""></div>
@@ -10,7 +10,10 @@
 		</div>
 		<indexSwiper></indexSwiper>
         <indexNav></indexNav>
-		<Nav></Nav>
+        <div class="newFuli"><img src="../../assets/img/yhq.gif" alt="" width="100%"></div>
+        <indexBiqiang></indexBiqiang>
+        <indexMiaosha></indexMiaosha>
+        <indexLeftscroll></indexLeftscroll>
 	</div>
 </template>
 
@@ -22,74 +25,52 @@ import { get } from '@/axiosApi'
 import imgUrl from '@/imgUrl'
 import indexNav from './indexNav'
 import indexSwiper from './indexSwiper'
-import Nav from '@/components/Nav'
+import indexBiqiang from './indexBiqiang'
+import indexMiaosha from './indexMiaosha'
+import indexLeftscroll from './indexLeftscroll'
 export default {
 	name: "index",
 	components: {
 		swiper,
         swiperSlide,
         indexNav,
-		indexSwiper,
-		Nav
+        indexSwiper,
+        indexBiqiang,
+        indexMiaosha,
+        indexLeftscroll
 	},
 	props: [],
 	data () {
 		return {
-			bannerData: [],
-			imgUrl: imgUrl,
-			swiperOption: {
-				loop: true,
-				autoplay: {
-					delay: 3000,
-					disableOnInteraction: false,
-				},
-				pagination: {
-					el: '.swiper-pagination',
-					type: 'fraction',
-					renderFraction: function (currentClass, totalClass) {
-					return '<span class="' + currentClass + '"></span>' +
-							' / ' +
-							'<span class="' + totalClass + '"></span>';
-					},
-				}
-			},
 		}
 	},
 	mounted() {
-		this.getBanner()
     },
 	methods: {
-		getBanner () {
-			let that = this
-			get('/index.php/home/index/banner').then(res => {
-				that.bannerData = res
-            }).catch(function (error) {
-                console.log(error)
-            })
-		},
+
 	},
 	watch: {}
 };
 </script>
 <style lang="stylus" scoped>
 .index
-	>.search-box
+	.search-box
 		position sticky
 		width 100%
 		top 0
 		z-index 9
 		left 0
-		>.search
+		.search
 			display flex
 			align-items center
 			background-color #cad9ae
 			padding 0 15px
 			height 70px
-			>.header
-				>img
+			.header
+				img
 					width 50px
 					border-radius 100%
-			>.input
+			.input
 				flex: 1
 				background-color #fff
 				border-radius 20px
@@ -101,11 +82,11 @@ export default {
 				background-size 15px
 				background-position 10px 50%
 				background-repeat no-repeat
-			>.tongzhi
-				position: relative;
-				>img
+			.tongzhi
+				position relative
+				img
 					width 30px
-				>span 
+				span 
 					position absolute
 					width 18px
 					height 18px
@@ -115,5 +96,5 @@ export default {
 					top -8px
 					right -10px
 					text-align center
-					line-height .48rem
+					line-height 18px
 </style>

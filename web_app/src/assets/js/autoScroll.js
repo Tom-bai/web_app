@@ -2,7 +2,7 @@ export default function autoScroll(dom,options){
     var options=options||{};
     var defaults={
       spaceBetween:15,
-      duration:600,
+      duration:300,
     };
     var settings = $.extend( {}, defaults, options );
   
