@@ -66,14 +66,14 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="stylus">
+<style lang="stylus" scoped>
 .Bset
     height 65px !important
     box-shadow 0 0 10px #ccc
     padding-bottom 5px
-    >.curr
+    >>>.curr
         color #000
-    >.tabbar-nav
+    >>>.tabbar-nav
         align-items flex-end
         >.icon-box
             >.icon

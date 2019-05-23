@@ -78,7 +78,7 @@ export default {
 		.swiperImg
 			>img 
 				width 94%
-				border-radius 10px
+				border-radius 6px
 		.swiper-container
 			top 15px
 			.swiper-pagination

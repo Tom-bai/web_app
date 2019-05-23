@@ -152,7 +152,7 @@ export default {
     .navBox
         position sticky
         left 0
-        top 70px
+        top 60px
         z-index: 9
         .topic-list-inner 
             background #fff
@@ -181,16 +181,16 @@ export default {
                         font-size 12px
                         font-weight normal
     .container
-        padding 0 15px
-        background #fff
         .list
             display flex
-            padding 10px 0
+            padding 10px 15px
+            background-color #fff
+            margin-top 10px
             .img
                 flex 0 0 120px
                 img
                     width 100%
-                    border-radius 8px
+                    border-radius 6px
                     display block
             .box
                 flex 1

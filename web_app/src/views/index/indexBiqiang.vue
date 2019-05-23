@@ -1,58 +1,61 @@
 <template>
 	<!-- 今日必抢 -->
-    <div class="indexBiqiang">
-        <div class="topName">
-            <div>今日必抢</div>
-            <div class="tip">高品质爆款抢先不断</div>
+    <div>
+        <div class="indexBiqiang">
+            <div class="newFuli"><img src="../../assets/img/yhq.gif" alt=""></div>
+            <div class="topName">
+                <div>今日必抢</div>
+                <div class="tip">高品质爆款抢先不断</div>
+            </div>
+            <div class="box boderRT">
+                <div class="listTwo">
+                    <div class="item">
+                        <div class="header">
+                            <p>新品上市</p>
+                        </div>
+                        <div class="img"><img src="../../assets/img/111.jpg" alt=""></div>
+                    </div>
+                </div>
+                <div class="listTwo">
+                    <div class="item">
+                        <div class="header">
+                            <p>新品上市</p>
+                        </div>
+                        <div class="img"><img src="../../assets/img/111.jpg" alt=""></div>
+                    </div>
+                </div>
+            </div>
+            <div class="box boderRB">
+                <div class="listThree">
+                    <div class="item">
+                        <div class="header">
+                            <p>新品上市</p>
+                            <p class="tip">邀请好友白拿</p>
+                        </div>
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                    </div>
+                </div>
+                <div class="listThree">
+                    <div class="item">
+                        <div class="header">
+                            <p>新品上市</p>
+                            <p class="tip">邀请好友白拿</p>
+                        </div>
+                        <div class="img"><img src="../../assets/img/cwww.jpg" alt=""></div>
+                    </div>
+                </div>
+                <div class="listThree">
+                    <div class="item">
+                        <div class="header">
+                            <p>新品上市</p>
+                            <p class="tip">邀请好友白拿</p>
+                        </div>
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="box">
-            <div class="listTwo">
-                <div class="item">
-                    <div class="header">
-                        <p>新品上市</p>
-                    </div>
-                    <div class="img"><img src="../../assets/img/111.jpg" alt=""></div>
-                </div>
-            </div>
-            <div class="listTwo">
-                <div class="item">
-                    <div class="header">
-                        <p>新品上市</p>
-                    </div>
-                    <div class="img"><img src="../../assets/img/111.jpg" alt=""></div>
-                </div>
-            </div>
-        </div>
-        <div class="box">
-            <div class="listThree">
-                <div class="item">
-                    <div class="header">
-                        <p>新品上市</p>
-                        <p class="tip">邀请好友白拿</p>
-                    </div>
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                </div>
-            </div>
-            <div class="listThree">
-                <div class="item">
-                    <div class="header">
-                        <p>新品上市</p>
-                        <p class="tip">邀请好友白拿</p>
-                    </div>
-                    <div class="img"><img src="../../assets/img/cwww.jpg" alt=""></div>
-                </div>
-            </div>
-            <div class="listThree">
-                <div class="item">
-                    <div class="header">
-                        <p>新品上市</p>
-                        <p class="tip">邀请好友白拿</p>
-                    </div>
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                </div>
-            </div>
-        </div>
-    </div>
+     </div>
 </template>
 
 <script>
@@ -78,6 +81,12 @@ export default {
 <style lang="stylus" scoped>
 .indexBiqiang
     padding 0 15px
+    .newFuli
+        margin-top 10px
+        img
+            display block
+            width 100%
+            border-radius 6px
     .topName
         display flex
         align-items center
@@ -89,6 +98,10 @@ export default {
             color #999
             font-size 12px
             font-weight normal
+    .boderRT
+        border-radius 6px 6px 0 0
+    .boderRB
+        border-radius 0 0 6px 6px
     .box
         display flex
         border 1px solid #ddd
@@ -112,6 +125,7 @@ export default {
                     img 
                         width 100%
                         display block
+                        border-radius 6px
         .listThree
             flex 1
             border-right 1px solid #ddd
@@ -132,4 +146,5 @@ export default {
                     img 
                         width 100%
                         display block
+                        border-radius 6px
 </style>

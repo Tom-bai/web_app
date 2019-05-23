@@ -382,8 +382,6 @@ export default {
 			let that = this
 			get('/index.php/home/index/ajax_allpro').then(res => {
                 that.dataList = res.data
-                console.log(res);
-                
             }).catch(function (error) {
                 console.log(error)
             })
@@ -392,12 +390,12 @@ export default {
 	watch: {}
 };
 </script>
-<style lang="stylus">
+<style lang="stylus" scoped>
 .indexYiyuan
     .navbox
         position sticky
         left 0
-        top 70px
+        top 60px
         z-index 9
         background-color #fff
         .nav
@@ -408,6 +406,17 @@ export default {
                 flex 1
                 padding 10px 0
                 position relative
+                &:before
+                    content: ' ';
+                    position absolute
+                    width 2px
+                    height 50%
+                    background-color #f5f5f5
+                    right  0
+                    top 50%
+                    transform translate(-50%,-50%)
+                &:last-child
+                    width 0px
                 .iocn
                     display flex
                     align-items center
@@ -419,6 +428,10 @@ export default {
                         height 18px
                         display block
                         margin-right 5px
+            .ziding
+                &:last-child
+                    &:before
+                        width 0px
             .active
                 color #b3a07f
                 &:after
@@ -431,9 +444,9 @@ export default {
                     bottom 0
                     transform translate(-50%)
     .content
-        margin-top 10px
         .banner
             padding 0 10px
+            margin 10px 0
             img
                 width 100%
                 border-radius 8px
@@ -441,9 +454,9 @@ export default {
         .bannertwo
             display flex
             align-items center
-            padding 5px
+            padding 0 5px
             div
-                padding 5px
+                padding 0 5px
             img
                 width 100%
                 border-radius 8px
@@ -454,13 +467,24 @@ export default {
             background-color #fff
             margin-bottom 10px
             font-size 14px
+            margin-top 10px
             .itemBtn
                 flex 1
-                border-right solid 1px #f1f1f1
                 position relative
                 padding 15px 0
+                &:before
+                    content: ' ';
+                    position absolute
+                    width 2px
+                    height 50%
+                    background-color #f5f5f5
+                    right  0
+                    top 50%
+                    transform translate(-50%,-50%)
+            .itemBtn
                 &:last-child
-                    border-right none
+                    &:before
+                        width 0px
             .active
                 color #b3a07f
                 &:after
@@ -473,7 +497,7 @@ export default {
                     bottom 0
                     transform translate(-50%)
         .list
-            margin-bottom 10px
+            margin-top 10px
             background-color #fff
             .item
                 display flex
@@ -484,7 +508,7 @@ export default {
                     img 
                         width 100%
                         display block
-                        border-radius 8px
+                        border-radius 6px
                 .text
                     flex 1
                     overflow hidden
@@ -551,7 +575,7 @@ export default {
                     .btn
                         display flex
                         align-items center
-                        margin-top 10px
+                        margin-top 15px
                         .iocn
                             background-image url('../../assets/img/z_zcrs.jpg')
                             background-repeat no-repeat
@@ -562,7 +586,7 @@ export default {
                         .zhichi
                             border 1px solid #f08f20
                             padding 2px 10px
-                            border-radius 3px
+                            border-radius 6px
                             color #f08f20
                             margin-left auto
             .man

@@ -1,139 +1,141 @@
 <template>
 	<!-- 商品左滑动卡片 -->
-    <div class="indexLeftscroll">
-        <div class="mian">
-            <div class="topName">
-                <div>今日必抢</div>
-                <div class="tip">高品质爆款抢先不断</div>
+    <div>
+        <div class="indexLeftscroll">
+            <div class="mian">
+                <div class="topName">
+                    <div>今日必抢</div>
+                    <div class="tip">高品质爆款抢先不断</div>
+                </div>
+                <div class="imgBg"><img src="../../assets/img/111.jpg" alt=""></div>
+                <div class="container">
+                    <div class="list">
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                        <div class="money">
+                            <div>￥399.00</div>
+                            <div class="vip"></div>
+                        </div>
+                    </div>
+                    <div class="list">
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                        <div class="money">
+                            <div>￥399.00</div>
+                            <div class="vip"></div>
+                        </div>
+                    </div>
+                    <div class="list">
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                        <div class="money">
+                            <div>￥399.00</div>
+                            <div class="vip"></div>
+                        </div>
+                    </div>
+                    <div class="list">
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                        <div class="money">
+                            <div>￥399.00</div>
+                            <div class="vip"></div>
+                        </div>
+                    </div>
+                    <div class="list">
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                        <div class="money">
+                            <div>￥399.00</div>
+                            <div class="vip"></div>
+                        </div>
+                    </div>
+                    <div class="list">
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                        <div class="money">
+                            <div>￥399.00</div>
+                            <div class="vip"></div>
+                        </div>
+                    </div>
+                    <div class="list">
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                        <div class="money">
+                            <div>￥399.00</div>
+                            <div class="vip"></div>
+                        </div>
+                    </div>
+                    <div class="list">
+                        <img src="../../assets/img/all2.png" alt="">
+                    </div>
+                </div>
             </div>
-            <div class="imgBg"><img src="../../assets/img/111.jpg" alt=""></div>
-            <div class="container">
-                <div class="list">
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="money">
-                        <div>￥399.00</div>
-                        <div class="vip"></div>
+            <div class="mian">
+                <div class="topName">
+                    <div>今日必抢</div>
+                    <div class="tip">高品质爆款抢先不断</div>
+                </div>
+                <div class="imgBg"><img src="../../assets/img/111.jpg" alt=""></div>
+                <div class="container">
+                    <div class="list">
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                        <div class="money">
+                            <div>￥399.00</div>
+                            <div class="vip"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="list">
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="money">
-                        <div>￥399.00</div>
-                        <div class="vip"></div>
+                    <div class="list">
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                        <div class="money">
+                            <div>￥399.00</div>
+                            <div class="vip"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="list">
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="money">
-                        <div>￥399.00</div>
-                        <div class="vip"></div>
+                    <div class="list">
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                        <div class="money">
+                            <div>￥399.00</div>
+                            <div class="vip"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="list">
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="money">
-                        <div>￥399.00</div>
-                        <div class="vip"></div>
+                    <div class="list">
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                        <div class="money">
+                            <div>￥399.00</div>
+                            <div class="vip"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="list">
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="money">
-                        <div>￥399.00</div>
-                        <div class="vip"></div>
+                    <div class="list">
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                        <div class="money">
+                            <div>￥399.00</div>
+                            <div class="vip"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="list">
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="money">
-                        <div>￥399.00</div>
-                        <div class="vip"></div>
+                    <div class="list">
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                        <div class="money">
+                            <div>￥399.00</div>
+                            <div class="vip"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="list">
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="money">
-                        <div>￥399.00</div>
-                        <div class="vip"></div>
+                    <div class="list">
+                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                        <div class="money">
+                            <div>￥399.00</div>
+                            <div class="vip"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="list">
-                    <img src="../../assets/img/all2.png" alt="">
-                </div>
-            </div>
-        </div>
-        <div class="mian">
-            <div class="topName">
-                <div>今日必抢</div>
-                <div class="tip">高品质爆款抢先不断</div>
-            </div>
-            <div class="imgBg"><img src="../../assets/img/111.jpg" alt=""></div>
-            <div class="container">
-                <div class="list">
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="money">
-                        <div>￥399.00</div>
-                        <div class="vip"></div>
+                    <div class="list">
+                        <img src="../../assets/img/all2.png" alt="">
                     </div>
-                </div>
-                <div class="list">
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="money">
-                        <div>￥399.00</div>
-                        <div class="vip"></div>
-                    </div>
-                </div>
-                <div class="list">
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="money">
-                        <div>￥399.00</div>
-                        <div class="vip"></div>
-                    </div>
-                </div>
-                <div class="list">
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="money">
-                        <div>￥399.00</div>
-                        <div class="vip"></div>
-                    </div>
-                </div>
-                <div class="list">
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="money">
-                        <div>￥399.00</div>
-                        <div class="vip"></div>
-                    </div>
-                </div>
-                <div class="list">
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="money">
-                        <div>￥399.00</div>
-                        <div class="vip"></div>
-                    </div>
-                </div>
-                <div class="list">
-                    <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="money">
-                        <div>￥399.00</div>
-                        <div class="vip"></div>
-                    </div>
-                </div>
-                <div class="list">
-                    <img src="../../assets/img/all2.png" alt="">
                 </div>
             </div>
         </div>
@@ -160,7 +162,7 @@ export default {
 	watch: {}
 };
 </script>
-<style lang="stylus">
+<style lang="stylus" scoped>
 .indexLeftscroll
     .mian
         .topName

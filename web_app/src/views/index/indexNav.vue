@@ -1,48 +1,50 @@
 <template>
 	<!-- 导航 -->
-    <div class="indexNav">
-        <div class="navBox">
-            <div class="navHeader">
-                <div class="pz">
-                    <div>享疯了自营 | 品质保障</div>
-                    <div class="list">
-                        <div class="tip">
-                            <div><img src="../../assets/img/c.png" alt=""></div>
-                            <div>享店自营</div>
-                        </div>
-                        <div class="tip">
-                            <div><img src="../../assets/img/q.png" alt=""></div>
-                            <div> 全球直采</div>
-                        </div>
-                        <div class="tip">
-                            <div><img src="../../assets/img/z.png" alt=""></div>
-                            <div> 假一赔十</div>
-                        </div>
-                        <div class="tip">
-                            <div><img src="../../assets/img/s.png" alt=""></div>
-                            <div>售后无忧</div>
+    <div>
+        <div class="indexNav">
+            <div class="navBox">
+                <div class="navHeader">
+                    <div class="pz">
+                        <div>享疯了自营 | 品质保障</div>
+                        <div class="list">
+                            <div class="tip">
+                                <div><img src="../../assets/img/c.png" alt=""></div>
+                                <div>享店自营</div>
+                            </div>
+                            <div class="tip">
+                                <div><img src="../../assets/img/q.png" alt=""></div>
+                                <div> 全球直采</div>
+                            </div>
+                            <div class="tip">
+                                <div><img src="../../assets/img/z.png" alt=""></div>
+                                <div> 假一赔十</div>
+                            </div>
+                            <div class="tip">
+                                <div><img src="../../assets/img/s.png" alt=""></div>
+                                <div>售后无忧</div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="btn">
+                    <div>保障措施</div>
+                    <div class="cha">查看详情</div>
+                </div>
             </div>
-            <div class="btn">
-                <div>保障措施</div>
-                <div class="cha">查看详情</div>
-            </div>
+            <swiper :options="swiperOption" v-if="navBtn.length>0" class="swiperBox">
+                <swiper-slide v-for="(item,index) in navBtn" :key="index" class="swiperB">
+                    <div class="navBtnbox">
+                        <div class="navBtn">
+                            <div class="list" v-for="(itemT,index) in item.nav" :key="index">
+                                <div><img :src="itemT.img" alt=""></div>
+                                <div>{{itemT.text}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </swiper-slide>
+                <div class="swiper-scrollbar" slot="pagination"></div>
+            </swiper>
         </div>
-        <swiper :options="swiperOption" v-if="navBtn.length>0" class="swiperBox">
-            <swiper-slide v-for="(item,index) in navBtn" :key="index" class="swiperB">
-                <div class="navBtnbox">
-                    <div class="navBtn">
-                        <div class="list" v-for="(itemT,index) in item.nav" :key="index">
-                            <div><img :src="itemT.img" alt=""></div>
-                            <div>{{itemT.text}}</div>
-                        </div>
-                    </div>
-                </div>
-            </swiper-slide>
-            <div class="swiper-scrollbar" slot="pagination"></div>
-        </swiper>
     </div>
 </template>
 
@@ -169,7 +171,7 @@ export default {
 	watch: {}
 };
 </script>
-<style lang="stylus">
+<style lang="stylus" scoped>
 .indexNav
     margin-top 30px
     padding 0 15px
@@ -205,13 +207,14 @@ export default {
         background: #fff
         padding-top 15px
         margin-top 10px
-        border-radius 8px
-        .swiper-scrollbar
+        border-radius 6px
+        >>>.swiper-scrollbar
             width 20%
             background #aba6a67a
             left 50%
             transform translate(-50%)
             bottom 8px
+            height 3px
             .swiper-scrollbar-drag
                 background #f53d3d
         .swiperB

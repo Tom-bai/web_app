@@ -86,8 +86,9 @@ export default {
         align-items center
         font-size 16px
         font-weight bold
-        height 50px
+        height 40px
         justify-content center
+        padding-top 10px
     .watefall
         position relative
         .pin

@@ -1,3 +1,3 @@
 
-let imgUrl = 'http://www.xfengle.com/'
+let imgUrl = 'http://shop.xfengle.com/'
 export default imgUrl

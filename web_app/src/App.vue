@@ -24,7 +24,7 @@ body,html
 	margin 0
 	padding 0
 body,html{
-    background-color #fafafa
+    background-color #f5f5f5
 }
 #app
 	font-family 12px/1.5 Helvetica Neue,Helvetica,Arial,Hiragino Sans GB,tahoma,simsun,sans-serif
