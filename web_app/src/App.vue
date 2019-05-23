@@ -23,11 +23,8 @@
 body,html
 	margin 0
 	padding 0
-body,html{
-    background-color #f5f5f5
-}
 #app
-	font-family 12px/1.5 Helvetica Neue,Helvetica,Arial,Hiragino Sans GB,tahoma,simsun,sans-serif
+	font-family PingFangSC-Regular,Helvetica Neue,Helvetica,microsoft yahei,sans-serif
 	-webkit-font-smoothing antialiased
 	-moz-osx-font-smoothing grayscale
 	text-align center

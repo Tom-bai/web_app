@@ -7,18 +7,18 @@
             <div v-masonry-tile class="pin" v-for="(item,index) in articleData" :key="index">
                 <div class="box">
                     <img :src="item.img"/>
-                    <div class="watefallText">{{item.qm}}</div>
-                    <div class="myWatefall">
+                    <div class="watefallText" v-if="item.qm">{{item.qm}}</div>
+                    <div class="myWatefall" v-if="item.tip">
                         <div class="watefallHeadtext">
-                            <div class="mySignature">浮生若梦 FACE & BODY 双用水粉霜 50毫升</div>
-                            <div class="num">
+                            <div class="mySignature">{{item.tip}}</div>
+                            <!-- <div class="num">
                                 <div class="shu">15万</div> 
                                 <div class="img">
                                     <img src="../assets/img//nav.jpg" alt=""> 
                                     <img src="../assets/img//nav.jpg" alt=""> 
                                     <img src="../assets/img//nav.jpg" alt="">
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -38,21 +38,15 @@ export default {
             articleData: [
                 {
                     id: 1,
-                    img: require('../assets/img/2222.jpg'),
-                    qm: 'wdwd',
-                    name: 'asds',
-                    text: 'sdasd'
-                },
-                {
-                    id: 1,
-                    img: require('../assets/img/111.jpg'),
-                    qm: 'wdwd',
-                    name: 'asds',
-                    text: 'sdasd'
-                },
-                {
-                    id: 1,
                     img: require('../assets/img/img27.jpg'),
+                    qm: '',
+                    name: '',
+                    text: ''
+                },
+                {
+                    id: 1,
+                    img: require('../assets/img/2222.jpg'),
+                    tip: '浮生若梦 FACE & BODY 双用水粉霜 50毫升',
                     qm: 'wdwd',
                     name: 'asds',
                     text: 'sdasd'
@@ -60,6 +54,15 @@ export default {
                 {
                     id: 1,
                     img: require('../assets/img/2222.jpg'),
+                    tip: '浮生若梦 FACE & BODY 双用水粉霜 50毫升',
+                    qm: 'wdwd',
+                    name: 'asds',
+                    text: 'sdasd'
+                },
+                {
+                    id: 1,
+                    img: require('../assets/img/2222.jpg'),
+                    tip: '浮生若梦 FACE & BODY 双用水粉霜 50毫升',
                     qm: 'wdwd',
                     name: 'asds',
                     text: 'sdasd'
@@ -98,11 +101,12 @@ export default {
         .box
             background-color #ffffff
             border-radius 8px
-            padding 10px
+            padding 0 10px
             text-align left 
             >img
                 width:100%
                 height:auto
+                display block
             .watefallText
                 font-size 14px
                 font-weight bold
@@ -114,8 +118,6 @@ export default {
                 padding 5px 0
             .myWatefall
                 .watefallHeadtext
-                    .mySignature
-                        padding-bottom 5px
                     .num
                         display flex
                         align-items center
@@ -130,4 +132,5 @@ export default {
                                 height 16px
                                 border-radius 100%
                                 margin-left -10px
+                                display block
 </style>
