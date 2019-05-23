@@ -95,8 +95,8 @@ export default {
             width 47%
             padding 10px 0 0 8px
         .box
-            border 1px solid #ccc
-            box-shadow 0 0 6px #ccc
+            background-color #ffffff
+            border-radius 8px
             padding 10px
             text-align left 
             >img

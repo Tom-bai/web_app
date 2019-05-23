@@ -14,8 +14,8 @@
         <indexBiqiang></indexBiqiang>
         <indexMiaosha></indexMiaosha>
 		<indexYiyuan></indexYiyuan>
-        <indexLeftscroll></indexLeftscroll>
-		<div class="indexWaterFall">
+        <indexLeftscroll v-if="$store.state.INDEX_STATE == 0"></indexLeftscroll>
+		<div class="indexWaterFall" v-if="$store.state.INDEX_STATE == 0">
 			<WaterFall></WaterFall>
 		</div>
 	</div>
