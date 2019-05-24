@@ -2,7 +2,7 @@
 	<!-- 今日必抢 -->
     <div>
         <div class="indexBiqiang">
-            <div class="newFuli"><img src="../../assets/img/yhq.gif" alt=""></div>
+            <div class="newFuli"><img src="../../assets/img/111.jpg" alt=""></div>
             <div class="topName">
                 <div>今日必抢</div>
                 <div class="tip">高品质爆款抢先不断</div>
@@ -115,6 +115,7 @@ export default {
                 border-right none
             .item
                 padding 8px
+                background-color #fff
                 .header
                     font-size 16px
                     height 30px
@@ -134,6 +135,7 @@ export default {
                 border-right none
             .item
                 padding 8px
+                background-color #fff
                 .header
                     font-size 16px
                     height 45px

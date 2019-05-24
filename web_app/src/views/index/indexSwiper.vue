@@ -2,7 +2,7 @@
 	<!-- 轮播 -->
 	<div>
         <div class="indexSwiper">
-            <div class="search-box">
+            <div class="search-box" :class="topSearch?'toFixed':''">
                 <div class="search" id="search" :class="topSearch?'topSearch':''">
                     <div class="header"><img src="../../assets/img/nav.jpg" alt=""></div>
                     <div class="input">阿迪达斯</div>
@@ -93,16 +93,12 @@ export default {
 <style lang="stylus" scoped>
 .indexSwiper
     .search-box
-        position fixed
-        width 100%
-        top 0
-        z-index 99
-        left 0
         .search
             display flex
             align-items center
             padding 0 15px
             height 65px
+            background-color #000
             .header
                 img
                     width 30px
@@ -158,8 +154,12 @@ export default {
                 background-image url('../../assets/img/tzH.png')
                 .text
                     color $color
-    .topPdding
-        padding-top 65px
+    .toFixed
+        position fixed
+        width 100%
+        top 0
+        z-index 99
+        left 0
 	.swiper	
 		position relative
 		.swiperBg

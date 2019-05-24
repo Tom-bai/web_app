@@ -189,7 +189,7 @@ export default {
             margin-top -30px
             -webkit-overflow-scrolling touch
             .list
-                flex 0 0 29%
+                flex 0 0 26%
                 border none
                 border-right none
                 padding 10px 10px 10px 0

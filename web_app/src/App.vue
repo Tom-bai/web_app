@@ -2,6 +2,8 @@
 	<div id="app">
 		<div class="main">
             <router-view/>
+            <nut-backtop :distance="500" >
+            </nut-backtop>
 		    <Tabbar></Tabbar>
         </div>
 	</div>
@@ -16,7 +18,9 @@
 		props: [],
 		data () {
 		return {}
-		},
+        },
+        mounted () {
+        },
 		methods: {},
 		watch: {}
 	};
