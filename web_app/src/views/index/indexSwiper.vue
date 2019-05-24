@@ -119,12 +119,13 @@ export default {
                 background-repeat no-repeat
             .tongzhi
                 position relative
-                width 26px
                 height 40px
+                flex 0 0 30px
                 background-image url('../../assets/img/tz.png')
                 background-size 22px
                 background-repeat no-repeat
                 background-position 50% 0
+                transform scale(0.9)
                 .text 
                     font-size 12px
                     position absolute

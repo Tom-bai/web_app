@@ -11,14 +11,10 @@
                     <div class="myWatefall" v-if="item.tip">
                         <div class="watefallHeadtext">
                             <div class="mySignature">{{item.tip}}</div>
-                            <!-- <div class="num">
-                                <div class="shu">15万</div> 
-                                <div class="img">
-                                    <img src="../assets/img//nav.jpg" alt=""> 
-                                    <img src="../assets/img//nav.jpg" alt=""> 
-                                    <img src="../assets/img//nav.jpg" alt="">
-                                </div>
-                            </div> -->
+                            <div class="money">
+                                <div>￥399.00</div>
+                                <div class="vip"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -100,19 +96,20 @@ export default {
             &:first-child
                 .box
                     >img 
-                        height 210px
+                        height 270px
+                        border-radius $border-radius
             .box
                 background-color #ffffff
                 border-radius 3px
-                padding 10px
+                padding 0px
                 text-align left 
-                max-height 210px
+                max-height 270px
                 overflow hidden
                 >img
                     width:100%
                     height:auto
                     display block
-                    border-radius 3px
+                    border-radius border-radius border-radius 0 0
                 .watefallText
                     font-size 14px
                     font-weight bold
@@ -121,8 +118,9 @@ export default {
                     -webkit-line-clamp 1
                     -webkit-box-orient vertical
                     overflow hidden
-                    padding 5px 0
+                    padding 5px 10px
                 .myWatefall
+                    padding 0px 10px 15px 10px
                     .watefallHeadtext
                         .mySignature
                             text-overflow ellipsis
@@ -145,4 +143,21 @@ export default {
                                         border-radius 100%
                                         margin-left -10px
                                         display block
+                        .money
+                            color $color
+                            font-size 14px
+                            font-weight bold
+                            background-color #fff
+                            display flex
+                            align-items center
+                            justify-content flex-start
+                            line-height 1
+                            margin-top 10px
+                            .vip
+                                background-image url('../assets/img/vip.png')
+                                background-repeat no-repeat
+                                background-size 100%
+                                width 25px
+                                height 14px
+                                margin-left 5px
 </style>

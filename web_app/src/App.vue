@@ -2,7 +2,7 @@
 	<div id="app">
 		<div class="main">
             <router-view/>
-            <nut-backtop :distance="500" >
+            <nut-backtop :distance="500" :bottom="80" :right="10" class="myTop">
             </nut-backtop>
 		    <Tabbar></Tabbar>
         </div>
@@ -36,4 +36,11 @@ html,body{
     margin 0 auto 70px auto 
     background-color #f5f5f5
 }
+.myTop
+    .nut-backtop-main
+        background url('../src/assets/img/gotop.png') no-repeat center
+        background-size 100%
+        background-color #fff
+        box-shadow none
+        border none
 </style>
