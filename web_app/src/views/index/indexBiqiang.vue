@@ -86,7 +86,7 @@ export default {
         img
             display block
             width 100%
-            border-radius 6px
+            border-radius $border-radius
     .topName
         display flex
         align-items center
@@ -99,9 +99,9 @@ export default {
             font-size 12px
             font-weight normal
     .boderRT
-        border-radius 6px 6px 0 0
+        border-radius $border-radius $border-radius 0 0
     .boderRB
-        border-radius 0 0 6px 6px
+        border-radius 0 0 $border-radius $border-radius
     .box
         display flex
         border 1px solid #ddd
@@ -125,7 +125,7 @@ export default {
                     img 
                         width 100%
                         display block
-                        border-radius 6px
+                        border-radius $border-radius
         .listThree
             flex 1
             border-right 1px solid #ddd
@@ -146,5 +146,5 @@ export default {
                     img 
                         width 100%
                         display block
-                        border-radius 6px
+                        border-radius $border-radius
 </style>

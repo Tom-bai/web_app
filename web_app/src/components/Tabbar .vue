@@ -68,14 +68,17 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
 .Bset
-    height 65px !important
+    height 60px !important
     box-shadow 0 0 10px #ccc
-    padding-bottom 5px
     >>>.curr
         color #000
     >>>.tabbar-nav
-        align-items flex-end
         >.icon-box
+            >.tips
+                top -5px
+                right 5px
+                background-color #F0250F
+                color #fff
             >.icon
                 width 22px
                 height 22px

@@ -3,7 +3,9 @@ import axios from 'axios'
 axios.defaults.timeout = 30 * 1000
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 axios.defaults.baseURL = 'http://shop.xfengle.com' // 接口域名
+axios.defaults.withCredentials = true
 // POST传参序列化(添加请求拦截器)
+axios.defaults.baseURL = '/api'
 axios.interceptors.request.use(
     config => {
         // if (config.method === 'post') {

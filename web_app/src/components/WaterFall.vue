@@ -91,46 +91,58 @@ export default {
         font-weight bold
         height 40px
         justify-content center
-        padding-top 10px
     .watefall
         position relative
         .pin
             float left
             width 47%
             padding 10px 0 0 8px
-        .box
-            background-color #ffffff
-            border-radius 8px
-            padding 0 10px
-            text-align left 
-            >img
-                width:100%
-                height:auto
-                display block
-            .watefallText
-                font-size 14px
-                font-weight bold
+            &:first-child
+                .box
+                    >img 
+                        height 210px
+            .box
+                background-color #ffffff
+                border-radius 3px
+                padding 10px
+                text-align left 
+                max-height 210px
                 overflow hidden
-                text-overflow ellipsis
-                display -webkit-box
-                -webkit-line-clamp 1
-                -webkit-box-orient vertical
-                padding 5px 0
-            .myWatefall
-                .watefallHeadtext
-                    .num
-                        display flex
-                        align-items center
-                        justify-content flex-end
-                        .shu
-                            margin-right 20px
-                        .img
-                            display flex
-                            align-items center
-                            img
-                                width 16px
-                                height 16px
-                                border-radius 100%
-                                margin-left -10px
-                                display block
+                >img
+                    width:100%
+                    height:auto
+                    display block
+                    border-radius 3px
+                .watefallText
+                    font-size 14px
+                    font-weight bold
+                    text-overflow ellipsis
+                    display -webkit-box
+                    -webkit-line-clamp 1
+                    -webkit-box-orient vertical
+                    overflow hidden
+                    padding 5px 0
+                .myWatefall
+                    .watefallHeadtext
+                        .mySignature
+                            text-overflow ellipsis
+                            display -webkit-box
+                            -webkit-line-clamp 2
+                            -webkit-box-orient vertical
+                            overflow hidden
+                            .num
+                                display flex
+                                align-items center
+                                justify-content flex-end
+                                .shu
+                                    margin-right 20px
+                                .img
+                                    display flex
+                                    align-items center
+                                    img
+                                        width 16px
+                                        height 16px
+                                        border-radius 100%
+                                        margin-left -10px
+                                        display block
 </style>

@@ -4,7 +4,7 @@
             <div class="topic-list-inner">
                 <div class="nav" ref="nav">
                     <div class="box" v-for="(item,index) in list" :key="index" @click="queryTopic(item,index)" :class="{active:navActiveIndex==index}">
-                        <div>{{item.time}}</div>
+                        <div :class="{activeS:navActiveIndex==index}">{{item.time}}</div>
                         <div class="item">{{item.title}}</div>
                     </div>
                 </div>
@@ -152,7 +152,7 @@ export default {
     .navBox
         position sticky
         left 0
-        top 60px
+        top 65px
         z-index: 9
         .topic-list-inner 
             background #fff
@@ -171,12 +171,14 @@ export default {
                     line-height 1.3
                     flex 0 0 17%
                     &.active 
-                        color #b3a07f
-                        background-image url('../assets/img/z_index_line.jpg')
+                        color $color
+                        background-image url('../assets/img/z_index_line.png')
                         background-repeat no-repeat
                         background-position bottom
                         background-size 50%
                         font-weight 700
+                        .activeS
+                            font-size 16px
                     .item
                         font-size 12px
                         font-weight normal
@@ -190,7 +192,7 @@ export default {
                 flex 0 0 120px
                 img
                     width 100%
-                    border-radius 6px
+                    border-radius $border-radius
                     display block
             .box
                 flex 1
@@ -223,7 +225,7 @@ export default {
                         position relative
                         background: #ebebeb
                         vertical-align middle
-                        border-radius 4px
+                        border-radius $border-radius
                         margin-right 10px
                         b
                             display block
@@ -233,7 +235,7 @@ export default {
                             left 0
                             width 10%
                             background: #f1002d
-                            border-radius 4px
+                            border-radius $border-radius
                 .money
                     display flex
                     align-items center
@@ -254,6 +256,6 @@ export default {
                         text-align center
                         color #fff
                         font-weight 400
-                        border-radius 5px
+                        border-radius $border-radius
                         font-size 12px
 </style>

@@ -5,7 +5,7 @@
             <div class="navBox">
                 <div class="navHeader">
                     <div class="pz">
-                        <div>享疯了自营 | 品质保障</div>
+                        <div class="name">享疯了自营 | 品质保障</div>
                         <div class="list">
                             <div class="tip">
                                 <div><img src="../../assets/img/c.png" alt=""></div>
@@ -26,10 +26,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="btn">
+                <!-- <div class="btn">
                     <div>保障措施</div>
                     <div class="cha">查看详情</div>
-                </div>
+                </div> -->
             </div>
             <swiper :options="swiperOption" v-if="navBtn.length>0" class="swiperBox">
                 <swiper-slide v-for="(item,index) in navBtn" :key="index" class="swiperB">
@@ -64,6 +64,7 @@ export default {
 		return {
 			bannerData: [],
 			swiperOption: {
+                slidesPerView: 5,
 				scrollbar: {
                     el: '.swiper-scrollbar',
                     hide: false,
@@ -81,30 +82,11 @@ export default {
                             img: require('../../assets/img/nav.jpg'),
                             text: '美妆护肤'
                         },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
+                    ]
+                },
+                {
+                    id: 2,
+                    nav: [
                         {
                             img: require('../../assets/img/nav.jpg'),
                             text: '美妆护肤'
@@ -116,40 +98,8 @@ export default {
                     ]
                 },
                 {
-                    id: 2,
+                    id: 1,
                     nav: [
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤2'
-                        },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤2'
-                        },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤2'
-                        },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤2'
-                        },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
                         {
                             img: require('../../assets/img/nav.jpg'),
                             text: '美妆护肤'
@@ -159,7 +109,86 @@ export default {
                             text: '美妆护肤'
                         },
                     ]
-                }
+                },
+                {
+                    id: 1,
+                    nav: [
+                        {
+                            img: require('../../assets/img/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                        {
+                            img: require('../../assets/img/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                    ]
+                },
+                {
+                    id: 1,
+                    nav: [
+                        {
+                            img: require('../../assets/img/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                        {
+                            img: require('../../assets/img/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                    ]
+                },
+                {
+                    id: 1,
+                    nav: [
+                        {
+                            img: require('../../assets/img/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                        {
+                            img: require('../../assets/img/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                    ]
+                },
+                {
+                    id: 1,
+                    nav: [
+                        {
+                            img: require('../../assets/img/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                        {
+                            img: require('../../assets/img/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                    ]
+                },
+                {
+                    id: 1,
+                    nav: [
+                        {
+                            img: require('../../assets/img/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                        {
+                            img: require('../../assets/img/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                    ]
+                },
+                {
+                    id: 1,
+                    nav: [
+                        {
+                            img: require('../../assets/img/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                        {
+                            img: require('../../assets/img/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                    ]
+                },
+                
             ]
 		}
 	},
@@ -173,7 +202,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .indexNav
-    margin-top 30px
+    margin-top 20px
     padding 0 15px
     .navBox
         display flex
@@ -182,7 +211,11 @@ export default {
             flex 1
             text-align left 
             .pz
-                color #b29e7d
+                color $color
+                font-size 16px
+                line-height 1
+                .name
+                    padding 5px 0
                 .list
                     display flex
                     margin-top 5px
@@ -192,22 +225,24 @@ export default {
                         color #333
                         margin-right 2px
                         align-items center
+                        flex 1
+                        font-size 12px
                         img 
                             width 16px
-                            margin-right 2px
+                            margin-right 5px
                             display block
         .btn
             .cha
                 background-color #b29e7d
-                border-radius 10px
+                border-radius $border-radius
                 color #ffffff
                 padding 2px 8px
                 margin-top 2px
     .swiperBox
         background: #fff
-        padding-top 15px
+        padding 10px 0
         margin-top 10px
-        border-radius 6px
+        border-radius $border-radius
         >>>.swiper-scrollbar
             width 20%
             background #aba6a67a
@@ -216,14 +251,13 @@ export default {
             bottom 8px
             height 3px
             .swiper-scrollbar-drag
-                background #f53d3d
-        .swiperB
-            padding-bottom 10px
+                background-color $background-color
     .navBtnbox
         .navBtn
             display flex
             align-items center
             flex-wrap wrap
+            justify-content center
             .list
                 flex 0 0 20%
                 margin-bottom 10px
@@ -231,5 +265,5 @@ export default {
                     width 50px
                     border-radius 100%
                     display block
-                    margin auto
+                    margin auto auto 5px auto
 </style>

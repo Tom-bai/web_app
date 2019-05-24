@@ -27,7 +27,7 @@
                         <div class="money"><span>￥{{item.price}}</span><i class="vip"></i></div>
                     </div>
                 </div>
-                <div class="man">
+                <!-- <div class="man">
                     <div class="tip" v-if="item.biaoqian">
                         <span>{{item.biaoqian}}</span>
                     </div>
@@ -37,7 +37,7 @@
                             <img v-for="itemi in item.us" :src="imgUrl + itemi" alt="">
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="content" v-if="active == 1">
@@ -81,7 +81,7 @@
                             <span><small>￥</small>399</span><small>起</small>
                         </div>
                         <div class="progress">
-                            <nut-progress percentage="30" strokeColor="#f2826a" strokeWidth="6" status="active"></nut-progress>
+                            <nut-progress percentage="30" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
                         </div>
                         <div class="btn">
                             <i class="iocn"></i>
@@ -104,7 +104,7 @@
                             <span><small>￥</small>399</span><small>起</small>
                         </div>
                         <div class="progress">
-                            <nut-progress percentage="30" strokeColor="#f2826a" strokeWidth="6" status="active"></nut-progress>
+                            <nut-progress percentage="30" strokeColor="#f1002d"  status="active" strokeWidth="6" class="myProgress"></nut-progress>
                         </div>
                         <div class="btn">
                             <i class="iocn"></i>
@@ -395,7 +395,7 @@ export default {
     .navbox
         position sticky
         left 0
-        top 60px
+        top 65px
         z-index 9
         background-color #fff
         .nav
@@ -433,13 +433,13 @@ export default {
                     &:before
                         width 0px
             .active
-                color #b3a07f
+                color $color
                 &:after
                     content: ' ';
                     position absolute
                     width 60%
                     height 3px
-                    background-color #b3a07f
+                    background-color $background-color
                     left 50%
                     bottom 0
                     transform translate(-50%)
@@ -449,7 +449,7 @@ export default {
             margin 10px 0
             img
                 width 100%
-                border-radius 8px
+                border-radius $border-radius
                 display block
         .bannertwo
             display flex
@@ -459,7 +459,7 @@ export default {
                 padding 0 5px
             img
                 width 100%
-                border-radius 8px
+                border-radius $border-radius
                 display block
         .topNav
             display flex
@@ -486,13 +486,13 @@ export default {
                     &:before
                         width 0px
             .active
-                color #b3a07f
+                color $color
                 &:after
                     content: ' ';
                     position absolute
                     width 60%
                     height 3px
-                    background-color #b3a07f
+                    background-color $background-color
                     left 50%
                     bottom 0
                     transform translate(-50%)
@@ -508,7 +508,7 @@ export default {
                     img 
                         width 100%
                         display block
-                        border-radius 6px
+                        border-radius $border-radius
                 .text
                     flex 1
                     overflow hidden
@@ -551,7 +551,7 @@ export default {
                         height 30px
                         >span 
                             font-size 16px
-                            color #b19c79
+                            color $color
                             font-weight 700
                         >small
                             font-size 12px
@@ -560,18 +560,21 @@ export default {
                             background-image url('../../assets/img/vip.png')
                             background-repeat no-repeat
                             background-size 100% 100%
-                            width 42px
-                            height 17px
+                            width 26px
+                            height 14px
                             margin-left 10px
                         .card
                             background-image url('../../assets/img/buy2.png')
                             background-repeat no-repeat
                             background-size 100% 100%
-                            width 30px
-                            height 30px
+                            width 22px
+                            height 22px
                             margin-left auto
                     .progress
                         margin-top 10px
+                        .myProgress
+                            >>>.nut-progress-outer
+                                border-radius $border-radius
                     .btn
                         display flex
                         align-items center
@@ -584,10 +587,10 @@ export default {
                             height 18px
                             margin-right 10px
                         .zhichi
-                            border 1px solid #f08f20
+                            border 1px solid $color
                             padding 2px 10px
-                            border-radius 6px
-                            color #f08f20
+                            border-radius $border-radius
+                            color $color
                             margin-left auto
             .man
                 display flex
@@ -597,7 +600,7 @@ export default {
                 .tip
                     background #f2f2f2
                     border 1px solid #f2f2f2
-                    border-radius 10px
+                    border-radius $border-radius
                     padding 2px 10px
                     margin-right 10px
                 .num
