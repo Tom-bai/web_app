@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="content" v-if="active == 1">
-            <div class="banner"><img src="../../assets/img/111.jpg" alt=""></div>
+            <div class="banner"><img src="../../assets/img/index/111.jpg" alt=""></div>
             <div class="list" v-for="(item,index) in data1" :key="index">
                 <div class="item">
                     <div class="img"><img :src="item.img" alt=""></div>
@@ -63,10 +63,10 @@
             </div>
         </div>
         <div class="content" v-if="active == 2">
-            <div class="banner"><img src="../../assets/img/111.jpg" alt=""></div>
+            <div class="banner"><img src="../../assets/img/index/111.jpg" alt=""></div>
             <div class="bannertwo">
-                <div><img src="../../assets/img/111.jpg" alt=""></div>
-                <div><img src="../../assets/img/111.jpg" alt=""></div>
+                <div><img src="../../assets/img/index/111.jpg" alt=""></div>
+                <div><img src="../../assets/img/index/111.jpg" alt=""></div>
             </div>
             <div class="topNav">
                 <div class="itemBtn" :class="activeZC == 0?'active':''" @click="onClickZc(0)">正在众筹</div>
@@ -138,30 +138,30 @@ export default {
                     id: 1,
                     name: '全部',
                     tip: '品质好货',
-                    ioc: require('../../assets/img/all.png'),
-                    ioca: require('../../assets/img/allh.png'),
+                    ioc: require('../../assets/img/index/all.png'),
+                    ioca: require('../../assets/img/index/allh.png'),
                 },
                 {
                     id: 2,
                     name: '一元',
                     tip: '会员专享',
-                    ioc: require('../../assets/img/yh.png'),
-                    ioca: require('../../assets/img/y.png'),
+                    ioc: require('../../assets/img/index/yh.png'),
+                    ioca: require('../../assets/img/index/y.png'),
                 },
                 {
                     id: 3,
                     name: '众筹',
                     tip: '达人推荐',
-                    ioc: require('../../assets/img/zan.png'),
-                    ioca: require('../../assets/img/zanh.png'),
+                    ioc: require('../../assets/img/index/zan.png'),
+                    ioca: require('../../assets/img/index/zanh.png'),
                 },
             ],
             data1: [
                 {
-                   img: require('../../assets/img/2222.jpg'),
+                   img: require('../../assets/img/index/2222.jpg'),
                    name: '澳洲freezeframe 紧致全效眼霜（15ml）提拉紧致去细纹黑眼圈',
                    tip: '两条包邮两条包邮两条包邮两条包邮',
-                   guoioc: require('../../assets/img/q.png'),
+                   guoioc: require('../../assets/img/index/q.png'),
                    guoname: '中国',
                    guonamet2: 'Bai白白',
                    money: '200',
@@ -176,21 +176,21 @@ export default {
                    shu: '15万',
                    shuimg:[
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        },
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        },
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        }
                    ]
                 },
                 {
-                   img: require('../../assets/img/2222.jpg'),
+                   img: require('../../assets/img/index/2222.jpg'),
                    name: '澳洲freezeframe 紧致全效眼霜（15ml）提拉紧致去细纹黑眼圈',
                    tip: '两条包邮两条包邮两条包邮两条包邮',
-                   guoioc: require('../../assets/img/q.png'),
+                   guoioc: require('../../assets/img/index/q.png'),
                    guoname: '中国',
                    guonamet2: 'Bai白白',
                    money: '200',
@@ -205,21 +205,21 @@ export default {
                    shu: '15万',
                    shuimg:[
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        },
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        },
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        }
                    ]
                 },
                 {
-                   img: require('../../assets/img/2222.jpg'),
+                   img: require('../../assets/img/index/2222.jpg'),
                    name: '澳洲freezeframe 紧致全效眼霜（15ml）提拉紧致去细纹黑眼圈',
                    tip: '两条包邮两条包邮两条包邮两条包邮',
-                   guoioc: require('../../assets/img/q.png'),
+                   guoioc: require('../../assets/img/index/q.png'),
                    guoname: '中国',
                    guonamet2: 'Bai白白',
                    money: '200',
@@ -234,21 +234,21 @@ export default {
                    shu: '15万',
                    shuimg:[
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        },
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        },
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        }
                    ]
                 },
                 {
-                   img: require('../../assets/img/2222.jpg'),
+                   img: require('../../assets/img/index/2222.jpg'),
                    name: '澳洲freezeframe 紧致全效眼霜（15ml）提拉紧致去细纹黑眼圈',
                    tip: '两条包邮两条包邮两条包邮两条包邮',
-                   guoioc: require('../../assets/img/q.png'),
+                   guoioc: require('../../assets/img/index/q.png'),
                    guoname: '中国',
                    guonamet2: 'Bai白白',
                    money: '200',
@@ -263,21 +263,21 @@ export default {
                    shu: '15万',
                    shuimg:[
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        },
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        },
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        }
                    ]
                 },
                 {
-                   img: require('../../assets/img/2222.jpg'),
+                   img: require('../../assets/img/index/2222.jpg'),
                    name: '澳洲freezeframe 紧致全效眼霜（15ml）提拉紧致去细纹黑眼圈',
                    tip: '两条包邮两条包邮两条包邮两条包邮',
-                   guoioc: require('../../assets/img/q.png'),
+                   guoioc: require('../../assets/img/index/q.png'),
                    guoname: '中国',
                    guonamet2: 'Bai白白',
                    money: '200',
@@ -292,21 +292,21 @@ export default {
                    shu: '15万',
                    shuimg:[
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        },
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        },
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        }
                    ]
                 },
                 {
-                   img: require('../../assets/img/2222.jpg'),
+                   img: require('../../assets/img/index/2222.jpg'),
                    name: '澳洲freezeframe 紧致全效眼霜（15ml）提拉紧致去细纹黑眼圈',
                    tip: '两条包邮两条包邮两条包邮两条包邮',
-                   guoioc: require('../../assets/img/q.png'),
+                   guoioc: require('../../assets/img/index/q.png'),
                    guoname: '中国',
                    guonamet2: 'Bai白白',
                    money: '200',
@@ -321,21 +321,21 @@ export default {
                    shu: '15万',
                    shuimg:[
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        },
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        },
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        }
                    ]
                 },
                 {
-                   img: require('../../assets/img/2222.jpg'),
+                   img: require('../../assets/img/index/2222.jpg'),
                    name: '澳洲freezeframe 紧致全效眼霜（15ml）提拉紧致去细纹黑眼圈',
                    tip: '两条包邮两条包邮两条包邮两条包邮',
-                   guoioc: require('../../assets/img/q.png'),
+                   guoioc: require('../../assets/img/index/q.png'),
                    guoname: '中国',
                    guonamet2: 'Bai白白',
                    money: '200',
@@ -350,13 +350,13 @@ export default {
                    shu: '15万',
                    shuimg:[
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        },
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        },
                        {
-                           img: require('../../assets/img/nav.jpg'),
+                           img: require('../../assets/img/index/nav.jpg'),
                        }
                    ]
                 },
@@ -557,14 +557,14 @@ export default {
                             font-size 12px
                             padding 0 5px
                         .vip
-                            background-image url('../../assets/img/vip.png')
+                            background-image url('../../assets/img/index/vip.png')
                             background-repeat no-repeat
                             background-size 100% 100%
                             width 26px
                             height 14px
                             margin-left 10px
                         .card
-                            background-image url('../../assets/img/buy2.png')
+                            background-image url('../../assets/img/index/buy2.png')
                             background-repeat no-repeat
                             background-size 100% 100%
                             width 22px
@@ -580,7 +580,7 @@ export default {
                         align-items center
                         margin-top 15px
                         .iocn
-                            background-image url('../../assets/img/z_zcrs.jpg')
+                            background-image url('../../assets/img/index/z_zcrs.jpg')
                             background-repeat no-repeat
                             background-size 100% 100%
                             width 15px

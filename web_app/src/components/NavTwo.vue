@@ -12,7 +12,7 @@
         </div>
         <div class="container">
             <div class="list">
-                <div class="img"><img src="../assets/img/2222.jpg" alt=""></div>
+                <div class="img"><img src="../assets/img/index/2222.jpg" alt=""></div>
                 <div class="box">
                     <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
                     <div class="tip">国际潮流品牌低至六折</div>
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="list">
-                <div class="img"><img src="../assets/img/2222.jpg" alt=""></div>
+                <div class="img"><img src="../assets/img/index/2222.jpg" alt=""></div>
                 <div class="box">
                     <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
                     <div class="tip">国际潮流品牌低至六折</div>
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="list">
-                <div class="img"><img src="../assets/img/2222.jpg" alt=""></div>
+                <div class="img"><img src="../assets/img/index/2222.jpg" alt=""></div>
                 <div class="box">
                     <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
                     <div class="tip">国际潮流品牌低至六折</div>
@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="list">
-                <div class="img"><img src="../assets/img/2222.jpg" alt=""></div>
+                <div class="img"><img src="../assets/img/index/2222.jpg" alt=""></div>
                 <div class="box">
                     <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
                     <div class="tip">国际潮流品牌低至六折</div>
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="list">
-                <div class="img"><img src="../assets/img/2222.jpg" alt=""></div>
+                <div class="img"><img src="../assets/img/index/2222.jpg" alt=""></div>
                 <div class="box">
                     <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
                     <div class="tip">国际潮流品牌低至六折</div>
@@ -172,7 +172,7 @@ export default {
                     flex 0 0 17%
                     &.active 
                         color $color
-                        background-image url('../assets/img/z_index_line.png')
+                        background-image url('../assets/img/index/z_index_line.png')
                         background-repeat no-repeat
                         background-position bottom
                         background-size 50%

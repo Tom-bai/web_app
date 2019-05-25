@@ -1,14 +1,14 @@
 <template>
 	<!-- 首页 -->
 	<div> 
-		<indexSwiper></indexSwiper>
-        <indexNav></indexNav>
-        <indexBiqiang></indexBiqiang>
-        <indexMiaosha></indexMiaosha>
-		<indexYiyuan></indexYiyuan>
-        <indexLeftscroll v-if="$store.state.INDEX_STATE == 0"></indexLeftscroll>
-		<div class="indexWaterFall" v-if="$store.state.INDEX_STATE == 0">
-			<WaterFall></WaterFall>
+		<div class="index"> 
+			<indexSwiper></indexSwiper>
+			<indexNav></indexNav>
+			<indexBiqiang></indexBiqiang>
+			<indexMiaosha></indexMiaosha>
+			<indexYiyuan></indexYiyuan>
+			<indexLeftscroll v-if="$store.state.INDEX_STATE == 0"></indexLeftscroll>
+			<WaterFall v-if="$store.state.INDEX_STATE == 0"></WaterFall>
 		</div>
 	</div>
 </template>
@@ -54,5 +54,6 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-
+.index
+	margin-bottom 70px
 </style>

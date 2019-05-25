@@ -2,7 +2,7 @@
 	<!-- 今日必抢 -->
     <div>
         <div class="indexBiqiang">
-            <div class="newFuli"><img src="../../assets/img/111.jpg" alt=""></div>
+            <div class="newFuli"><img src="../../assets/img/index/111.jpg" alt=""></div>
             <div class="topName">
                 <div>今日必抢</div>
                 <div class="tip">高品质爆款抢先不断</div>
@@ -13,7 +13,7 @@
                         <div class="header">
                             <p>新品上市</p>
                         </div>
-                        <div class="img"><img src="../../assets/img/111.jpg" alt=""></div>
+                        <div class="img"><img src="../../assets/img/index/111.jpg" alt=""></div>
                     </div>
                 </div>
                 <div class="listTwo">
@@ -21,7 +21,7 @@
                         <div class="header">
                             <p>新品上市</p>
                         </div>
-                        <div class="img"><img src="../../assets/img/111.jpg" alt=""></div>
+                        <div class="img"><img src="../../assets/img/index/111.jpg" alt=""></div>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                             <p>新品上市</p>
                             <p class="tip">邀请好友白拿</p>
                         </div>
-                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="img"><img src="../../assets/img/index/2222.jpg" alt=""></div>
                     </div>
                 </div>
                 <div class="listThree">
@@ -41,7 +41,7 @@
                             <p>新品上市</p>
                             <p class="tip">邀请好友白拿</p>
                         </div>
-                        <div class="img"><img src="../../assets/img/cwww.jpg" alt=""></div>
+                        <div class="img"><img src="../../assets/img/index/cwww.jpg" alt=""></div>
                     </div>
                 </div>
                 <div class="listThree">
@@ -50,7 +50,7 @@
                             <p>新品上市</p>
                             <p class="tip">邀请好友白拿</p>
                         </div>
-                        <div class="img"><img src="../../assets/img/2222.jpg" alt=""></div>
+                        <div class="img"><img src="../../assets/img/index/2222.jpg" alt=""></div>
                     </div>
                 </div>
             </div>

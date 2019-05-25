@@ -4,12 +4,12 @@
             <router-view/>
             <nut-backtop :distance="500" :bottom="80" :right="10" class="myTop">
             </nut-backtop>
-		    <Tabbar></Tabbar>
+		    <Tabbar v-if="showTabber"></Tabbar>
         </div>
 	</div>
 </template>
 <script>
-    import Tabbar from './components/Tabbar '
+    import Tabbar from './components/Tabbar'
 	export default {
 		name: "index",
 		components: {
@@ -17,28 +17,43 @@
 		},
 		props: [],
 		data () {
-		return {}
+            return {
+                showTabber: true
+            }
         },
         mounted () {
         },
 		methods: {},
-		watch: {}
+		watch: {
+            '$route'(to,from) {
+                switch (to.name) {
+                    case 'index':
+                        this.showTabber = true
+                        break;
+                    case 'buy':
+                        this.showTabber = true
+                        break;
+                    case 'vip':
+                        this.showTabber = true
+                        break;
+                    case 'cart':
+                        this.showTabber = true
+                        break;
+                    case 'center':
+                        this.showTabber = true
+                        break;
+                    default:
+                        this.showTabber = false
+                        break;
+                }
+            }
+        }
 	};
 </script>
 <style lang="stylus">
-html,body{
-    padding 0
-    font-family PingFangSC-Regular,Helvetica Neue,Helvetica,microsoft yahei,sans-serif
-    -webkit-font-smoothing antialiased
-    -moz-osx-font-smoothing grayscale
-    text-align center
-    color #2c3e50
-    margin 0 auto 70px auto 
-    background-color #f5f5f5
-}
 .myTop
     .nut-backtop-main
-        background url('../src/assets/img/gotop.png') no-repeat center
+        background url('../src/assets/img/index/gotop.png') no-repeat center
         background-size 100%
         background-color #fff
         box-shadow none

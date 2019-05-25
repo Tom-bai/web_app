@@ -4,9 +4,9 @@
         <div class="indexSwiper">
             <div class="search-box" :class="topSearch?'toFixed':''">
                 <div class="search" id="search" :class="topSearch?'topSearch':''">
-                    <div class="header"><img src="../../assets/img/nav.jpg" alt=""></div>
+                    <div class="header"><img src="../../assets/img/index/nav.jpg" alt=""></div>
                     <div class="input">阿迪达斯</div>
-                    <div class="tongzhi">
+                    <div class="tongzhi" @click="onRouter('/myMsg')">
                         <span class="text">消息</span>
                         <span class="num">9</span>
                     </div>
@@ -29,7 +29,7 @@
 // @ is an alias to /src
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-import { get } from '@/axiosApi'
+import { get,post } from '@/axiosApi'
 import imgUrl from '@/imgUrl'
 export default {
 	name: "index",
@@ -41,6 +41,7 @@ export default {
 	data () {
 		return {
             topSearch: false,
+            unreadData: [],
 			bannerData: [],
 			imgUrl: imgUrl,
 			swiperOption: {
@@ -62,17 +63,34 @@ export default {
 		}
 	},
 	mounted() {
-		this.getBanner()
+        this.getBanner()
+        this.getUnread()
         window.addEventListener('scroll', this.handleScroll)
     },
     destroyed () {
         window.removeEventListener('scroll', this.handleScroll)
     },
 	methods: {
-		getBanner () {
+        onRouter (pathUrl,id) {
+            this.$router.push({
+				path: pathUrl,
+				query: {
+                    id: id
+				}
+			})
+        },
+		getBanner () { // 获取banner数据
 			let that = this
 			get('/index.php/home/index/banner').then(res => {
 				that.bannerData = res
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        getUnread () { // 获取通知
+			let that = this
+			post('/index.php/home/article/unread').then(res => {
+				that.unreadData = res
             }).catch(function (error) {
                 console.log(error)
             })
@@ -113,7 +131,7 @@ export default {
                 line-height 28px
                 padding 0 34px
                 margin 0 10px
-                background-image url('../../assets/img/sc.png')
+                background-image url('../../assets/img/index/sc.png')
                 background-size 15px
                 background-position 10px 50%
                 background-repeat no-repeat
@@ -121,7 +139,7 @@ export default {
                 position relative
                 height 40px
                 flex 0 0 30px
-                background-image url('../../assets/img/tz.png')
+                background-image url('../../assets/img/index/tz.png')
                 background-size 22px
                 background-repeat no-repeat
                 background-position 50% 0
@@ -150,9 +168,9 @@ export default {
             background-color #fff
             .input
                 border solid 1px $color
-                background-image url('../../assets/img/scH.png')
+                background-image url('../../assets/img/index/scH.png')
             .tongzhi
-                background-image url('../../assets/img/tzH.png')
+                background-image url('../../assets/img/index/tzH.png')
                 .text
                     color $color
     .toFixed

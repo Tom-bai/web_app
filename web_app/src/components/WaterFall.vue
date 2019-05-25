@@ -1,19 +1,21 @@
 <template>
-    <div class="componentsWater">
-        <div class="topName">
-            <div>猜你喜欢</div>
-        </div>
-        <div class="watefall" id='watefall' v-masonry transition-duration="0.1s" item-selector=".pin">
-            <div v-masonry-tile class="pin" v-for="(item,index) in articleData" :key="index">
-                <div class="box">
-                    <img :src="item.img"/>
-                    <div class="watefallText" v-if="item.qm">{{item.qm}}</div>
-                    <div class="myWatefall" v-if="item.tip">
-                        <div class="watefallHeadtext">
-                            <div class="mySignature">{{item.tip}}</div>
-                            <div class="money">
-                                <div>￥399.00</div>
-                                <div class="vip"></div>
+    <div>
+        <div class="componentsWater">
+            <div class="topName">
+                <div>猜你喜欢</div>
+            </div>
+            <div class="watefall" id='watefall' v-masonry transition-duration="0.1s" item-selector=".pin">
+                <div v-masonry-tile class="pin" v-for="(item,index) in articleData" :key="index">
+                    <div class="box">
+                        <img :src="item.img"/>
+                        <div class="watefallText" v-if="item.qm">{{item.qm}}</div>
+                        <div class="myWatefall" v-if="item.tip">
+                            <div class="watefallHeadtext">
+                                <div class="mySignature">{{item.tip}}</div>
+                                <div class="money">
+                                    <div>￥399.00</div>
+                                    <div class="vip"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -34,14 +36,14 @@ export default {
             articleData: [
                 {
                     id: 1,
-                    img: require('../assets/img/img27.jpg'),
+                    img: require('../assets/img/index/img27.jpg'),
                     qm: '',
                     name: '',
                     text: ''
                 },
                 {
                     id: 1,
-                    img: require('../assets/img/2222.jpg'),
+                    img: require('../assets/img/index/2222.jpg'),
                     tip: '浮生若梦 FACE & BODY 双用水粉霜 50毫升',
                     qm: 'wdwd',
                     name: 'asds',
@@ -49,7 +51,7 @@ export default {
                 },
                 {
                     id: 1,
-                    img: require('../assets/img/2222.jpg'),
+                    img: require('../assets/img/index/2222.jpg'),
                     tip: '浮生若梦 FACE & BODY 双用水粉霜 50毫升',
                     qm: 'wdwd',
                     name: 'asds',
@@ -57,7 +59,7 @@ export default {
                 },
                 {
                     id: 1,
-                    img: require('../assets/img/2222.jpg'),
+                    img: require('../assets/img/index/2222.jpg'),
                     tip: '浮生若梦 FACE & BODY 双用水粉霜 50毫升',
                     qm: 'wdwd',
                     name: 'asds',
@@ -78,7 +80,7 @@ export default {
     }
 }
 </script>
-<style lang="stylus">
+<style lang="stylus" scoped>
 .componentsWater
     .topName
         display flex
@@ -154,7 +156,7 @@ export default {
                             line-height 1
                             margin-top 10px
                             .vip
-                                background-image url('../assets/img/vip.png')
+                                background-image url('../assets/img/index/vip.png')
                                 background-repeat no-repeat
                                 background-size 100%
                                 width 25px

@@ -9,7 +9,7 @@
             </div>
 
             <div class="nav-right-arrow rotateUp" @click="openTagModal(list)">
-                <img src="../assets/img/dwon.png" alt="" class="drop-down" :class="{reverse:showModal}">
+                <img src="../assets/img/index/dwon.png" alt="" class="drop-down" :class="{reverse:showModal}">
             </div>
       </div>
 

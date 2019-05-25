@@ -8,19 +8,19 @@
                         <div class="name">享疯了自营 | 品质保障</div>
                         <div class="list">
                             <div class="tip">
-                                <div><img src="../../assets/img/c.png" alt=""></div>
+                                <div><img src="../../assets/img/index/c.png" alt=""></div>
                                 <div>享店自营</div>
                             </div>
                             <div class="tip">
-                                <div><img src="../../assets/img/q.png" alt=""></div>
+                                <div><img src="../../assets/img/index/q.png" alt=""></div>
                                 <div> 全球直采</div>
                             </div>
                             <div class="tip">
-                                <div><img src="../../assets/img/z.png" alt=""></div>
+                                <div><img src="../../assets/img/index/z.png" alt=""></div>
                                 <div> 假一赔十</div>
                             </div>
                             <div class="tip">
-                                <div><img src="../../assets/img/s.png" alt=""></div>
+                                <div><img src="../../assets/img/index/s.png" alt=""></div>
                                 <div>售后无忧</div>
                             </div>
                         </div>
@@ -75,11 +75,11 @@ export default {
                     id: 1,
                     nav: [
                         {
-                            img: require('../../assets/img/nav.jpg'),
+                            img: require('../../assets/img/index/nav.jpg'),
                             text: '美妆护肤'
                         },
                         {
-                            img: require('../../assets/img/nav.jpg'),
+                            img: require('../../assets/img/index/nav.jpg'),
                             text: '美妆护肤'
                         },
                     ]
@@ -88,24 +88,11 @@ export default {
                     id: 2,
                     nav: [
                         {
-                            img: require('../../assets/img/nav.jpg'),
+                            img: require('../../assets/img/index/nav.jpg'),
                             text: '美妆护肤'
                         },
                         {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                    ]
-                },
-                {
-                    id: 1,
-                    nav: [
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
+                            img: require('../../assets/img/index/nav.jpg'),
                             text: '美妆护肤'
                         },
                     ]
@@ -114,24 +101,11 @@ export default {
                     id: 1,
                     nav: [
                         {
-                            img: require('../../assets/img/nav.jpg'),
+                            img: require('../../assets/img/index/nav.jpg'),
                             text: '美妆护肤'
                         },
                         {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                    ]
-                },
-                {
-                    id: 1,
-                    nav: [
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
+                            img: require('../../assets/img/index/nav.jpg'),
                             text: '美妆护肤'
                         },
                     ]
@@ -140,24 +114,11 @@ export default {
                     id: 1,
                     nav: [
                         {
-                            img: require('../../assets/img/nav.jpg'),
+                            img: require('../../assets/img/index/nav.jpg'),
                             text: '美妆护肤'
                         },
                         {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                    ]
-                },
-                {
-                    id: 1,
-                    nav: [
-                        {
-                            img: require('../../assets/img/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/nav.jpg'),
+                            img: require('../../assets/img/index/nav.jpg'),
                             text: '美妆护肤'
                         },
                     ]
@@ -166,11 +127,11 @@ export default {
                     id: 1,
                     nav: [
                         {
-                            img: require('../../assets/img/nav.jpg'),
+                            img: require('../../assets/img/index/nav.jpg'),
                             text: '美妆护肤'
                         },
                         {
-                            img: require('../../assets/img/nav.jpg'),
+                            img: require('../../assets/img/index/nav.jpg'),
                             text: '美妆护肤'
                         },
                     ]
@@ -179,11 +140,50 @@ export default {
                     id: 1,
                     nav: [
                         {
-                            img: require('../../assets/img/nav.jpg'),
+                            img: require('../../assets/img/index/nav.jpg'),
                             text: '美妆护肤'
                         },
                         {
-                            img: require('../../assets/img/nav.jpg'),
+                            img: require('../../assets/img/index/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                    ]
+                },
+                {
+                    id: 1,
+                    nav: [
+                        {
+                            img: require('../../assets/img/index/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                        {
+                            img: require('../../assets/img/index/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                    ]
+                },
+                {
+                    id: 1,
+                    nav: [
+                        {
+                            img: require('../../assets/img/index/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                        {
+                            img: require('../../assets/img/index/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                    ]
+                },
+                {
+                    id: 1,
+                    nav: [
+                        {
+                            img: require('../../assets/img/index/nav.jpg'),
+                            text: '美妆护肤'
+                        },
+                        {
+                            img: require('../../assets/img/index/nav.jpg'),
                             text: '美妆护肤'
                         },
                     ]
