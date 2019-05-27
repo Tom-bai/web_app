@@ -2,55 +2,60 @@
 	<!-- 今日必抢 -->
     <div>
         <div class="indexBiqiang">
-            <div class="newFuli"><img src="../../assets/img/index/111.jpg" alt=""></div>
+            <div class="newFuli"><img v-lazy="$imgUrl + 'Uploads/' + dataList.home_img_1" alt=""></div>
             <div class="topName">
-                <div>今日必抢</div>
-                <div class="tip">高品质爆款抢先不断</div>
+                <div>{{dataList.cn_bt}}</div>
+                <div class="tip">{{dataList.cn_fbt}}</div>
             </div>
             <div class="box boderRT">
                 <div class="listTwo">
+                    <!-- 新品上市 -->
                     <div class="item">
                         <div class="header">
-                            <p>新品上市</p>
+                            <p>{{dataList.jr_tl_bt}}</p>
                         </div>
-                        <div class="img"><img src="../../assets/img/index/111.jpg" alt=""></div>
+                        <div class="img"><img v-lazy="$imgUrl + 'Uploads/' + dataList.jr_tl_img" alt=""></div>
                     </div>
                 </div>
                 <div class="listTwo">
-                    <div class="item">
+                    <!-- 满减 -->
+                    <div class="item" @click="onRouter('/indexMan',1)">
                         <div class="header">
-                            <p>新品上市</p>
+                            <p>{{dataList.jr_tr_bt}}</p>
                         </div>
-                        <div class="img"><img src="../../assets/img/index/111.jpg" alt=""></div>
+                        <div class="img"><img v-lazy="$imgUrl + 'Uploads/' + dataList.jr_tr_img" alt=""></div>
                     </div>
                 </div>
             </div>
             <div class="box boderRB">
                 <div class="listThree">
+                    <!-- 砍价 -->
                     <div class="item">
                         <div class="header">
-                            <p>新品上市</p>
-                            <p class="tip">邀请好友白拿</p>
+                            <p>{{dataList.jr_bl_bt}}</p>
+                            <p class="tip">{{dataList.jr_bl_fbt}}</p>
                         </div>
-                        <div class="img"><img src="../../assets/img/index/2222.jpg" alt=""></div>
+                        <div class="img"><img v-lazy="$imgUrl + 'Uploads/' + dataList.jr_bl_img" alt=""></div>
                     </div>
                 </div>
                 <div class="listThree">
+                    <!-- 拼团 -->
                     <div class="item">
                         <div class="header">
-                            <p>新品上市</p>
-                            <p class="tip">邀请好友白拿</p>
+                            <p>{{dataList.jr_bm_bt}}</p>
+                            <p class="tip">{{dataList.jr_bm_fbt}}</p>
                         </div>
-                        <div class="img"><img src="../../assets/img/index/cwww.jpg" alt=""></div>
+                        <div class="img"><img v-lazy="$imgUrl + 'Uploads/' + dataList.jr_bm_img" alt=""></div>
                     </div>
                 </div>
                 <div class="listThree">
+                    <!-- 满件送 -->
                     <div class="item">
                         <div class="header">
-                            <p>新品上市</p>
-                            <p class="tip">邀请好友白拿</p>
+                            <p>{{dataList.jr_br_bt}}</p>
+                            <p class="tip">{{dataList.jr_br_fbt}}</p>
                         </div>
-                        <div class="img"><img src="../../assets/img/index/2222.jpg" alt=""></div>
+                        <div class="img"><img v-lazy="$imgUrl + 'Uploads/' + dataList.jr_br_img" alt=""></div>
                     </div>
                 </div>
             </div>
@@ -68,12 +73,29 @@ export default {
 	props: [],
 	data () {
 		return {
+            dataList: [],
 		}
 	},
 	mounted() {
+        this.getData()
     },
 	methods: {
-
+        onRouter (pathUrl,id) {
+            this.$router.push({
+				path: pathUrl,
+				query: {
+                    id: id
+				}
+			})
+        },
+        getData () { // 今日必抢
+            let that = this
+			get('/index.php/home/index/indexset').then(res => {
+                that.dataList = res    
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
 	},
 	watch: {}
 };

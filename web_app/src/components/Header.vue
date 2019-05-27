@@ -30,7 +30,7 @@ export default {
     display flex
     align-items center
     height 60px
-    box-shadow 0 0 8px #ccc
+    box-shadow 0 0 2px #ccc
     position sticky
     top 0
     left 0

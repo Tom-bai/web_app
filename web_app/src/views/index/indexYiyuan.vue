@@ -5,7 +5,7 @@
             <div class="nav">
                 <div class="ziding" :class="active == index?'active':''" v-for="(item,index) in list" :key="index" @click="onClick(index)">
                     <div class="iocn">
-                        <div><img :src="active == index?item.ioc:item.ioca" alt=""></div>
+                        <div><img  v-lazy="active == index?item.ioc:item.ioca" alt=""></div>
                         <div>{{item.name}}</div>
                     </div>
                     <div>{{item.tip}}</div>
@@ -13,34 +13,37 @@
             </div>
         </div>
         <div class="content" v-if="active == 0">
-            <div class="list" v-for="(item,index) in dataList" :key="index">
-                <div class="item">
-                    <div class="img"><img :src="imgUrl + item.img" alt=""></div>
-                    <div class="text">
-                        <div class="name">{{item.title}}</div>
-                        <div class="tip">{{item.dec}}</div>
-                        <div class="guojia">
-                            <img :src="imgUrl + item.img1" alt="">
-                            <!-- <div>{{item.guoname}}</div>
-                            <div>{{item.guonamet2}}</div> -->
+            <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
+                <div class="list" v-for="(item,index) in dataList" :key="index">
+                    <div class="item">
+                        <div class="img"><img  v-lazy="imgUrl + item.img" alt=""></div>
+                        <div class="text">
+                            <div class="name">{{item.title}}</div>
+                            <div class="tip">{{item.dec}}</div>
+                            <div class="guojia">
+                                <img  v-lazy="imgUrl + item.img1" alt="">
+                                <!-- <div>{{item.guoname}}</div>
+                                <div>{{item.guonamet2}}</div> -->
+                            </div>
+                            <div class="money"><span>￥{{item.price}}</span><i class="vip"></i></div>
                         </div>
-                        <div class="money"><span>￥{{item.price}}</span><i class="vip"></i></div>
                     </div>
+                    <!-- <div class="man">
+                        <div class="tip" v-if="item.biaoqian">
+                            <span>{{item.biaoqian}}</span>
+                        </div>
+                        <div class="num">
+                            <div class="shu">{{item.ck}}</div>
+                            <div class="img">
+                                <img v-for="itemi in item.us" :src="imgUrl + itemi" alt="">
+                            </div>
+                        </div>
+                    </div> -->
                 </div>
-                <!-- <div class="man">
-                    <div class="tip" v-if="item.biaoqian">
-                        <span>{{item.biaoqian}}</span>
-                    </div>
-                    <div class="num">
-                        <div class="shu">{{item.ck}}</div>
-                        <div class="img">
-                            <img v-for="itemi in item.us" :src="imgUrl + itemi" alt="">
-                        </div>
-                    </div>
-                </div> -->
-            </div>
+            </nut-infiniteloading>
         </div>
         <div class="content" v-if="active == 1">
+
             <div class="banner"><img src="../../assets/img/index/111.jpg" alt=""></div>
             <div class="list" v-for="(item,index) in data1" :key="index">
                 <div class="item">
@@ -132,6 +135,8 @@ export default {
             active: 0,
             activeZC: 0,
             activeZCD: 0,
+            limit: 1,
+            limitTwo: 1,
             imgUrl: imgUrl,
             list:[
                 {
@@ -361,16 +366,33 @@ export default {
                    ]
                 },
             ],
-            dataList: []
+            dataList: [],
+            isHasMore: true,
+            isLoading: false,
 		}
 	},
 	mounted() {
         this.getData()
     },
 	methods: {
-        onClick (index) {
+        onInfinite () {
+            let that = this
+            if (that.isHasMore) {
+                that.isLoading = true
+                that.limit++
+                that.getData()
+            }
+        },
+        onClick (index) { //三个btn
             this.active = index
             this.$store.commit('set_INDEX_STATE', this.active)
+            if (this.active == 0) {
+                this.getData()
+            } else if (this.active == 1) {
+                this.getDataTwo()
+            } else if (this.active == 2) {
+                this.getDataThree()
+            }
         },
         onClickZc (index) {
             this.activeZC = index
@@ -378,10 +400,53 @@ export default {
         onClickZcD (index) {
             this.activeZCD = index
         },
-        getData () {
-			let that = this
-			get('/index.php/home/index/ajax_allpro').then(res => {
-                that.dataList = res.data
+        getData () { // 全部
+            let that = this
+            let params = {
+                limit: that.limit
+            }
+			get('/index.php/home/index/ajax_allpro',params).then(res => {
+                if (res.status > 0) {
+                    that.dataList = that.dataList.concat(res.data)
+                    that.isLoading = false
+                } else {
+                    that.isLoading = false
+                    that.isHasMore = false
+                }          
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        getDataTwo () { // 一元
+            let that = this
+            let params = {
+                limit: that.limitTwo
+            }
+			get('/index.php/home/index/ajax_allOne',params).then(res => {
+                if (res.status > 0) {
+                    that.dataList = that.dataList.concat(res.data)
+                    that.isLoading = false
+                } else {
+                    that.isLoading = false
+                    that.isHasMore = false
+                }          
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        getDataThree () { // 众筹
+            let that = this
+            let params = {
+                limit: that.limitTwo
+            }
+			get('/index.php/home/index/ajax_allcrow',params).then(res => {
+                if (res.status > 0) {
+                    that.dataList = that.dataList.concat(res.data)
+                    that.isLoading = false
+                } else {
+                    that.isLoading = false
+                    that.isHasMore = false
+                }          
             }).catch(function (error) {
                 console.log(error)
             })

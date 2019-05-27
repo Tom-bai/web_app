@@ -1,32 +1,32 @@
 <template>
 	<!-- 我的消息通知 -->
-	<div> 
-		<div class="indexMsg">
-			<Header><span slot="topName">我的通知</span></Header>
-			<div class="box">
-				<div class="list" @click="onRouter('/myMsg/indexToutiao')">
-					<div class="iocn toutiaoIoc"></div>
-					<div class="text">
-						<div class="top">
-							<div class="tip">享疯了头条</div>
-							<div class="time">2019-4-12 14:07</div>
-						</div>
-						<div class="new">您有新的消息</div>
-					</div>
-				</div>
-				<div class="list" @click="onRouter('/myMsg/indexTongzhi')">
-					<div class="iocn fangkeIoc"></div>
-					<div class="text">
-						<div class="top">
-							<div class="tip">访客通知</div>
-							<div class="time">2019-4-12 14:07</div>
-						</div>
-						<div class="new">访客通知访问了你的分享链接</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div>
+        <div class="indexMsg">
+            <Header><span slot="topName">我的通知</span></Header>
+            <div class="box">
+                <div class="list" @click="onRouter('/myMsg/indexToutiao')">
+                    <div class="iocn toutiaoIoc"></div>
+                    <div class="text">
+                        <div class="top">
+                            <div class="tip">享疯了头条</div>
+                            <div class="time">2019-4-12 14:07</div>
+                        </div>
+                        <div class="new">您有新的消息</div>
+                    </div>
+                </div>
+                <div class="list" @click="onRouter('/myMsg/indexTongzhi')">
+                    <div class="iocn fangkeIoc"></div>
+                    <div class="text">
+                        <div class="top">
+                            <div class="tip">访客通知</div>
+                            <div class="time">2019-4-12 14:07</div>
+                        </div>
+                        <div class="new">访客通知访问了你的分享链接</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -61,6 +61,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .indexMsg
+    background-color #fff
 	.box
 		margin-top 10px
 		.list
@@ -96,5 +97,4 @@ export default {
 				.new
 					font-size 12px
 					margin-top 5px
-
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="top">
     <div class="navBox">
       <div class="topic-list-inner">
             <div class="nav" ref="nav">
@@ -9,7 +9,7 @@
             </div>
 
             <div class="nav-right-arrow rotateUp" @click="openTagModal(list)">
-                <img src="../assets/img/index/dwon.png" alt="" class="drop-down" :class="{reverse:showModal}">
+                <img src="../assets/img/dwon.png" alt="" class="drop-down" :class="{reverse:showModal}">
             </div>
       </div>
 
@@ -32,22 +32,22 @@ export default {
     data() {
         return {
             list: [ //自己定义的假数据，实际是获取的数据
-                {title: 'AAAA', id: 1},
-                {title: 'BBBB', id: 2},
-                {title: 'CCCC', id: 3},
-                {title: 'DDDD', id: 4},
-                {title: 'EEEE', id: 5},
-                {title: 'FFFF', id: 6},
-                {title: 'HHHH', id: 7},
-                {title: 'MMMM', id: 8},
-                {title: 'RRRR', id: 9},
-                {title: 'QQQQ', id: 10},
-                {title: 'UUUU', id: 11},
-                {title: 'TTTT', id: 12},
-                {title: 'NNNN', id: 13},
-                {title: 'OOOO', id: 14},
-                {title: 'PPPP', id: 15},
-                {title: 'ZZZZ', id: 16},
+                {title: '超值秒杀', id: 1},
+                {title: '超值秒杀', id: 2},
+                {title: '超值秒杀', id: 3},
+                {title: '超值秒杀', id: 4},
+                {title: '超值秒杀', id: 5},
+                {title: '超值秒杀', id: 6},
+                {title: '超值秒杀', id: 7},
+                {title: '超值秒杀', id: 8},
+                {title: '超值秒杀', id: 9},
+                {title: '超值秒杀', id: 10},
+                {title: '超值秒杀', id: 11},
+                {title: '超值秒杀', id: 12},
+                {title: '超值秒杀', id: 13},
+                {title: '超值秒杀', id: 14},
+                {title: '超值秒杀', id: 15},
+                {title: '超值秒杀', id: 16},
             ],
             navActiveIndex: 0, //当前高亮的tab选项卡index
             showModal: false, //是否显示modal
@@ -84,42 +84,50 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-.topic-list-inner 
-    background #fff
-    display flex
-    align-items center
-    padding 0 10px
-.nav 
-    display flex
-    overflow-x auto
-    overflow-y hidden
-    .box 
-        white-space nowrap
-        font-size 14px
-        line-height 30px
-        color #333333
-        padding 10px
-        .item 
-            height: 100%;
-            &.active 
-                color: #fe3e62;
-                border-bottom: 1.5px solid #fe3e62;
-.nav-right-arrow 
-    right 0
+.top
+    position sticky
+    left 0
     top 0
-    width 30px
-    /*background: #fff;*/
-    background-image: linear-gradient(to right, rgba(#fff, 0), #fff 30%, #fff);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-.drop-down 
-    width: 30px;
-    /*padding-top: 0.35rem;*/
-    /*margin-left: 0.22rem;*/
-    transform: rotate(0deg);
-    transition: all 0.5s;
-    &.reverse 
-        transform: rotate(-180deg);
+    z-index 9
+    .navBox
+        position relative
+        .topic-list-inner 
+            background #fff
+            display flex
+            align-items center
+            padding 0 10px
+        .nav 
+            display flex
+            overflow-x auto
+            overflow-y hidden
+            -webkit-overflow-scrolling touch
+            .box 
+                white-space nowrap
+                font-size 14px
+                line-height 30px
+                padding 10px
+                color #858585
+                .item 
+                    height 100%
+                    &.active 
+                        color #000
+                        border-bottom solid 2px #000
+        .nav-right-arrow 
+            right 0
+            top 0
+            background-image: linear-gradient(to right, rgba(#fff, 0), #fff 30%, #fff)
+            display flex
+            align-items center
+            justify-content center
+            flex 0 0 20px
+            padding-left 10px
+            img 
+                width 80%
+                display block
+        .drop-down 
+            width 30px
+            transform rotate(0deg)
+            transition all 0.5s
+            &.reverse 
+                transform rotate(-180deg)
 </style>

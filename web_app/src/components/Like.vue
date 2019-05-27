@@ -25,12 +25,10 @@
     </div>
 </template>
 <script>
+import { get } from '@/axiosApi'
 export default {
-    props: {
-        // articleData: {
-        //   type: Array
-        // }
-    },
+    name: "Like",
+    props: {},
     data () {
         return {
             articleData: [
@@ -65,14 +63,24 @@ export default {
                     name: 'asds',
                     text: 'sdasd'
                 },
-            ]
+            ],
+            dataList: []
         }
     },
     created () {
     },
     mounted () {
+        this.getData()
     },
     methods: {
+        getData () { // 猜你喜欢
+            let that = this
+			get('/index.php/home/index/plate').then(res => {
+                that.dataList = res.data
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
     },
     watch: {
     },

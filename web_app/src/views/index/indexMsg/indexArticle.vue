@@ -38,19 +38,19 @@
 				</div>
 			</div>
 		</div>
-		<WaterFall></WaterFall>
+		<Like></Like>
 	</div>
 </template>
 
 <script>
 // @ is an alias to /src
 import Header from '@/components/Header'
-import WaterFall from '@/components/WaterFall'
+import Like from '@/components/Like'
 export default {
 	name: "indexToutiao",
 	components: {
 		Header,
-		WaterFall
+		Like
 	},
 	props: [],
 	data () {

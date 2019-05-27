@@ -6,7 +6,17 @@ Vue.use(Router)
 
 export default new Router({
 	mode: 'history',
-	base: process.env.BASE_URL,
+    base: process.env.BASE_URL,
+    scrollBehavior(to,from,savePosition) { // 在点击浏览器的“前进/后退”，或者切换导航的时候触发。
+        if(savePosition){
+            return savePosition;
+        }else{
+            return {
+                x: 0,
+                y: 0
+            }
+        }
+    },
 	routes: [
 		{// Tab首页
 			path: '/',
@@ -25,13 +35,18 @@ export default new Router({
 		},
 		{ 
 			path: '/myMsg/indexArticle',
-			name: 'indexTongzhi',
+			name: 'indexArticle',
 			component: () => import('./views/index/indexMsg/indexArticle')
 		},
 		{ 
 			path: '/myMsg/indexTongzhi',
 			name: 'indexTongzhi',
 			component: () => import('./views/index/indexMsg/indexTongzhi')
+        },
+        { 
+			path: '/indexMan',
+			name: 'indexBiqiang',
+			component: () => import('./views/index/indexBiquangChild/indexMan')
 		},
 		{// Tab买手
 			path: '/buy',

@@ -1,10 +1,12 @@
 <template>
 	<div id="app">
-		<div class="main">
-            <router-view/>
-            <nut-backtop :distance="500" :bottom="80" :right="10" class="myTop">
-            </nut-backtop>
-		    <Tabbar v-if="showTabber"></Tabbar>
+        <div>
+            <div class="main">
+                <router-view/>
+                <nut-backtop :distance="500" :bottom="80" :right="10" class="myTop">
+                </nut-backtop>
+                <Tabbar v-if="showTabber"></Tabbar>
+            </div>
         </div>
 	</div>
 </template>

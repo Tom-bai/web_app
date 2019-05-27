@@ -52,7 +52,7 @@ export function get(url, params, msg) {
         axios({
             method: 'get',
             url: url,
-            data: params
+            params: params
         }).then(
             res => {
                 resolve(res.data)

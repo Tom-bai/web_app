@@ -8,7 +8,7 @@
 			<indexMiaosha></indexMiaosha>
 			<indexYiyuan></indexYiyuan>
 			<indexLeftscroll v-if="$store.state.INDEX_STATE == 0"></indexLeftscroll>
-			<WaterFall v-if="$store.state.INDEX_STATE == 0"></WaterFall>
+			<Like v-if="$store.state.INDEX_STATE == 0"></Like>
 		</div>
 	</div>
 </template>
@@ -25,7 +25,7 @@ import indexBiqiang from './indexBiqiang'
 import indexMiaosha from './indexMiaosha'
 import indexYiyuan from './indexYiyuan'
 import indexLeftscroll from './indexLeftscroll'
-import WaterFall from '@/components/WaterFall'
+import Like from '@/components/Like'
 export default {
 	name: "index",
 	components: {
@@ -37,7 +37,7 @@ export default {
 		indexMiaosha,
 		indexYiyuan,
 		indexLeftscroll,
-		WaterFall
+		Like
 	},
 	props: [],
 	data () {

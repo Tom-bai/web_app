@@ -8,7 +8,7 @@
                     <div class="input">阿迪达斯</div>
                     <div class="tongzhi" @click="onRouter('/myMsg')">
                         <span class="text">消息</span>
-                        <span class="num">9</span>
+                        <span class="num">{{unreadData.count}}</span>
                     </div>
                 </div>
             </div>
@@ -166,6 +166,7 @@ export default {
                     font-size 12px
         .topSearch
             background-color #fff
+            box-shadow 0 0 2px #ccc
             .input
                 border solid 1px $color
                 background-image url('../../assets/img/index/scH.png')

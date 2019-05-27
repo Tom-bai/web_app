@@ -7,14 +7,16 @@ import NutUI from '@nutui/nutui'
 import '@nutui/nutui/dist/nutui.css'
 import {VueMasonryPlugin} from 'vue-masonry'
 import VueLazyload from 'vue-lazyload'
+import imgUrl from '../src/imgUrl'
 Vue.use(VueLazyload,{
     error: require('../src/assets/img/moren.jpg'),
-    loading: require('../src/assets/img/loging.gif')
+    loading: ''
 })
+Vue.use(imgUrl)
 Vue.use(VueMasonryPlugin)
 NutUI.install(Vue)
 Vue.config.productionTip = false
-
+Vue.prototype.$imgUrl = imgUrl
 new Vue({
   router,
   store,
