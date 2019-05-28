@@ -70,10 +70,10 @@ export default {
     created () {
     },
     mounted () {
-        this.getData()
+        this.getDataLike()
     },
     methods: {
-        getData () { // 猜你喜欢
+        getDataLike () { // 猜你喜欢
             let that = this
 			get('/index.php/home/index/plate').then(res => {
                 that.dataList = res.data
@@ -162,7 +162,7 @@ export default {
                             align-items center
                             justify-content flex-start
                             line-height 1
-                            margin-top 10px
+                            margin-top 5px
                             .vip
                                 background-image url('../assets/img/index/vip.png')
                                 background-repeat no-repeat

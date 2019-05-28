@@ -18,8 +18,8 @@
                     </div>
                 </div>
                 <div class="listTwo">
-                    <!-- 满减 -->
-                    <div class="item" @click="onRouter('/indexMan',1)">
+                    <!-- 满减 传值 id = 2-->
+                    <div class="item" @click="onRouter('/indexMan',2)">
                         <div class="header">
                             <p>{{dataList.jr_tr_bt}}</p>
                         </div>
@@ -30,7 +30,7 @@
             <div class="box boderRB">
                 <div class="listThree">
                     <!-- 砍价 -->
-                    <div class="item">
+                    <div class="item boderRL">
                         <div class="header">
                             <p>{{dataList.jr_bl_bt}}</p>
                             <p class="tip">{{dataList.jr_bl_fbt}}</p>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="listThree">
                     <!-- 拼团 -->
-                    <div class="item">
+                    <div class="item" @click="onRouter('/indexManPinTuan')">
                         <div class="header">
                             <p>{{dataList.jr_bm_bt}}</p>
                             <p class="tip">{{dataList.jr_bm_fbt}}</p>
@@ -49,8 +49,8 @@
                     </div>
                 </div>
                 <div class="listThree">
-                    <!-- 满件送 -->
-                    <div class="item">
+                    <!-- 满件减 传值 id = 1 -->
+                    <div class="item boderRB" @click="onRouter('/indexManJJ',1)">
                         <div class="header">
                             <p>{{dataList.jr_br_bt}}</p>
                             <p class="tip">{{dataList.jr_br_fbt}}</p>
@@ -77,7 +77,7 @@ export default {
 		}
 	},
 	mounted() {
-        this.getData()
+        this.getDataJin()
     },
 	methods: {
         onRouter (pathUrl,id) {
@@ -88,7 +88,7 @@ export default {
 				}
 			})
         },
-        getData () { // 今日必抢
+        getDataJin () { // 今日必抢
             let that = this
 			get('/index.php/home/index/indexset').then(res => {
                 that.dataList = res    
@@ -115,20 +115,22 @@ export default {
         font-size 16px
         font-weight bold
         height 50px
+        background-color #fff
+        margin-top 10px
+        padding 0 10px
+        border-radius $border-radius $border-radius 0 0
         .tip
             margin-left 15px
             color #999
             font-size 12px
             font-weight normal
-    .boderRT
-        border-radius $border-radius $border-radius 0 0
+    .boderRL
+        border-radius 0 0 0 $border-radius
     .boderRB
-        border-radius 0 0 $border-radius $border-radius
+        border-radius 0 0 $border-radius 0
     .box
         display flex
-        border 1px solid #ddd
-        &:last-child
-            border-top none
+        border-top solid 1px #f1f1f1
         .listTwo
             flex 1
             border-right 1px solid #ddd

@@ -8,6 +8,7 @@ import '@nutui/nutui/dist/nutui.css'
 import {VueMasonryPlugin} from 'vue-masonry'
 import VueLazyload from 'vue-lazyload'
 import imgUrl from '../src/imgUrl'
+import Bus from '../src/bus'
 Vue.use(VueLazyload,{
     error: require('../src/assets/img/moren.jpg'),
     loading: ''
@@ -17,6 +18,7 @@ Vue.use(VueMasonryPlugin)
 NutUI.install(Vue)
 Vue.config.productionTip = false
 Vue.prototype.$imgUrl = imgUrl
+Vue.prototype.$Bus = Bus
 new Vue({
   router,
   store,

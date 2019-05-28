@@ -2,7 +2,7 @@
 	<!-- 导航 -->
     <div>
         <div class="indexNav">
-            <div class="navBox">
+            <!-- <div class="navBox">
                 <div class="navHeader">
                     <div class="pz">
                         <div class="name">享疯了自营 | 品质保障</div>
@@ -26,11 +26,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="btn">
+                <div class="btn">
                     <div>保障措施</div>
                     <div class="cha">查看详情</div>
-                </div> -->
-            </div>
+                </div>
+            </div> -->
             <swiper :options="swiperOption" v-if="navBtn.length>0" class="swiperBox">
                 <swiper-slide v-for="(item,index) in navBtn" :key="index" class="swiperB">
                     <div class="navBtnbox">

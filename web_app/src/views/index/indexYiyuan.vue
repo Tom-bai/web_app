@@ -5,7 +5,7 @@
             <div class="nav">
                 <div class="ziding" :class="active == index?'active':''" v-for="(item,index) in list" :key="index" @click="onClick(index)">
                     <div class="iocn">
-                        <div><img  v-lazy="active == index?item.ioc:item.ioca" alt=""></div>
+                        <div><img  :src="active == index?item.ioc:item.ioca" alt=""></div>
                         <div>{{item.name}}</div>
                     </div>
                     <div>{{item.tip}}</div>
@@ -372,7 +372,7 @@ export default {
 		}
 	},
 	mounted() {
-        this.getData()
+        this.getDataOne()
     },
 	methods: {
         onInfinite () {
@@ -380,14 +380,14 @@ export default {
             if (that.isHasMore) {
                 that.isLoading = true
                 that.limit++
-                that.getData()
+                that.getDataOne()
             }
         },
         onClick (index) { //三个btn
             this.active = index
             this.$store.commit('set_INDEX_STATE', this.active)
             if (this.active == 0) {
-                this.getData()
+                this.getDataOne()
             } else if (this.active == 1) {
                 this.getDataTwo()
             } else if (this.active == 2) {
@@ -400,7 +400,7 @@ export default {
         onClickZcD (index) {
             this.activeZCD = index
         },
-        getData () { // 全部
+        getDataOne () { // 全部
             let that = this
             let params = {
                 limit: that.limit
@@ -460,7 +460,7 @@ export default {
     .navbox
         position sticky
         left 0
-        top 65px
+        top 45px
         z-index 9
         background-color #fff
         .nav

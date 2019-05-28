@@ -3,12 +3,12 @@
     <div class="navBox">
       <div class="topic-list-inner">
             <div class="nav" ref="nav">
-                <div class="box" v-for="(item,index) in list" :key="index" @click="queryTopic(item,index)">
+                <div class="box" v-for="(item,index) in dataNav" :key="index" @click.stop="queryTopic(item,index)">
                     <div class="item" :class="{active:navActiveIndex==index}">{{item.title}}</div>
                 </div>
             </div>
 
-            <div class="nav-right-arrow rotateUp" @click="openTagModal(list)">
+            <div class="nav-right-arrow rotateUp" @click.stop="openTagModal(dataNav)">
                 <img src="../assets/img/dwon.png" alt="" class="drop-down" :class="{reverse:showModal}">
             </div>
       </div>
@@ -26,29 +26,13 @@
 import $ from '@/assets/js/jquery.min.js'
 import AutoScroll from '@/assets/js/autoScroll'
 import NavModal from './NavModal'
+import Bus from '@/bus.js'
 let autoScrollInstance = null  //关键点：在加载的插件之前的就要定义个变量的，如果定在data中 ，则会报错
 export default {
     name: 'navScroll',
+    props: ['dataNav'],
     data() {
         return {
-            list: [ //自己定义的假数据，实际是获取的数据
-                {title: '超值秒杀', id: 1},
-                {title: '超值秒杀', id: 2},
-                {title: '超值秒杀', id: 3},
-                {title: '超值秒杀', id: 4},
-                {title: '超值秒杀', id: 5},
-                {title: '超值秒杀', id: 6},
-                {title: '超值秒杀', id: 7},
-                {title: '超值秒杀', id: 8},
-                {title: '超值秒杀', id: 9},
-                {title: '超值秒杀', id: 10},
-                {title: '超值秒杀', id: 11},
-                {title: '超值秒杀', id: 12},
-                {title: '超值秒杀', id: 13},
-                {title: '超值秒杀', id: 14},
-                {title: '超值秒杀', id: 15},
-                {title: '超值秒杀', id: 16},
-            ],
             navActiveIndex: 0, //当前高亮的tab选项卡index
             showModal: false, //是否显示modal
             selectTag: null,   //传递个子组件（modal）的数据的
@@ -58,15 +42,15 @@ export default {
         NavModal
     },
     methods: {
-        //
         queryTopic(data, index) {
             //点击谁，谁就高亮 ，定一个变量，click事件的赋值使其相等，而在:class 中 判断是否相等，即可
             this.navActiveIndex = index;
-
-            //插件的调取方法
+            //插件的调取方法 
             if (autoScrollInstance) { //确保的插件加载成功
                 autoScrollInstance.scrollTo(this.$refs.nav.childNodes[index])
             }
+            // id 传父
+            Bus.$emit('navBtn', data.id)
         },
         //点击modal的事件
         openTagModal(tag) {
@@ -76,7 +60,6 @@ export default {
         },
     },
     mounted() {
-        //写在掉接口的里面的
         this.$nextTick(() => {
             autoScrollInstance = new AutoScroll(this.$refs.nav, {spaceBetween: 0})//节点 nav
         })

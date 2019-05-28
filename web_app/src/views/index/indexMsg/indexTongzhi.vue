@@ -1,7 +1,7 @@
 <template>
 	<!-- 访客通知 -->
 	<div> 
-		<Header><span slot="topName">访客通知</span></Header>
+		<!-- <Header><span slot="topName">访客通知</span></Header> -->
 		<div class="indexTongzhi">
 			<div class="box">
 				<div class="list">
@@ -32,7 +32,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="nomre">已经显示全部消息了</div>
+			<div class="nomore">已经显示全部消息了</div>
 		</div>
 	</div>
 </template>
@@ -68,38 +68,36 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.indexTongzhi
-	.box
-		margin-top 10px
-		.list
-			display flex
-			align-items center
-			padding 0 15px
-			border-bottom solid 2px #f1f1f1
-			height 70px
-			.iocn
-				flex 0 0 50px
-				height 50px
-				img 
-					width 100%
-					border-radius 100%
-					display block
-			.text
-				flex 1
-				text-align left 
-				padding 0 15px
-				.top
-					display flex
-					align-items center
-					.tip
-						font-size 15px
-						font-weight 400
-					.time
-						font-size 12px
-						color #999
-						margin-left auto
-				.new
-					font-size 12px
-					margin-top 5px
-
+.box
+    background-color #fff
+    .list
+        display flex
+        align-items center
+        padding 0 15px
+        border-bottom solid 2px #f1f1f1
+        height 70px
+        .iocn
+            flex 0 0 50px
+            height 50px
+            img 
+                width 100%
+                border-radius 100%
+                display block
+        .text
+            flex 1
+            text-align left 
+            padding 0 15px
+            .top
+                display flex
+                align-items center
+                .tip
+                    font-size 15px
+                    font-weight 400
+                .time
+                    font-size 12px
+                    color #999
+                    margin-left auto
+            .new
+                font-size 12px
+                margin-top 5px
 </style>

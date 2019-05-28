@@ -2,17 +2,7 @@
 	<!-- 轮播 -->
 	<div>
         <div class="indexSwiper">
-            <div class="search-box" :class="topSearch?'toFixed':''">
-                <div class="search" id="search" :class="topSearch?'topSearch':''">
-                    <div class="header"><img src="../../assets/img/index/nav.jpg" alt=""></div>
-                    <div class="input">阿迪达斯</div>
-                    <div class="tongzhi" @click="onRouter('/myMsg')">
-                        <span class="text">消息</span>
-                        <span class="num">{{unreadData.count}}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="swiper topPdding">
+            <div class="swiper">
                 <div class="swiperBg"></div>
                 <swiper :options="swiperOption" v-if="bannerData.length>0">
                     <swiper-slide v-for="(slide, index) in bannerData" :key="index" class="swiperImg">
@@ -40,8 +30,6 @@ export default {
 	props: [],
 	data () {
 		return {
-            topSearch: false,
-            unreadData: [],
 			bannerData: [],
 			imgUrl: imgUrl,
 			swiperOption: {
@@ -64,11 +52,6 @@ export default {
 	},
 	mounted() {
         this.getBanner()
-        this.getUnread()
-        window.addEventListener('scroll', this.handleScroll)
-    },
-    destroyed () {
-        window.removeEventListener('scroll', this.handleScroll)
     },
 	methods: {
         onRouter (pathUrl,id) {
@@ -87,121 +70,34 @@ export default {
                 console.log(error)
             })
         },
-        getUnread () { // 获取通知
-			let that = this
-			post('/index.php/home/article/unread').then(res => {
-				that.unreadData = res
-            }).catch(function (error) {
-                console.log(error)
-            })
-        },
-        handleScroll() {
-            let that = this
-            let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-            if (scrollTop > 65) {
-                this.topSearch = true
-            } else {
-                this.topSearch = false
-            }
-        },
 	},
 	watch: {}
 };
 </script>
 <style lang="stylus" scoped>
-.indexSwiper
-    .search-box
-        .search
-            display flex
-            align-items center
-            padding 0 15px
-            height 65px
-            background-color #000
-            .header
-                img
-                    width 30px
-                    border-radius 100%
-                    display block
-            .input
-                flex: 1
-                background-color #fff
-                border solid 1px #fff
-                border-radius 20px
-                text-align left 
-                line-height 28px
-                padding 0 34px
-                margin 0 10px
-                background-image url('../../assets/img/index/sc.png')
-                background-size 15px
-                background-position 10px 50%
-                background-repeat no-repeat
-            .tongzhi
-                position relative
-                height 40px
-                flex 0 0 30px
-                background-image url('../../assets/img/index/tz.png')
-                background-size 22px
-                background-repeat no-repeat
-                background-position 50% 0
-                transform scale(0.9)
-                .text 
-                    font-size 12px
-                    position absolute
-                    width 100%
-                    left 0
-                    bottom 0
-                    color #fff
-                .num 
-                    height 18px
-                    min-width 8px
-                    padding 0 5px
-                    position absolute
-                    border-radius 10px
-                    line-height 18px
-                    background-color $background-color
-                    color #fff
-                    top -8px
-                    right -8px
-                    text-align center
-                    font-size 12px
-        .topSearch
-            background-color #fff
-            box-shadow 0 0 2px #ccc
-            .input
-                border solid 1px $color
-                background-image url('../../assets/img/index/scH.png')
-            .tongzhi
-                background-image url('../../assets/img/index/tzH.png')
-                .text
-                    color $color
-    .toFixed
-        position fixed
+.swiper	
+    position relative
+    min-height 160px
+    .swiperBg
+        position absolute;
         width 100%
-        top 0
-        z-index 99
+        height 80%
         left 0
-	.swiper	
-		position relative
-		.swiperBg
-			position absolute;
-			width 100%
-			height 80%
-			left 0px
-			top 0px
-			background-color #1a1a1a
-		.swiperImg
-			>img 
-				width 94%
-				border-radius 3px
-		.swiper-container
-			top 15px
-			.swiper-pagination
-				width 40px
-				background-color rgba(0, 0, 0, 0.4)
-				text-align center
-				padding 2px 5px
-				border-radius 3px
-				line-height 18px
-				color #fff
-				margin 0px 30px
+        top 0
+        background-color #1a1a1a
+    .swiperImg
+        >img 
+            width 92%
+            border-radius 3px
+    >>>.swiper-container
+        top 5px
+        .swiper-pagination
+            width 40px
+            background-color rgba(0, 0, 0, 0.4)
+            text-align center
+            padding 2px 5px
+            border-radius 3px
+            line-height 18px
+            color #fff
+            margin 0px 30px
 </style>

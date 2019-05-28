@@ -1,7 +1,7 @@
 <template>
 	<!-- 文章 -->
 	<div> 
-		<Header><span slot="topName">文章名字</span></Header>
+		<!-- <Header><span slot="topName">文章名字</span></Header> -->
 		<div class="indexArticle">
 			<div class="article">
 				<div class="banner"><img src="../../../assets/img/index/myMsg/ac1.jpg" alt=""></div>
@@ -38,7 +38,7 @@
 				</div>
 			</div>
 		</div>
-		<Like></Like>
+		<Like class="articleLike"></Like>
 	</div>
 </template>
 
@@ -71,42 +71,44 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.indexArticle
-	.article
-		.banner
-			img 
-				width 100%
-				display block
-		.content
-			padding 15px
-			text-align left 
-			h1
-				font-size 18px
-			.timeBox
-				display flex
-				align-items center
-				font-size 13px
-				.time
-					time
-						padding-right 10px
-				.zan
-					display flex
-					align-items center
-					margin-left auto
-					.zanIocn
-						margin-left 10px
-						width 18px
-						height 18px
-						background-size 100%
-						background-repeat no-repeat
-					.zanN
-						background-image url('../../../assets/img/index/myMsg/zanh.png')
-					.zanZ
-						background-image url('../../../assets/img/index/myMsg/zan.png')
-			.textbox
-				font-size 14px
-				padding-top 10px
-				img 
-					width 100%
-					display block
+.article
+    .banner
+        img 
+            width 100%
+            display block
+    .content
+        padding 15px
+        text-align left 
+        background-color #fff
+        h1
+            font-size 18px
+        .timeBox
+            display flex
+            align-items center
+            font-size 13px
+            .time
+                time
+                    padding-right 10px
+            .zan
+                display flex
+                align-items center
+                margin-left auto
+                .zanIocn
+                    margin-left 10px
+                    width 18px
+                    height 18px
+                    background-size 100%
+                    background-repeat no-repeat
+                .zanN
+                    background-image url('../../../assets/img/index/myMsg/zanh.png')
+                .zanZ
+                    background-image url('../../../assets/img/index/myMsg/zan.png')
+        .textbox
+            font-size 14px
+            padding-top 10px
+            img 
+                width 100%
+                display block
+.articleLike
+    margin-top 10px
 </style>

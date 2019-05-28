@@ -122,6 +122,14 @@ export default {
                     time: '00:00',
                     title: '抢购中',
                 },
+                {   id: 7,
+                    time: '00:00',
+                    title: '抢购中',
+                },
+                {   id: 8,
+                    time: '00:00',
+                    title: '抢购中',
+                },
             ],
             navActiveIndex: 0, //当前高亮的tab选项卡index
             selectTag: null,   //传递个子组件（modal）的数据的
@@ -152,7 +160,7 @@ export default {
     .navBox
         position sticky
         left 0
-        top 65px
+        top 45px
         z-index: 9
         .topic-list-inner 
             background #fff
@@ -162,14 +170,14 @@ export default {
                 display flex
                 overflow-x auto
                 overflow-y hidden
+                flex 1
                 .box 
                     white-space nowrap
                     font-size 14px
                     line-height 30px
                     color #333333
-                    padding 10px
+                    padding 10px 13px
                     line-height 1.3
-                    flex 0 0 17%
                     &.active 
                         color $color
                         background-image url('../assets/img/index/z_index_line.png')

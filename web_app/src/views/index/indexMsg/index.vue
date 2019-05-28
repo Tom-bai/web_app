@@ -2,7 +2,7 @@
 	<!-- 我的消息通知 -->
     <div>
         <div class="indexMsg">
-            <Header><span slot="topName">我的通知</span></Header>
+            <!-- <Header><span slot="topName">我的通知</span></Header> -->
             <div class="box">
                 <div class="list" @click="onRouter('/myMsg/indexToutiao')">
                     <div class="iocn toutiaoIoc"></div>
@@ -60,41 +60,39 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.indexMsg
+.box
     background-color #fff
-	.box
-		margin-top 10px
-		.list
-			display flex
-			align-items center
-			padding 0 15px
-			border-bottom solid 2px #f1f1f1
-			height 60px
-			.iocn
-				flex 0 0 50px
-				height 50px
-				background-size 26px
-				background-repeat no-repeat
-				background-position 50%
-			.toutiaoIoc
-				background-image url('../../../assets/img/index/myMsg/toutiao.png')
-			.fangkeIoc
-				background-image url('../../../assets/img/index/myMsg/fangke.png')
-			.text
-				flex 1
-				text-align left 
-				padding 0 15px
-				.top
-					display flex
-					align-items center
-					.tip
-						font-size 15px
-						font-weight 700
-					.time
-						font-size 12px
-						color #999
-						margin-left auto
-				.new
-					font-size 12px
-					margin-top 5px
+    .list
+        display flex
+        align-items center
+        padding 0 15px
+        border-bottom solid 2px #f1f1f1
+        height 70px
+        .iocn
+            flex 0 0 50px
+            height 50px
+            background-size 26px
+            background-repeat no-repeat
+            background-position 50%
+        .toutiaoIoc
+            background-image url('../../../assets/img/index/myMsg/toutiao.png')
+        .fangkeIoc
+            background-image url('../../../assets/img/index/myMsg/fangke.png')
+        .text
+            flex 1
+            text-align left 
+            padding 0 15px
+            .top
+                display flex
+                align-items center
+                .tip
+                    font-size 15px
+                    font-weight 700
+                .time
+                    font-size 12px
+                    color #999
+                    margin-left auto
+            .new
+                font-size 12px
+                margin-top 5px
 </style>
