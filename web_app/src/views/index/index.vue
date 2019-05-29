@@ -28,7 +28,6 @@
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { get,post } from '@/axiosApi'
-import imgUrl from '@/imgUrl'
 import indexNav from './indexNav'
 import indexSwiper from './indexSwiper'
 import indexBiqiang from './indexBiqiang'

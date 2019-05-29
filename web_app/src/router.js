@@ -87,6 +87,14 @@ export default new Router({
                 title: '拼团商品'
             },
 			component: () => import('./views/index/indexBiquangChild/indexManPinTuan') // 拼团
+        },
+        { 
+			path: '/indexVipJuan',
+            name: 'indexVipJuan',
+            meta:{
+                title: '拼团商品'
+            },
+			component: () => import('./views/index/indexBiquangChild/indexVipJuan') // 新会员首减
 		},
 		{// Tab买手
 			path: '/buy',

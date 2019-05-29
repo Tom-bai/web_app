@@ -1,5 +1,5 @@
 <template>
-	<!-- 一元抢购 -->
+	<!-- 抢购 -->
     <div class="indexYiyuan">
         <div class="navbox">
             <div class="nav">
@@ -16,12 +16,12 @@
             <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
                 <div class="list" v-for="(item,index) in dataList" :key="index">
                     <div class="item">
-                        <div class="img"><img  v-lazy="imgUrl + item.img" alt=""></div>
+                        <div class="img"><img  v-lazy="$imgUrl + item.img" alt=""></div>
                         <div class="text">
                             <div class="name">{{item.title}}</div>
                             <div class="tip">{{item.dec}}</div>
                             <div class="guojia">
-                                <img  v-lazy="imgUrl + item.img1" alt="">
+                                <img  v-lazy="$imgUrl + item.img1" alt="">
                                 <!-- <div>{{item.guoname}}</div>
                                 <div>{{item.guonamet2}}</div> -->
                             </div>
@@ -43,27 +43,28 @@
             </nut-infiniteloading>
         </div>
         <div class="content" v-if="active == 1">
-
             <div class="banner"><img src="../../assets/img/index/111.jpg" alt=""></div>
-            <div class="list" v-for="(item,index) in data1" :key="index">
-                <div class="item">
-                    <div class="img"><img :src="item.img" alt=""></div>
-                    <div class="text">
-                        <div class="name">{{item.name}}</div>
-                        <div class="tip">{{item.tip}}</div>
-                        <div class="guojia">
-                            <img :src="item.guoioc" alt="">
-                            <div>{{item.guoname}}</div>
-                            <div>{{item.guonamet2}}</div>
-                        </div>
-                        <div class="money">
-                            <span>￥{{item.money}}</span>
-                            <i class="vip"></i>
-                            <span class="card"></span>
+            <nut-infiniteloading @loadmore="onInfiniteY" :is-show-mod="true"  :is-loading="isLoadingY" :threshold="200" :has-more="isHasMoreY">
+                <div class="list" v-for="(item,index) in dataYiList" :key="index">
+                    <div class="item">
+                        <div class="img"><img v-lazy="$imgUrl + item.img" alt=""></div>
+                        <div class="text">
+                            <div class="name">{{item.title}}</div>
+                            <div class="tip">{{item.title}}</div>
+                            <div class="guojia">
+                                <img v-lazy="$imgUrl + item.img1"alt="">
+                                <!-- <div>{{item.guoname}}</div>
+                                <div>{{item.guonamet2}}</div> -->
+                            </div>
+                            <div class="money">
+                                <span>￥{{item.price}}</span>
+                                <i class="vip"></i>
+                                <span class="card"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </nut-infiniteloading>
         </div>
         <div class="content" v-if="active == 2">
             <div class="banner"><img src="../../assets/img/index/111.jpg" alt=""></div>
@@ -71,48 +72,100 @@
                 <div><img src="../../assets/img/index/111.jpg" alt=""></div>
                 <div><img src="../../assets/img/index/111.jpg" alt=""></div>
             </div>
-            <div class="topNav">
-                <div class="itemBtn" :class="activeZC == 0?'active':''" @click="onClickZc(0)">正在众筹</div>
-                <div class="itemBtn" :class="activeZC == 1?'active':''" @click="onClickZc(1)">预备众筹</div>
+                <div>
+                    <div class="topNav">
+                    <div class="itemBtn" :class="activeZC == 0?'active':''" @click="onClickZc(0)">正在众筹</div>
+                    <div class="itemBtn" :class="activeZC == 1?'active':''" @click="onClickZc(1)">预备众筹</div>
+                </div>
+                <div v-if="activeZC == 0">
+                    <div class="list" v-for="(item,index) in dataZongList.datacr">
+                        <div class="item">
+                            <div class="img"><img v-lazy="$imgUrl + '/Uploads/' + item.pro_img" alt=""></div>
+                            <div class="text">
+                                <div class="name">{{item.title}}</div>
+                                <div class="money">
+                                    <span><small>￥</small>{{item.g_price}}</span><small>起</small>
+                                </div>
+                                <div class="progress">
+                                    <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
+                                </div>
+                                <div class="btn">
+                                    <i class="iocn"></i>
+                                    <span>{{item.cdf_num}}人支撑</span>
+                                    <span class="zhichi">支撑项目</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nomore" v-if="dataZongList.datacr == null">暂无数据</div>
+                </div>
+                <div v-if="activeZC == 1">
+                    <div class="list" v-for="(item,index) in dataZongList.data_coming">
+                        <div class="item">
+                            <div class="img"><img v-lazy="$imgUrl + '/Uploads/' + item.pro_img" alt=""></div>
+                            <div class="text">
+                                <div class="name">{{item.title}}</div>
+                                <div class="money">
+                                    <span><small>￥</small>{{item.g_price}}</span><small>起</small>
+                                </div>
+                                <div class="progress">
+                                    <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
+                                </div>
+                                <div class="btn">
+                                    <i class="iocn"></i>
+                                    <span>{{item.cdf_num}}人支撑</span>
+                                    <span class="zhichi">支撑项目</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nomore" v-if="dataZongList.data_coming == null">暂无数据</div>
+                </div>
             </div>
-            <div class="list" v-for="(item,index) in data1">
-                <div class="item">
-                    <div class="img"><img :src="item.img" alt=""></div>
-                    <div class="text">
-                        <div class="name">{{item.name}}</div>
-                        <div class="money">
-                            <span><small>￥</small>399</span><small>起</small>
-                        </div>
-                        <div class="progress">
-                            <nut-progress percentage="30" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
-                        </div>
-                        <div class="btn">
-                            <i class="iocn"></i>
-                            <span>225人支撑</span>
-                            <span class="zhichi">支撑项目</span>
+            <div>
+                <div class="topNav">
+                    <div class="itemBtn" :class="activeZCD == 0?'active':''" @click="onClickZcD(0)">人数最多</div>
+                    <div class="itemBtn" :class="activeZCD == 1?'active':''" @click="onClickZcD(1)">金额最多</div>
+                </div>
+                <div v-if="activeZCD == 0">
+                    <div class="list" v-for="(item,index) in dataZongList.datanum">
+                        <div class="item">
+                            <div class="img"><img v-lazy="$imgUrl + '/Uploads/' + item.pro_img" alt=""></div>
+                            <div class="text">
+                                <div class="name">{{item.title}}</div>
+                                <div class="money">
+                                    <span><small>￥</small>{{item.g_price}}</span><small>起</small>
+                                </div>
+                                <div class="progress">
+                                    <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
+                                </div>
+                                <div class="btn">
+                                    <i class="iocn"></i>
+                                    <span>{{item.cdf_num}}人支撑</span>
+                                    <span class="zhichi">支撑项目</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="topNav">
-                <div class="itemBtn" :class="activeZCD == 0?'active':''" @click="onClickZcD(0)">人数最多</div>
-                <div class="itemBtn" :class="activeZCD == 1?'active':''" @click="onClickZcD(1)">金额最多</div>
-            </div>
-            <div class="list" v-for="(item,index) in data1">
-                <div class="item">
-                    <div class="img"><img :src="item.img" alt=""></div>
-                    <div class="text">
-                        <div class="name">{{item.name}}</div>
-                        <div class="money">
-                            <span><small>￥</small>399</span><small>起</small>
-                        </div>
-                        <div class="progress">
-                            <nut-progress percentage="30" strokeColor="#f1002d"  status="active" strokeWidth="6" class="myProgress"></nut-progress>
-                        </div>
-                        <div class="btn">
-                            <i class="iocn"></i>
-                            <span>225人支撑</span>
-                            <span class="zhichi">支撑项目</span>
+                <div v-if="activeZCD == 1">
+                    <div class="list" v-for="(item,index) in dataZongList.datamen">
+                        <div class="item">
+                            <div class="img"><img v-lazy="$imgUrl + '/Uploads/' + item.pro_img" alt=""></div>
+                            <div class="text">
+                                <div class="name">{{item.title}}</div>
+                                <div class="money">
+                                    <span><small>￥</small>{{item.g_price}}</span><small>起</small>
+                                </div>
+                                <div class="progress">
+                                    <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
+                                </div>
+                                <div class="btn">
+                                    <i class="iocn"></i>
+                                    <span>{{item.cdf_num}}人支撑</span>
+                                    <span class="zhichi">支撑项目</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -124,7 +177,6 @@
 <script>
 // @ is an alias to /src
 import { get } from '@/axiosApi'
-import imgUrl from '@/imgUrl'
 export default {
 	name: "indexYiyuan",
 	components: {
@@ -135,10 +187,7 @@ export default {
             active: 0,
             activeZC: 0,
             activeZCD: 0,
-            limit: 1,
-            limitTwo: 1,
-            imgUrl: imgUrl,
-            list:[
+            list:[ // 导航
                 {
                     id: 1,
                     name: '全部',
@@ -366,16 +415,25 @@ export default {
                    ]
                 },
             ],
-            dataList: [],
+            limit: 1,
+            dataList: [], // 全部
             isHasMore: true,
             isLoading: false,
+            limitZ: 1,
+            dataZongList: [], //众筹
+            isHasMoreZ: true,
+            isLoadingZ: false,
+            limitY: 1,
+            dataYiList: [], //一元
+            isHasMoreY: true,
+            isLoadingY: false,
 		}
 	},
 	mounted() {
         this.getDataOne()
     },
 	methods: {
-        onInfinite () {
+        onInfinite () { // 全部
             let that = this
             if (that.isHasMore) {
                 that.isLoading = true
@@ -383,14 +441,25 @@ export default {
                 that.getDataOne()
             }
         },
+        onInfiniteY () { // 一元
+            let that = this
+            if (that.isHasMoreY) {
+                that.isLoadingY = true
+                that.limitY++
+                that.getDataTwo()
+            }
+        },
         onClick (index) { //三个btn
             this.active = index
             this.$store.commit('set_INDEX_STATE', this.active)
             if (this.active == 0) {
+                this.limit = 1
                 this.getDataOne()
             } else if (this.active == 1) {
+                this.limitY = 1
                 this.getDataTwo()
             } else if (this.active == 2) {
+                this.limitZ = 1
                 this.getDataThree()
             }
         },
@@ -420,16 +489,16 @@ export default {
         getDataTwo () { // 一元
             let that = this
             let params = {
-                limit: that.limitTwo
+                limit: that.limitY
             }
 			get('/index.php/home/index/ajax_allOne',params).then(res => {
                 if (res.status > 0) {
-                    that.dataList = that.dataList.concat(res.data)
-                    that.isLoading = false
+                    that.dataYiList = that.dataYiList.concat(res.data)
+                    that.isLoadingY = false
                 } else {
-                    that.isLoading = false
-                    that.isHasMore = false
-                }          
+                    that.isLoadingY = false
+                    that.isHasMoreY = false
+                }  
             }).catch(function (error) {
                 console.log(error)
             })
@@ -437,16 +506,10 @@ export default {
         getDataThree () { // 众筹
             let that = this
             let params = {
-                limit: that.limitTwo
+                limit: that.limitZ
             }
-			get('/index.php/home/index/ajax_allcrow',params).then(res => {
-                if (res.status > 0) {
-                    that.dataList = that.dataList.concat(res.data)
-                    that.isLoading = false
-                } else {
-                    that.isLoading = false
-                    that.isHasMore = false
-                }          
+			get('/index.php/home/index/cf',params).then(res => {
+                that.dataZongList = res   
             }).catch(function (error) {
                 console.log(error)
             })
@@ -533,6 +596,10 @@ export default {
             margin-bottom 10px
             font-size 14px
             margin-top 10px
+            position sticky
+            top 100px
+            left 0
+            z-index 8
             .itemBtn
                 flex 1
                 position relative

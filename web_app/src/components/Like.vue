@@ -5,15 +5,15 @@
                 <div>猜你喜欢</div>
             </div>
             <div class="watefall" id='watefall' v-masonry transition-duration="0.1s" item-selector=".pin">
-                <div v-masonry-tile class="pin" v-for="(item,index) in articleData" :key="index">
+                <div v-masonry-tile class="pin" v-for="(item,index) in dataList" :key="index">
                     <div class="box">
-                        <img :src="item.img"/>
-                        <div class="watefallText" v-if="item.qm">{{item.qm}}</div>
-                        <div class="myWatefall" v-if="item.tip">
+                        <img :src="item.img" v-lazy="$imgUrl + '/Uploads/' + item.img"/>
+                        <div class="watefallText" v-if="item.title">{{item.title}}</div>
+                        <div class="myWatefall">
                             <div class="watefallHeadtext">
-                                <div class="mySignature">{{item.tip}}</div>
+                                <div class="mySignature">{{item.title}}</div>
                                 <div class="money">
-                                    <div>￥399.00</div>
+                                    <div>￥{{item.price}}</div>
                                     <div class="vip"></div>
                                 </div>
                             </div>
@@ -75,8 +75,8 @@ export default {
     methods: {
         getDataLike () { // 猜你喜欢
             let that = this
-			get('/index.php/home/index/plate').then(res => {
-                that.dataList = res.data
+			get('/index.php/home/index/like_goods').then(res => {
+                that.dataList = res
             }).catch(function (error) {
                 console.log(error)
             })

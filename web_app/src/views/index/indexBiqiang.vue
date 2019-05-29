@@ -2,7 +2,7 @@
 	<!-- 今日必抢 -->
     <div>
         <div class="indexBiqiang">
-            <div class="newFuli"><img v-lazy="$imgUrl + 'Uploads/' + dataList.home_img_1" alt=""></div>
+            <div class="newFuli" @click="onRouter('/indexVipJuan',3)"><img v-lazy="$imgUrl + 'Uploads/' + dataList.home_img_1" alt=""></div>
             <div class="topName">
                 <div>{{dataList.cn_bt}}</div>
                 <div class="tip">{{dataList.cn_fbt}}</div>
@@ -88,10 +88,10 @@ export default {
 				}
 			})
         },
-        getDataJin () { // 今日必抢
+        getDataJin () { // 首页新品，满减，砍价，拼团的设置
             let that = this
 			get('/index.php/home/index/indexset').then(res => {
-                that.dataList = res    
+                that.dataList = res   
             }).catch(function (error) {
                 console.log(error)
             })

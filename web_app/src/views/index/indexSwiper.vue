@@ -6,7 +6,7 @@
                 <div class="swiperBg"></div>
                 <swiper :options="swiperOption" v-if="bannerData.length>0">
                     <swiper-slide v-for="(slide, index) in bannerData" :key="index" class="swiperImg">
-                        <img :src="imgUrl + slide.img" :alt="slide.alt">
+                        <img :src="$imgUrl + slide.img" :alt="slide.alt">
                     </swiper-slide>
                     <div class="swiper-pagination" slot="pagination"></div>
                 </swiper>
@@ -20,7 +20,6 @@
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { get,post } from '@/axiosApi'
-import imgUrl from '@/imgUrl'
 export default {
 	name: "index",
 	components: {
@@ -31,7 +30,6 @@ export default {
 	data () {
 		return {
 			bannerData: [],
-			imgUrl: imgUrl,
 			swiperOption: {
 				loop: true,
 				autoplay: {
