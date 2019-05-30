@@ -95,6 +95,22 @@ export default new Router({
                 title: '拼团商品'
             },
 			component: () => import('./views/index/indexBiquangChild/indexVipJuan') // 新会员首减
+        },
+        { 
+			path: '/indexNewUp',
+            name: 'indexNewUp',
+            meta:{
+                title: '新品上市'
+            },
+			component: () => import('./views/index/indexBiquangChild/indexNewUp') // 新会员首减
+        },
+        { 
+			path: '/indexKanFree',
+            name: 'indexKanFree',
+            meta:{
+                title: '砍价免费拿'
+            },
+			component: () => import('./views/index/indexBiquangChild/indexKanFree') // 砍价免费拿
 		},
 		{// Tab买手
 			path: '/buy',

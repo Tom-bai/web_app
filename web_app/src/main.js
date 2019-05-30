@@ -11,7 +11,7 @@ import imgUrl from '../src/imgUrl'
 import Bus from '../src/bus'
 Vue.use(VueLazyload,{
     error: require('../src/assets/img/moren.jpg'),
-    loading: ''
+    loading: require('../src/assets/img/moren.jpg'),
 })
 Vue.use(imgUrl)
 Vue.use(VueMasonryPlugin)

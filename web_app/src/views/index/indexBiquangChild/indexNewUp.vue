@@ -1,0 +1,293 @@
+<template>
+	<!-- 新品上市 -->
+    <div>
+        <div class="indexNewUp">
+            <div class="header">
+                <img src="../../../assets/img/index/indexNewUp/banner.jpg" alt="">
+                <div class="bg">
+                    <div class="box">
+                        <div class="logo"><img src="../../../assets/img/index/indexNewUp/nav.jpg" alt=""></div>
+                        <div class="text">
+                            <div class="name">欧蔓莎</div>
+                            <div class="tip">舒适快时尚潮流女鞋品牌</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab">
+                <div class="list"><span>价格</span><span><i class="up"></i><i class="down"></i></span></div>
+                <div class="list">上新</div>
+                <div class="list">综合</div>
+                <div class="list" @click="onMore"><i class="more" :class="list?'':'noMore'"></i></div>
+            </div>
+            <div class="listMain" v-if="list">
+                <div class="listBox">
+                    <div class="list" v-for="(item,index) in listDD">
+                        <div class="img">
+                            <img  src="../../../assets/img/index/2222.jpg" alt="">
+                        </div>
+                        <div class="name">TINCOCO 【2条装】6D薄款任意剪透明丝袜连裤袜</div>
+                        <div class="money">
+                            <span>￥639 </span>
+                            <span class="vip"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="itemMain" v-else>
+                <div class="itembox">
+                    <div class="item" v-for="item in listDD">
+                        <div class="img">
+                            <img  src="../../../assets/img/index/2222.jpg" alt="">
+                        </div>
+                        <div class="textbox">
+                            <div class="money">
+                                <span class="vip"></span>
+                                <span>￥639 </span>
+                            </div>
+                            <div class="name">TINCOCO 【2条装】6D薄款任意剪透明丝袜连裤袜</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </div>
+</template>
+
+<script>
+// @ is an alias to /src
+import { get } from '@/axiosApi'
+export default {
+	name: "indexNewUp",
+	components: {
+	},
+	props: [],
+	data () {
+		return {
+            dataList: [],
+            listDD: new Array(10),
+            list: true
+        }
+	},
+	mounted() {
+        this.getList()
+    },
+    created(){
+    },
+    beforeDestroy() {
+    },
+	methods: {
+        onMore () {
+           this.list = !this.list 
+        },
+        getList () { // nav导航分类
+            let that = this
+            let params = {
+                type: that.$route.query.id
+            }
+			get('/index.php/home/index/manjian_cate',params).then(res => {
+                console.log(res);
+                that.dataList = res
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+	},
+	watch: {}
+};
+</script>
+<style lang="stylus" scoped>
+.header
+    position relative
+    >img 
+        width 100%
+        display block
+    .bg
+        position absolute
+        width 100%
+        height 100%
+        background-color rgba(0, 0, 0, 0.2)
+        top 0
+        left 0
+        .box
+            display flex
+            align-items center
+            color #fff
+            margin-top 10%
+            text-align left
+            padding 0 15px
+            .logo
+                width 50px
+                background-color #fff
+                height 50px
+                display flex
+                align-items center
+                >img 
+                    width 100%
+                    display block
+                    border-radius $border-radius
+            .text
+                flex 1
+                overflow hidden
+                text-overflow ellipsis
+                white-space nowrap
+                padding-left 10px
+                .name
+                    font-size 16px
+                    font-weight 600
+                    margin-bottom 10px
+                    overflow hidden
+                    text-overflow ellipsis
+                    white-space nowrap
+                .tip
+                    overflow hidden
+                    text-overflow ellipsis
+                    display -webkit-box
+                    -webkit-box-orient vertical
+                    -webkit-line-clamp 2
+                    white-space initial
+.tab
+    display flex
+    align-items center
+    height 45px
+    background-color #fff
+    position sticky
+    top 0
+    width 100%
+    left 0
+    border-bottom solid 1px #f1f1f1
+    .list
+        flex 1
+        font-size 14px
+        display flex
+        justify-content center
+        .up
+            background-image url('../../../assets/img/index/indexNewUp/up.png')
+            background-repeat no-repeat
+            background-size 100%
+            width 10px
+            height 10px
+            display block
+            margin-left 5px
+        .down
+            background-image url('../../../assets/img/index/indexNewUp/dwon.png')
+            background-repeat no-repeat
+            background-size 100%
+            width 10px
+            height 10px
+            display block
+            margin-left 5px
+        .more
+            background-image url('../../../assets/img/index/indexNewUp/more1.png')
+            background-repeat no-repeat
+            background-size 100%
+            width 20px
+            height 20px
+            display inline-block
+        .noMore
+            background-image url('../../../assets/img/index/indexNewUp/more2.png')
+.listMain
+    .topName
+        display flex
+        align-items center
+        font-size 16px
+        font-weight bold
+        height 40px
+        justify-content center
+    .listBox
+        display flex
+        align-items center
+        flex-wrap wrap 
+        justify-content flex-start
+        padding 3%
+        .list
+            flex 0 0 48.5%
+            text-align left 
+            background-color #fff
+            border-radius $border-radius
+            margin-bottom 10px
+            margin-right 3%
+            &:nth-child(2n+0)
+                margin-right 0
+            .img
+                img
+                    width 100%
+                    display block
+                    border-radius $border-radius $border-radius 0 0
+            .name
+                overflow hidden
+                text-overflow ellipsis
+                display -webkit-box
+                -webkit-box-orient vertical
+                -webkit-line-clamp 2
+                white-space initial
+                font-weight 400
+                padding 5px 5px 0 5px
+            .money
+                font-size 16px
+                color $color
+                font-weight bold
+                padding 2px 5px
+                display flex
+                align-items center
+                line-height 1
+                margin 5px 0
+                .yuan
+                    font-size 12px
+                    font-weight normal
+                    color #858585
+                    text-decoration line-through
+                    margin-left 5px
+                .vip
+                    background-image url('../../../assets/img/index/vip.png')
+                    background-repeat no-repeat
+                    background-size 100%
+                    width 25px
+                    height 14px
+                    margin-left 5px
+            .btn
+                background-color $background-color
+                color #fff
+                text-align center
+                line-height 25px
+                width 80%
+                margin 2px auto 10px auto
+                border-radius $border-radius
+.itemMain
+    .itembox
+        background-color #fff
+        .item
+            display flex
+            text-align left
+            .img
+                flex 0 0 120px
+                img 
+                    width 100%
+                    border-radius $border-radius
+                    display block
+            .textbox
+                padding 0 10px
+                border-bottom solid 1px #f1f1f1
+                .money
+                    font-size 16px
+                    color $color
+                    font-weight bold
+                    padding 2px 5px
+                    display flex
+                    align-items center
+                    line-height 1
+                    margin 5px 0
+                    .yuan
+                        font-size 12px
+                        font-weight normal
+                        color #858585
+                        text-decoration line-through
+                        margin-left 5px
+                    .vip
+                        background-image url('../../../assets/img/index/vip.png')
+                        background-repeat no-repeat
+                        background-size 100%
+                        width 25px
+                        height 14px
+                        margin-right 5px
+</style>

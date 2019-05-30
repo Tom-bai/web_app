@@ -51,7 +51,7 @@
                             <div class="tip">{{item.title}}</div>
                             <div class="yipin"><span class="tag">已拼{{item.pnum}}件</span></div>
                             <div class="money">
-                                <div class="p1">
+                                <div class="pM">
                                     <div>
                                         <span class="tag">{{item.num}}人团</span>
                                         <span class="num">￥{{item.s_price}}</span>
@@ -288,7 +288,7 @@ export default {
                 display flex
                 align-items center
                 color $color
-                .p1
+                .pM
                     margin 5px 0
                     .tag
                         font-weight normal

@@ -119,14 +119,17 @@ export default {
         display flex
         align-items center
         flex-wrap wrap 
-        justify-content space-between
-        padding 10px
+        justify-content flex-start
+        padding 2%
     .list
-        flex 0 0 31.2222%
+        flex 0 0 32%
         text-align left 
         background-color #fff
         border-radius $border-radius
         margin-bottom 10px
+        margin-right 2%
+        &:nth-child(3n+0)
+            margin-right 0
         .img
             img
                 width 100%

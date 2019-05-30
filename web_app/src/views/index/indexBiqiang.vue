@@ -10,7 +10,7 @@
             <div class="box boderRT">
                 <div class="listTwo">
                     <!-- 新品上市 -->
-                    <div class="item">
+                    <div class="item" @click="onRouter('/indexNewUp',2)">
                         <div class="header">
                             <p>{{dataList.jr_tl_bt}}</p>
                         </div>
@@ -30,7 +30,7 @@
             <div class="box boderRB">
                 <div class="listThree">
                     <!-- 砍价 -->
-                    <div class="item boderRL">
+                    <div class="item boderRL" @click="onRouter('/indexKanFree',2)">
                         <div class="header">
                             <p>{{dataList.jr_bl_bt}}</p>
                             <p class="tip">{{dataList.jr_bl_fbt}}</p>
