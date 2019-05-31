@@ -16,3 +16,21 @@ html,body
     font-size 12px
     color #666
     padding 20px 0
+.scrollFixed
+    position fixed
+    width 100%
+// 右边飞入动画
+.TransitionRight-enter-active {
+    animation: TransitionRight .3s;
+}
+.TransitionRight-leave-active {
+    animation: TransitionRight .3s reverse;
+}
+@keyframes TransitionRight {
+    0% {
+        transform: translate3d(100%, 0, 0)
+    }
+    100% {
+        transform: translate3d(0, 0, 0)
+    }
+}

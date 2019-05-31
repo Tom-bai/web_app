@@ -10,6 +10,7 @@
                     </swiper-slide>
                     <div class="swiper-pagination" slot="pagination"></div>
                 </swiper>
+                <div v-else class="noSwiper"><img src="../../assets/img/moren.jpg"></div>
             </div>
         </div>
     </div>
@@ -77,12 +78,20 @@ export default {
     position relative
     min-height 160px
     .swiperBg
-        position absolute;
+        position absolute
         width 100%
         height 80%
         left 0
         top 0
         background-color #1a1a1a
+    .noSwiper
+        img 
+            width 100%
+            height 160px
+            position absolute
+            left 0
+            z-index 2
+            top 5px
     .swiperImg
         >img 
             width 92%

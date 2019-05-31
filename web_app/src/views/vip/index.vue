@@ -18,11 +18,37 @@
                 </div>
                 <div class="navBox">
                     <div class="name"><span>划算</span></div>
-                    <div class="list">
-                        <div class="listImg"><img src="../../assets/img/vip/list.png" alt=""></div>
-                        <div class="listText">
-                            <p>9折/96折</p>
-                            <p>专享折扣</p>
+                    <div class="listbox">
+                        <div class="list" v-for="item in navData">
+                            <div class="listImg"><img src="../../assets/img/vip/list.png" alt=""></div>
+                            <div class="listText">
+                                <div class="name">9折/96折</div>
+                                <div class="tip">专享折扣</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="navBox">
+                    <div class="name"><span>划算</span></div>
+                    <div class="listbox">
+                        <div class="list" v-for="item in navData">
+                            <div class="listImg"><img src="../../assets/img/vip/list.png" alt=""></div>
+                            <div class="listText">
+                                <div class="name">9折/96折</div>
+                                <div class="tip">专享折扣</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="navBox">
+                    <div class="name"><span>划算</span></div>
+                    <div class="listbox">
+                        <div class="list" v-for="item in navData">
+                            <div class="listImg"><img src="../../assets/img/vip/list.png" alt=""></div>
+                            <div class="listText">
+                                <div class="name">9折/96折</div>
+                                <div class="tip">专享折扣</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -40,7 +66,8 @@ export default {
 	props: [],
 	data () {
 		return {
-            showVipNav: false
+            showVipNav: false,
+            navData: new Array(5)
         }
 	},
 	methods: {
@@ -52,75 +79,96 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.vip
-    padding 15px
-	.vipCard
-        position relative
-        .vpiBg
-            img
-                width 100%
-                display block
-        .kaiBtn
-            background linear-gradient(270deg,#ffedbe,#ffe8aa)
-            position absolute
-            top 10px
-            right 10px
-            width 100px
-            height 30px
-            line-height 30px
-            border-radius 20px
-            font-weight 400
-        .tipBottom
-            position absolute
-            bottom 40px
-            left 0
-            display flex
-            align-items center
+.vipCard
+    margin 15px
+    position relative
+    .vpiBg
+        img
             width 100%
-            color #ffefc4
-            justify-content center
-            .logo
-                width 20px
-                height 20px
-                background-image url('../../assets/img/vip/logo2.png')
-                background-size 100% 100%
-            .tip
-                flex 0 0 240px
-                text-overflow ellipsis
-                display -webkit-box
-                -webkit-line-clamp 1
-                -webkit-box-orient vertical
-                overflow hidden
-            .iocn
-                width 18px
-                height 18px
-                background-image url('../../assets/img/vip/ioc2.png')
-                background-size 100% 100%
-    .vipNav
-        .header
-            display flex
-            align-items center
-            font-size 15px
-            font-weight bold
-            justify-content center
-            .iocn
-                width 15px
-                height 15px
-                background-image url('../../assets/img/vip/down.png')
-                background-size 100% 100%
-                margin-left 5px
-                transform rotate(180deg)
-            .active
-                transform rotate(0deg)
-    .navBox
+            display block
+    .kaiBtn
+        background linear-gradient(270deg,#ffedbe,#ffe8aa)
+        position absolute
+        top 10px
+        right 10px
+        width 100px
+        height 30px
+        line-height 30px
+        border-radius 20px
+        font-weight 400
+    .tipBottom
+        position absolute
+        bottom 40px
+        left 0
         display flex
         align-items center
-        .name
-            flex 0 0 20px
-            span
-                width 12px
-                display block
-                border-right 1px dashed #c3c2c1
-                color #c3c2c1
-                padding 0 15px
+        width 100%
+        color #ffefc4
+        justify-content center
+        .logo
+            width 20px
+            height 20px
+            background-image url('../../assets/img/vip/logo2.png')
+            background-size 100% 100%
+        .tip
+            flex 0 0 240px
+            text-overflow ellipsis
+            display -webkit-box
+            -webkit-line-clamp 1
+            -webkit-box-orient vertical
+            overflow hidden
+        .iocn
+            width 18px
+            height 18px
+            background-image url('../../assets/img/vip/ioc2.png')
+            background-size 100% 100%
+.vipNav
+    padding 15px 0
+    background-color #fff
+    .header
+        display flex
+        align-items center
+        font-size 15px
+        font-weight bold
+        justify-content center
+        .iocn
+            width 15px
+            height 15px
+            background-image url('../../assets/img/vip/down.png')
+            background-size 100% 100%
+            margin-left 5px
+            transform rotate(180deg)
+        .active
+            transform rotate(0deg)
+.navBox
+    display flex
+    align-items center
+    padding-top 15px
+    .name
+        flex 0 0 20px
+        span
+            width 12px
+            display block
+            border-right 1px dashed #c3c2c1
+            color #c3c2c1
+            padding 0 15px
+    .listbox
+        display flex
+        align-items center
+        flex-flow wrap
+        flex 1
+        padding 0 10px
+        .list
+            flex 1
+            .listImg
+                img 
+                    width 40px
+                    display block
+                    margin auto
+            .listText
+                line-height 1
+                .name
+                    padding 5px 0
+                .tip
+                    color #999
 </style>

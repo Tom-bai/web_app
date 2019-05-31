@@ -110,8 +110,18 @@ export default new Router({
             meta:{
                 title: '砍价免费拿'
             },
-			component: () => import('./views/index/indexBiquangChild/indexKanFree') // 砍价免费拿
-		},
+            component: () => import('./views/index/indexBiquangChild/indexKanFree'), // 砍价免费拿
+            children: [
+                { 
+                    path: '/Address',
+                    name: 'Address',
+                    meta:{
+                        title: '填写地址'
+                    },
+                    component: () => import('./components/Address.vue') // 填写地址
+                },
+            ]
+        },
 		{// Tab买手
 			path: '/buy',
             name: 'buy',
