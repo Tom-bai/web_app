@@ -128,7 +128,8 @@ export default {
                     -webkit-line-clamp 1
                     -webkit-box-orient vertical
                     overflow hidden
-                    padding 5px 10px
+                    margin 5px 10px
+                    line-height 1.3
                 .myWatefall
                     padding 0px 10px 15px 10px
                     .watefallHeadtext
@@ -138,6 +139,7 @@ export default {
                             -webkit-line-clamp 2
                             -webkit-box-orient vertical
                             overflow hidden
+                            line-height 1.3
                             .num
                                 display flex
                                 align-items center

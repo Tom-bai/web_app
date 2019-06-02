@@ -32,12 +32,16 @@
                 </div>
             </div> -->
             <swiper :options="swiperOption" v-if="navBtn.length>0" class="swiperBox">
-                <swiper-slide v-for="(item,index) in navBtn" :key="index" class="swiperB">
+                <swiper-slide v-for="(item,index) in dataNav" :key="index" class="swiperB">
                     <div class="navBtnbox">
                         <div class="navBtn">
-                            <div class="list" v-for="(itemT,index) in item.nav" :key="index">
-                                <div><img :src="itemT.img" alt=""></div>
-                                <div>{{itemT.text}}</div>
+                            <div class="list" :key="index">
+                                <div><img v-lazy="$imgUrl + item.img" alt=""></div>
+                                <div>{{item.name}}</div>
+                            </div>
+                            <div class="list" :key="index">
+                                <div><img v-lazy="$imgUrl + item.img" alt=""></div>
+                                <div>{{item.name}}</div>
                             </div>
                         </div>
                     </div>
@@ -70,6 +74,7 @@ export default {
                     hide: false,
                 },
             },
+            dataNav: [],
             navBtn: [
                 {
                     id: 1,
@@ -193,9 +198,30 @@ export default {
 		}
 	},
 	mounted() {
+        this.getData()
     },
 	methods: {
-
+        onRouter (pathUrl,id) {
+            this.$router.push({
+				path: pathUrl,
+				query: {
+                    id: id
+				}
+			})
+        },
+        getData () { // 一元
+            let that = this
+            let params = {
+                limit: that.limitY
+            }
+			get('/index.php/home/index/cate',params).then(res => {
+                that.dataNav = res
+                console.log(res);
+                
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
 	},
 	watch: {}
 };
@@ -263,6 +289,7 @@ export default {
                 margin-bottom 10px
                 img
                     width 50px
+                    height 50px
                     border-radius 100%
                     display block
                     margin auto auto 5px auto

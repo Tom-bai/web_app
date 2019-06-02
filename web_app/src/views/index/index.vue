@@ -58,6 +58,7 @@ export default {
 	mounted() {
         this.getUnread()
         window.addEventListener('scroll', this.handleScroll)
+        document.body.classList.remove('scrollFixed')
     },
     destroyed () {
         window.removeEventListener('scroll', this.handleScroll)
@@ -82,7 +83,7 @@ export default {
         handleScroll() {
             let that = this
             let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-            if (scrollTop > 65) {
+            if (scrollTop > 5) {
                 this.topSearch = true
             } else {
                 this.topSearch = false

@@ -6,11 +6,11 @@
             <div class="itemMain">
                 <div class="itembox" v-if="showList == 1">
                     <div class="listBox">
-                        <div class="list" v-for="item in listDD">
+                        <div class="list" v-for="(item,index) in dataList" :key="index">
                             <div class="img">
-                                <img  src="../../../assets/img/index/2222.jpg" alt="">
+                                <img v-lazy="$imgUrl + item.img" alt="">
                             </div>
-                            <div class="name">TINCOCO 【2条装】6D薄款任意剪透明丝袜连裤袜</div>
+                            <div class="name">{{item.title}}</div>
                             <div class="money">
                                 <span>￥639 </span>
                                 <span class="tip">已抢10件</span>
@@ -57,6 +57,7 @@
                 <div class="list" @click="onKanMy(2)">我的砍价</div>
             </div>
         </div>
+        <!-- 选择框 -->
         <nut-actionsheet :is-visible="isVisible" @close="onHiddenActionSheet" :isClickCloseMask="false">
             <div slot="custom" class="custom-wrap">
                 <div class="actionsheetBox">
@@ -89,7 +90,7 @@
                     <SelectAddress slot="custom"></SelectAddress>
                 </nut-actionsheet>
             </div>
-            </nut-actionsheet>
+        </nut-actionsheet>
      </div>
 </template>
 
@@ -128,6 +129,7 @@ export default {
             document.body.classList.remove('scrollFixed')
             document.scrollingElement.scrollTop = this.scrollTop
         }) 
+        this.getData()
     },
     created(){
     },
@@ -159,12 +161,9 @@ export default {
         onClickItemS (index) {
             this.YanSeActive = index
         },
-        getList () { // nav导航分类
+        getData () { // 砍价商品
             let that = this
-            let params = {
-                type: that.$route.query.id
-            }
-			get('/index.php/home/index/manjian_cate',params).then(res => {
+			get('/index.php/home/free/chop_list').then(res => {
                 console.log(res);
                 that.dataList = res
             }).catch(function (error) {

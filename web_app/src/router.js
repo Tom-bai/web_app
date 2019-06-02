@@ -122,6 +122,14 @@ export default new Router({
                 },
             ]
         },
+        { 
+			path: '/indexMeiZhuang',
+            name: 'indexMeiZhuang',
+            meta:{
+                title: '美妆学院'
+            },
+			component: () => import('./views/index/indexBiquangChild/indexMeiZhuang') // 美妆学院
+        },
 		{// Tab买手
 			path: '/buy',
             name: 'buy',

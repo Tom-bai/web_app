@@ -3,7 +3,7 @@
         <div class="SelectAddress">
             <div class="header">选择收货地址<i class="close" @click="onAddressShow"></i></div>
             <div class="listBox">
-                <div class="list" v-for="item in addressData" @click="onClickAddress">
+                <div class="list" v-for="(item,index) in addressData" @click="onClickAddress" :key="index">
                     <div class="text">
                         <div class="name">白白白，18578640282</div>
                         <div class="address">广东省广州市天河区</div>
