@@ -28,7 +28,7 @@
                         </div>
                         <div class="name">TINCOCO 【2条装】6D薄款任意剪透明丝袜连裤袜</div>
                         <div class="money">
-                            <span>￥639 </span>
+                            <span>¥639 </span>
                             <span class="vip"></span>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                         <div class="textbox">
                             <div class="money">
                                 <span class="vip"></span>
-                                <span>￥639 </span>
+                                <span>¥639 </span>
                             </div>
                             <div class="name">TINCOCO 【2条装】6D薄款任意剪透明丝袜连裤袜</div>
                         </div>

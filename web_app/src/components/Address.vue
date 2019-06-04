@@ -82,10 +82,6 @@ export default {
         onAddressShow() { // 选择地址
             this.addressShow = !this.addressShow
         },
-        selected(data){
-            this.city = data.province.value + ' ' + data.city.value +' ' + data.area.value
-            this.addressShow = !this.addressShow
-        },
     },
     watch: {
     }

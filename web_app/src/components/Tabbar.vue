@@ -107,8 +107,8 @@ export default {
     bottom 0
     height 60px
     z-index 999
-    box-shadow 0 0 8px #ccc
     background-color #fff
+    border-top solid 1px #f1f1f1
     .tabbarNav
         flex 1
         .navIocn

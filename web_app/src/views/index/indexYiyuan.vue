@@ -15,7 +15,7 @@
         <div class="content" v-if="active == 0">
             <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
                 <div class="list" v-for="(item,index) in dataList" :key="index">
-                    <div class="item">
+                    <div class="item" @click="onRouter('/ProductDetails',item.ck)">
                         <div class="img"><img  v-lazy="$imgUrl + item.img" alt=""></div>
                         <div class="text">
                             <div class="name">{{item.title}}</div>
@@ -25,7 +25,7 @@
                                 <!-- <div>{{item.guoname}}</div>
                                 <div>{{item.guonamet2}}</div> -->
                             </div>
-                            <div class="money"><span>￥{{item.price}}</span><i class="vip"></i></div>
+                            <div class="money"><span>¥{{item.price}}</span><i class="vip"></i></div>
                         </div>
                     </div>
                     <!-- <div class="man">
@@ -57,7 +57,7 @@
                                 <div>{{item.guonamet2}}</div> -->
                             </div>
                             <div class="money">
-                                <span>￥{{item.price}}</span>
+                                <span>¥{{item.price}}</span>
                                 <i class="vip"></i>
                                 <span class="card"></span>
                             </div>
@@ -80,11 +80,11 @@
                 <div v-if="activeZC == 0">
                     <div class="list" v-for="(item,index) in dataZongList.datacr">
                         <div class="item">
-                            <div class="img"><img v-lazy="$imgUrl + '/Uploads/' + item.pro_img" alt=""></div>
+                            <div class="img"><img v-lazy="$imgUrl + item.pro_img" alt=""></div>
                             <div class="text">
                                 <div class="name">{{item.title}}</div>
                                 <div class="money">
-                                    <span><small>￥</small>{{item.g_price}}</span><small>起</small>
+                                    <span><small>¥</small>{{item.g_price}}</span><small>起</small>
                                 </div>
                                 <div class="progress">
                                     <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
@@ -106,7 +106,7 @@
                             <div class="text">
                                 <div class="name">{{item.title}}</div>
                                 <div class="money">
-                                    <span><small>￥</small>{{item.g_price}}</span><small>起</small>
+                                    <span><small>¥</small>{{item.g_price}}</span><small>起</small>
                                 </div>
                                 <div class="progress">
                                     <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
@@ -134,7 +134,7 @@
                             <div class="text">
                                 <div class="name">{{item.title}}</div>
                                 <div class="money">
-                                    <span><small>￥</small>{{item.g_price}}</span><small>起</small>
+                                    <span><small>¥</small>{{item.g_price}}</span><small>起</small>
                                 </div>
                                 <div class="progress">
                                     <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
@@ -147,6 +147,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="nomore" v-if="dataZongList.datanum == null">暂无数据</div>
                 </div>
                 <div v-if="activeZCD == 1">
                     <div class="list" v-for="(item,index) in dataZongList.datamen">
@@ -155,7 +156,34 @@
                             <div class="text">
                                 <div class="name">{{item.title}}</div>
                                 <div class="money">
-                                    <span><small>￥</small>{{item.g_price}}</span><small>起</small>
+                                    <span><small>¥</small>{{item.g_price}}</span><small>起</small>
+                                </div>
+                                <div class="progress">
+                                    <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
+                                </div>
+                                <div class="btn">
+                                    <i class="iocn"></i>
+                                    <span>{{item.cdf_num}}人支撑</span>
+                                    <span class="zhichi">支撑项目</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nomore" v-if="dataZongList.datamen == null">暂无数据</div>
+                </div>
+            </div>
+            <div>
+                <div class="topNav">
+                    <div class="itemBtn">过气的众筹</div>
+                </div>
+                <div>
+                    <div class="list" v-for="(item,index) in dataZongList.dataover">
+                        <div class="item">
+                            <div class="img"><img v-lazy="$imgUrl + '/Uploads/' + item.pro_img" alt=""></div>
+                            <div class="text">
+                                <div class="name">{{item.title}}</div>
+                                <div class="money">
+                                    <span><small>¥</small>{{item.g_price}}</span><small>起</small>
                                 </div>
                                 <div class="progress">
                                     <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
@@ -210,211 +238,6 @@ export default {
                     ioca: require('../../assets/img/index/zanh.png'),
                 },
             ],
-            data1: [
-                {
-                   img: require('../../assets/img/index/2222.jpg'),
-                   name: '澳洲freezeframe 紧致全效眼霜（15ml）提拉紧致去细纹黑眼圈',
-                   tip: '两条包邮两条包邮两条包邮两条包邮',
-                   guoioc: require('../../assets/img/index/q.png'),
-                   guoname: '中国',
-                   guonamet2: 'Bai白白',
-                   money: '200',
-                   mantip: [
-                       {
-                           name: '口红 唇釉'
-                       },
-                       {
-                           name: '香水'
-                       }
-                   ],
-                   shu: '15万',
-                   shuimg:[
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       },
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       },
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       }
-                   ]
-                },
-                {
-                   img: require('../../assets/img/index/2222.jpg'),
-                   name: '澳洲freezeframe 紧致全效眼霜（15ml）提拉紧致去细纹黑眼圈',
-                   tip: '两条包邮两条包邮两条包邮两条包邮',
-                   guoioc: require('../../assets/img/index/q.png'),
-                   guoname: '中国',
-                   guonamet2: 'Bai白白',
-                   money: '200',
-                   mantip: [
-                       {
-                           name: '口红 唇釉'
-                       },
-                       {
-                           name: '香水'
-                       }
-                   ],
-                   shu: '15万',
-                   shuimg:[
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       },
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       },
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       }
-                   ]
-                },
-                {
-                   img: require('../../assets/img/index/2222.jpg'),
-                   name: '澳洲freezeframe 紧致全效眼霜（15ml）提拉紧致去细纹黑眼圈',
-                   tip: '两条包邮两条包邮两条包邮两条包邮',
-                   guoioc: require('../../assets/img/index/q.png'),
-                   guoname: '中国',
-                   guonamet2: 'Bai白白',
-                   money: '200',
-                   mantip: [
-                       {
-                           name: '口红 唇釉'
-                       },
-                       {
-                           name: '香水'
-                       }
-                   ],
-                   shu: '15万',
-                   shuimg:[
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       },
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       },
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       }
-                   ]
-                },
-                {
-                   img: require('../../assets/img/index/2222.jpg'),
-                   name: '澳洲freezeframe 紧致全效眼霜（15ml）提拉紧致去细纹黑眼圈',
-                   tip: '两条包邮两条包邮两条包邮两条包邮',
-                   guoioc: require('../../assets/img/index/q.png'),
-                   guoname: '中国',
-                   guonamet2: 'Bai白白',
-                   money: '200',
-                   mantip: [
-                       {
-                           name: '口红 唇釉'
-                       },
-                       {
-                           name: '香水'
-                       }
-                   ],
-                   shu: '15万',
-                   shuimg:[
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       },
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       },
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       }
-                   ]
-                },
-                {
-                   img: require('../../assets/img/index/2222.jpg'),
-                   name: '澳洲freezeframe 紧致全效眼霜（15ml）提拉紧致去细纹黑眼圈',
-                   tip: '两条包邮两条包邮两条包邮两条包邮',
-                   guoioc: require('../../assets/img/index/q.png'),
-                   guoname: '中国',
-                   guonamet2: 'Bai白白',
-                   money: '200',
-                   mantip: [
-                       {
-                           name: '口红 唇釉'
-                       },
-                       {
-                           name: '香水'
-                       }
-                   ],
-                   shu: '15万',
-                   shuimg:[
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       },
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       },
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       }
-                   ]
-                },
-                {
-                   img: require('../../assets/img/index/2222.jpg'),
-                   name: '澳洲freezeframe 紧致全效眼霜（15ml）提拉紧致去细纹黑眼圈',
-                   tip: '两条包邮两条包邮两条包邮两条包邮',
-                   guoioc: require('../../assets/img/index/q.png'),
-                   guoname: '中国',
-                   guonamet2: 'Bai白白',
-                   money: '200',
-                   mantip: [
-                       {
-                           name: '口红 唇釉'
-                       },
-                       {
-                           name: '香水'
-                       }
-                   ],
-                   shu: '15万',
-                   shuimg:[
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       },
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       },
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       }
-                   ]
-                },
-                {
-                   img: require('../../assets/img/index/2222.jpg'),
-                   name: '澳洲freezeframe 紧致全效眼霜（15ml）提拉紧致去细纹黑眼圈',
-                   tip: '两条包邮两条包邮两条包邮两条包邮',
-                   guoioc: require('../../assets/img/index/q.png'),
-                   guoname: '中国',
-                   guonamet2: 'Bai白白',
-                   money: '200',
-                   mantip: [
-                       {
-                           name: '口红 唇釉'
-                       },
-                       {
-                           name: '香水'
-                       }
-                   ],
-                   shu: '15万',
-                   shuimg:[
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       },
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       },
-                       {
-                           img: require('../../assets/img/index/nav.jpg'),
-                       }
-                   ]
-                },
-            ],
             limit: 1,
             dataList: [], // 全部
             isHasMore: true,
@@ -433,6 +256,14 @@ export default {
         this.getDataOne()
     },
 	methods: {
+        onRouter (pathUrl,id) {
+			this.$router.push({
+				path: pathUrl,
+				query: {
+                    id: id
+				}
+			})
+		},
         onInfinite () { // 全部
             let that = this
             if (that.isHasMore) {
@@ -551,6 +382,7 @@ export default {
                     font-size 16px
                     font-weight 700
                     justify-content center
+                    margin-bottom 5px
                     img
                         width 18px
                         height 18px

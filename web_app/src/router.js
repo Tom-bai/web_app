@@ -28,7 +28,8 @@ export default new Router({
 			path: '/',
             name: 'index',
             meta:{
-                title: '大象商城'
+                title: '大象商城',
+                keepAlive: true
             },
 			component: Index
 		},
@@ -36,7 +37,8 @@ export default new Router({
 			path: '/myMsg',
             name: 'myMsg',
             meta:{
-                title: '我的消息'
+                title: '我的消息',
+                keepAlive: false
             },
 			component: () => import('./views/index/indexMsg/index') // 消息首页
 		},
@@ -44,7 +46,8 @@ export default new Router({
 			path: '/myMsg/indexToutiao',
             name: 'indexToutiao',
             meta:{
-                title: '头条'
+                title: '头条',
+                keepAlive: false
             },
 			component: () => import('./views/index/indexMsg/indexToutiao') // 头条
 		},
@@ -60,7 +63,8 @@ export default new Router({
 			path: '/myMsg/indexTongzhi',
             name: 'indexTongzhi',
             meta:{
-                title: '我的通知'
+                title: '我的通知',
+                keepAlive: false
             },
 			component: () => import('./views/index/indexMsg/indexTongzhi') //我的通知
         },
@@ -68,7 +72,8 @@ export default new Router({
 			path: '/indexMan',
             name: 'indexMan',
             meta:{
-                title: '满减商品'
+                title: '满减商品',
+                keepAlive: false
             },
 			component: () => import('./views/index/indexBiquangChild/indexMan') // 满减
         },
@@ -76,7 +81,8 @@ export default new Router({
 			path: '/indexManJJ',
             name: 'indexManJJ',
             meta:{
-                title: '满件减商品'
+                title: '满件减商品',
+                keepAlive: false
             },
 			component: () => import('./views/index/indexBiquangChild/indexManJJ') // 满件减
         },
@@ -84,7 +90,8 @@ export default new Router({
 			path: '/indexManPinTuan',
             name: 'indexManPinTuan',
             meta:{
-                title: '拼团商品'
+                title: '拼团商品',
+                keepAlive: false
             },
 			component: () => import('./views/index/indexBiquangChild/indexManPinTuan') // 拼团
         },
@@ -92,7 +99,8 @@ export default new Router({
 			path: '/indexVipJuan',
             name: 'indexVipJuan',
             meta:{
-                title: '拼团商品'
+                title: '拼团商品',
+                keepAlive: false
             },
 			component: () => import('./views/index/indexBiquangChild/indexVipJuan') // 新会员首减
         },
@@ -100,7 +108,8 @@ export default new Router({
 			path: '/indexNewUp',
             name: 'indexNewUp',
             meta:{
-                title: '新品上市'
+                title: '新品上市',
+                keepAlive: false
             },
 			component: () => import('./views/index/indexBiquangChild/indexNewUp') // 新会员首减
         },
@@ -108,7 +117,8 @@ export default new Router({
 			path: '/indexKanFree',
             name: 'indexKanFree',
             meta:{
-                title: '砍价免费拿'
+                title: '砍价免费拿',
+                keepAlive: false
             },
             component: () => import('./views/index/indexBiquangChild/indexKanFree'), // 砍价免费拿
             children: [
@@ -116,7 +126,8 @@ export default new Router({
                     path: '/Address',
                     name: 'Address',
                     meta:{
-                        title: '填写地址'
+                        title: '填写地址',
+                        keepAlive: false
                     },
                     component: () => import('./components/Address.vue') // 填写地址
                 },
@@ -126,15 +137,26 @@ export default new Router({
 			path: '/indexMeiZhuang',
             name: 'indexMeiZhuang',
             meta:{
-                title: '美妆学院'
+                title: '美妆学院',
+                keepAlive: false
             },
 			component: () => import('./views/index/indexBiquangChild/indexMeiZhuang') // 美妆学院
+        },
+        {  // 商品详情
+			path: '/ProductDetails',
+            name: 'ProductDetails',
+            meta:{
+                title: '商品详情',
+                keepAlive: false
+            },
+            component: () => import('./components/ProductDetails.vue')  // 商品详情
         },
 		{// Tab买手
 			path: '/buy',
             name: 'buy',
             meta:{
-                title: '买手页面'
+                title: '买手页面',
+                keepAlive: false
             },
 			component: () => import('./views/buy/index')
 		},
@@ -142,7 +164,8 @@ export default new Router({
 			path: '/vip',
             name: 'vip',
             meta:{
-                title: '我的会员'
+                title: '我的会员',
+                keepAlive: false
             },
 			component: () => import('./views/vip/index')
 		},
@@ -150,7 +173,8 @@ export default new Router({
 			path: '/cart',
             name: 'cart',
             meta:{
-                title: '大象购物车'
+                title: '大象购物车',
+                keepAlive: false
             },
 			component: () => import('./views/cart/index')
 		},
@@ -158,7 +182,8 @@ export default new Router({
 			path: '/center',
             name: 'center',
             meta:{
-                title: '个人中心'
+                title: '个人中心',
+                keepAlive: false
             },
 			component: () => import('./views/center/index')
 		},

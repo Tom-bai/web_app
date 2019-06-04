@@ -4,13 +4,14 @@
         <div class="indexSwiper">
             <div class="swiper">
                 <div class="swiperBg"></div>
-                <swiper :options="swiperOption" v-if="bannerData.length>0">
-                    <swiper-slide v-for="(slide, index) in bannerData" :key="index" class="swiperImg">
-                        <img :src="$imgUrl + slide.img" :alt="slide.alt">
-                    </swiper-slide>
-                    <div class="swiper-pagination" slot="pagination"></div>
-                </swiper>
-                <div v-else class="noSwiper"><img src="../../assets/img/moren.jpg"></div>
+                <van-swipe :autoplay="3000" @change="onChange">
+                    <van-swipe-item v-for="(image, index) in bannerData" :key="index" class="swiperImg">
+                        <img v-lazy="$imgUrl + image.img" />
+                    </van-swipe-item>
+                    <div class="custom-indicator" slot="indicator">
+                        {{ current + 1 }} / {{bannerData.length}}
+                    </div>
+                </van-swipe>
             </div>
         </div>
     </div>
@@ -19,34 +20,19 @@
 <script>
 // @ is an alias to /src
 import 'swiper/dist/css/swiper.css'
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import { Swipe, SwipeItem } from 'vant'
 import { get,post } from '@/axiosApi'
 export default {
 	name: "index",
 	components: {
-		swiper,
-        swiperSlide
+        [Swipe.name]: Swipe,
+        [SwipeItem.name]: SwipeItem,
 	},
 	props: [],
 	data () {
 		return {
-			bannerData: [],
-			swiperOption: {
-				loop: true,
-				autoplay: {
-					delay: 3000,
-					disableOnInteraction: false,
-				},
-				pagination: {
-					el: '.swiper-pagination',
-					type: 'fraction',
-					renderFraction: function (currentClass, totalClass) {
-					return '<span class="' + currentClass + '"></span>' +
-							' / ' +
-							'<span class="' + totalClass + '"></span>';
-					},
-				}
-			},
+            bannerData: [],
+            current: 0
 		}
 	},
 	mounted() {
@@ -69,6 +55,9 @@ export default {
                 console.log(error)
             })
         },
+        onChange(index) {
+            this.current = index;
+        }
 	},
 	watch: {}
 };
@@ -76,7 +65,8 @@ export default {
 <style lang="stylus" scoped>
 .swiper	
     position relative
-    min-height 160px
+    height 160px
+    padding-top 15px
     .swiperBg
         position absolute
         width 100%
@@ -84,27 +74,20 @@ export default {
         left 0
         top 0
         background-color #1a1a1a
-    .noSwiper
-        img 
-            width 100%
-            height 160px
-            position absolute
-            left 0
-            z-index 2
-            top 5px
     .swiperImg
         >img 
             width 92%
+            height 160px
             border-radius 3px
-    >>>.swiper-container
-        top 5px
-        .swiper-pagination
+    >>>.custom-indicator
+            position absolute
+            bottom 10px
+            left 20px
             width 40px
             background-color rgba(0, 0, 0, 0.4)
             text-align center
-            padding 2px 5px
+            padding 5px 5px
             border-radius 3px
-            line-height 18px
+            line-height 1
             color #fff
-            margin 0px 30px
 </style>

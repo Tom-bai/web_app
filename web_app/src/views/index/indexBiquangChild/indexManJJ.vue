@@ -13,7 +13,7 @@
                             </div>
                             <div class="name">{{item.title}}</div>
                             <div class="money">
-                                <span>￥{{item.price}}</span><span class="yuan">￥{{item.u_price}}</span>
+                                <span>¥{{item.price}}</span><span class="yuan">¥{{item.u_price}}</span>
                             </div>
                             <div class="btn">立即购买</div>
                         </div>

@@ -35,11 +35,11 @@
                 <swiper-slide v-for="(item,index) in dataNav" :key="index" class="swiperB">
                     <div class="navBtnbox">
                         <div class="navBtn">
-                            <div class="list" :key="index">
+                            <div class="list">
                                 <div><img v-lazy="$imgUrl + item.img" alt=""></div>
                                 <div>{{item.name}}</div>
                             </div>
-                            <div class="list" :key="index">
+                            <div class="list">
                                 <div><img v-lazy="$imgUrl + item.img" alt=""></div>
                                 <div>{{item.name}}</div>
                             </div>

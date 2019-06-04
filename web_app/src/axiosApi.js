@@ -1,16 +1,18 @@
 import Vue from 'vue'
 import axios from 'axios'
+import qs from 'qs'
+import { Toast } from 'vant'
 axios.defaults.timeout = 30 * 1000
-axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.baseURL = 'http://shop.xfengle.com' // 接口域名
 axios.defaults.withCredentials = true
 // POST传参序列化(添加请求拦截器)
 axios.defaults.baseURL = '/api' //跨域
 axios.interceptors.request.use(
     config => {
-        // if (config.method === 'post') {
-        //     config.data = qs.stringify(config.data)
-        // }
+        if (config.method === 'post') {
+            config.data = qs.stringify(config.data)
+        }
         return config
     },
     err => {
@@ -81,6 +83,22 @@ export function formatTime(date, fmt) { // 格式化时间
         }
     }
     return fmt
+}
+export function toast(message) {
+    Toast({
+        duration: 0,       // 持续展示 toast
+        forbidClick: true, // 禁用背景点击
+        loadingType: 'spinner',
+        message: message
+    });
+    let second = 1
+    const timer = setInterval(() => {
+        second--
+        if (!second) {
+            clearInterval(timer)
+            Toast.clear()
+        }
+    }, 1500);
 }
 function padLeftZero(str) {
     return ('00' + str).substring(str.length)

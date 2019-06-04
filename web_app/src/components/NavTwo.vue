@@ -21,7 +21,7 @@
                         <span>即将售罄</span>
                     </div>
                     <div class="money">
-                        <div>￥399.00 <span class="zhuan">赚￥50</span></div>
+                        <div>¥399.00 <span class="zhuan">赚¥50</span></div>
                         <div class="btn" style="background: #f1002d;">马上抢</div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                         <span>即将售罄</span>
                     </div>
                     <div class="money">
-                        <div>￥399.00 <span class="zhuan">赚￥50</span></div>
+                        <div>¥399.00 <span class="zhuan">赚¥50</span></div>
                         <div class="btn" style="background: #f1002d;">马上抢</div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                         <span>即将售罄</span>
                     </div>
                     <div class="money">
-                        <div>￥399.00 <span class="zhuan">赚￥50</span></div>
+                        <div>¥399.00 <span class="zhuan">赚¥50</span></div>
                         <div class="btn" style="background: #f1002d;">马上抢</div>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                         <span>已有9673人收藏</span>
                     </div>
                     <div class="money">
-                        <div>￥399.00 <span class="zhuan">赚￥50</span></div>
+                        <div>¥399.00 <span class="zhuan">赚¥50</span></div>
                         <div class="btn" style="background: #1a1a1a;">即将开抢</div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                         <span>已有9673人收藏</span>
                     </div>
                     <div class="money">
-                        <div>￥399.00 <span class="zhuan">赚￥50</span></div>
+                        <div>¥399.00 <span class="zhuan">赚¥50</span></div>
                         <div class="btn" style="background: #1a1a1a;">即将开抢</div>
                     </div>
                 </div>
@@ -223,6 +223,7 @@ export default {
                     -webkit-box-orient vertical
                     font-size 14px 
                     font-weight 700
+                    margin-top 10px
 
                 .jindu
                     padding 5px 0

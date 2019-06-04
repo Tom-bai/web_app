@@ -12,7 +12,7 @@
                             </div>
                             <div class="name">{{item.title}}</div>
                             <div class="money">
-                                <span>￥639 </span>
+                                <span>¥639 </span>
                                 <span class="tip">已抢10件</span>
                             </div>
                             <div class="btn" @click="onHiddenActionSheet">点击免费拿</div>
@@ -64,7 +64,7 @@
                     <div class="header">
                         <div class="img"><img src="../../../assets/img/index/2222.jpg" alt=""></div>
                         <div class="text">
-                            <div class="money">￥10</div>
+                            <div class="money">¥10</div>
                             <div class="tip">请选择 款式 颜色</div>
                             <div class="close" @click="onHiddenActionSheet"></div>
                         </div>

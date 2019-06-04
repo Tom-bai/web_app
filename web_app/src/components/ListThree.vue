@@ -11,9 +11,9 @@
                         <div class="pM">
                             <div>
                                 <span class="tag">{{item.num}}人团</span>
-                                <span class="num">￥{{item.s_price}}</span>
+                                <span class="num">¥{{item.s_price}}</span>
                             </div>
-                            <div class="danmai">单买价<span>￥{{item.price}}</span></div>
+                            <div class="danmai">单买价<span>¥{{item.price}}</span></div>
                         </div>
                         <div class="btn"><span>去拼团</span></div>
                     </div>

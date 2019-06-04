@@ -15,27 +15,27 @@
                             <div class="name">2盒 l Santen 参天 FX 银装清凉眼药水 12毫升/盒</div>
                             <div class="money">
                                 <span class="tag">2人团</span>
-                                <span class="num">￥96</span>
+                                <span class="num">¥96</span>
                             </div>
-                            <div class="yuanjia">￥600</div>
+                            <div class="yuanjia">¥600</div>
                         </div>
                         <div class="list">
                             <div class="img"><img src="../../../assets/img/index/2222.jpg"></div>
                             <div class="name">2盒 l Santen 参天 FX 银装清凉眼药水 12毫升/盒</div>
                             <div class="money">
                                 <span class="tag">2人团</span>
-                                <span class="num">￥96</span>
+                                <span class="num">¥96</span>
                             </div>
-                            <div class="yuanjia">￥600</div>
+                            <div class="yuanjia">¥600</div>
                         </div>
                         <div class="list">
                             <div class="img"><img src="../../../assets/img/index/2222.jpg"></div>
                             <div class="name">2盒 l Santen 参天 FX 银装清凉眼药水 12毫升/盒</div>
                             <div class="money">
                                 <span class="tag">2人团</span>
-                                <span class="num">￥96</span>
+                                <span class="num">¥96</span>
                             </div>
-                            <div class="yuanjia">￥600</div>
+                            <div class="yuanjia">¥600</div>
                         </div>
                     </swiper-slide>
                     <!-- <div class="swiper-pagination" slot="pagination"></div> -->
@@ -54,9 +54,9 @@
                                 <div class="pM">
                                     <div>
                                         <span class="tag">{{item.num}}人团</span>
-                                        <span class="num">￥{{item.s_price}}</span>
+                                        <span class="num">¥{{item.s_price}}</span>
                                     </div>
-                                    <div class="danmai">单买价<span>￥{{item.price}}</span></div>
+                                    <div class="danmai">单买价<span>¥{{item.price}}</span></div>
                                 </div>
                                 <div class="btn"><span>去拼团</span></div>
                             </div>

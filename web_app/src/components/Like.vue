@@ -6,14 +6,14 @@
             </div>
             <div class="watefall" id='watefall' v-masonry transition-duration="0.1s" item-selector=".pin">
                 <div v-masonry-tile class="pin" v-for="(item,index) in dataList" :key="index">
-                    <div class="box">
-                        <img :src="item.img" v-lazy="$imgUrl + '/Uploads/' + item.img"/>
+                    <div class="box" @click="onRouter('/ProductDetails',item.id)">
+                        <img :src="item.img" v-lazy="$imgUrl + item.img"/>
                         <div class="watefallText" v-if="item.title">{{item.title}}</div>
                         <div class="myWatefall">
                             <div class="watefallHeadtext">
                                 <div class="mySignature">{{item.title}}</div>
                                 <div class="money">
-                                    <div>￥{{item.price}}</div>
+                                    <div>¥{{item.price}}</div>
                                     <div class="vip"></div>
                                 </div>
                             </div>
@@ -31,39 +31,6 @@ export default {
     props: {},
     data () {
         return {
-            articleData: [
-                {
-                    id: 1,
-                    img: require('../assets/img/index/img27.jpg'),
-                    qm: '',
-                    name: '',
-                    text: ''
-                },
-                {
-                    id: 1,
-                    img: require('../assets/img/index/2222.jpg'),
-                    tip: '浮生若梦 FACE & BODY 双用水粉霜 50毫升',
-                    qm: 'wdwd',
-                    name: 'asds',
-                    text: 'sdasd'
-                },
-                {
-                    id: 1,
-                    img: require('../assets/img/index/2222.jpg'),
-                    tip: '浮生若梦 FACE & BODY 双用水粉霜 50毫升',
-                    qm: 'wdwd',
-                    name: 'asds',
-                    text: 'sdasd'
-                },
-                {
-                    id: 1,
-                    img: require('../assets/img/index/2222.jpg'),
-                    tip: '浮生若梦 FACE & BODY 双用水粉霜 50毫升',
-                    qm: 'wdwd',
-                    name: 'asds',
-                    text: 'sdasd'
-                },
-            ],
             dataList: []
         }
     },
@@ -73,6 +40,14 @@ export default {
         this.getDataLike()
     },
     methods: {
+        onRouter (pathUrl,id) {
+			this.$router.push({
+				path: pathUrl,
+				query: {
+                    id: id
+				}
+			})
+		},
         getDataLike () { // 猜你喜欢
             let that = this
 			get('/index.php/home/index/like_goods').then(res => {

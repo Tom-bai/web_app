@@ -2,9 +2,11 @@
 	<div id="app">
         <div>
             <div class="main">
-                <router-view/>
-                <nut-backtop :distance="500" :bottom="80" :right="10" class="myTop">
-                </nut-backtop>
+                <keep-alive>
+                    <router-view v-if="$route.meta.keepAlive"></router-view>
+                </keep-alive>
+                <router-view v-if="!$route.meta.keepAlive"></router-view>
+                <nut-backtop :distance="500" :bottom="80" :right="10" class="myTop"></nut-backtop>
                 <Tabbar v-if="showTabber"></Tabbar>
             </div>
         </div>

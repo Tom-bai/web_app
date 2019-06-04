@@ -15,7 +15,7 @@
                                 <div class="img"><img src="../../assets/img/index/2222.jpg" alt=""></div>
                                 <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
                                 <div class="money">
-                                    <div>￥399.00</div>
+                                    <div>¥399.00</div>
                                     <div class="vip"></div>
                                 </div>
                             </div>
@@ -37,7 +37,7 @@
                                 <div class="img"><img src="../../assets/img/index/2222.jpg" alt=""></div>
                                 <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
                                 <div class="money">
-                                    <div>￥399.00</div>
+                                    <div>¥399.00</div>
                                     <div class="vip"></div>
                                 </div>
                             </div>

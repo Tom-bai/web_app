@@ -14,7 +14,7 @@
                             <div class="name">人见人爱，超高人气</div>
                             <div class="tip">Freeplus 芙丽芳丝 净润洗面霜 100克</div>
                             <div class="money">
-                                <span class="num">￥asd</span>
+                                <span class="num">¥asd</span>
                                 <span class="new">新人专享</span>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                         </div>
                         <div class="name">TINCOCO 【2条装】6D薄款任意剪透明丝袜连裤袜</div>
                         <div class="money">
-                            <span>￥639 </span>
+                            <span>¥639 </span>
                             <span class="vip"></span>
                         </div>
                         <div class="btn">立即购买</div>

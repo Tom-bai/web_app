@@ -2,7 +2,7 @@
 	<!-- 今日必抢 -->
     <div>
         <div class="indexBiqiang">
-            <div class="newFuli" @click="onRouter('/indexVipJuan',3)"><img v-lazy="$imgUrl + 'Uploads/' + dataList.home_img_1" alt=""></div>
+            <div class="newFuli" @click="onRouter('/indexVipJuan',3)"><img v-lazy="$imgUrl  + dataList.home_img_1" alt=""></div>
             <div class="topName">
                 <div>{{dataList.cn_bt}}</div>
                 <div class="tip">{{dataList.cn_fbt}}</div>
@@ -14,7 +14,7 @@
                         <div class="header">
                             <p>{{dataList.jr_tl_bt}}</p>
                         </div>
-                        <div class="img"><img v-lazy="$imgUrl + 'Uploads/' + dataList.jr_tl_img" alt=""></div>
+                        <div class="img"><img v-lazy="$imgUrl  + dataList.jr_tl_img" alt=""></div>
                     </div>
                 </div>
                 <div class="listTwo">
@@ -23,7 +23,7 @@
                         <div class="header">
                             <p>{{dataList.jr_tr_bt}}</p>
                         </div>
-                        <div class="img"><img v-lazy="$imgUrl + 'Uploads/' + dataList.jr_tr_img" alt=""></div>
+                        <div class="img"><img v-lazy="$imgUrl  + dataList.jr_tr_img" alt=""></div>
                     </div>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                             <p>{{dataList.jr_bl_bt}}</p>
                             <p class="tip">{{dataList.jr_bl_fbt}}</p>
                         </div>
-                        <div class="img"><img v-lazy="$imgUrl + 'Uploads/' + dataList.jr_bl_img" alt=""></div>
+                        <div class="img"><img v-lazy="$imgUrl  + dataList.jr_bl_img" alt=""></div>
                     </div>
                 </div>
                 <div class="listThree">
@@ -45,7 +45,7 @@
                             <p>{{dataList.jr_bm_bt}}</p>
                             <p class="tip">{{dataList.jr_bm_fbt}}</p>
                         </div>
-                        <div class="img"><img v-lazy="$imgUrl + 'Uploads/' + dataList.jr_bm_img" alt=""></div>
+                        <div class="img"><img v-lazy="$imgUrl  + dataList.jr_bm_img" alt=""></div>
                     </div>
                 </div>
                 <div class="listThree">
@@ -55,7 +55,7 @@
                             <p>{{dataList.jr_br_bt}}</p>
                             <p class="tip">{{dataList.jr_br_fbt}}</p>
                         </div>
-                        <div class="img"><img v-lazy="$imgUrl + 'Uploads/' + dataList.jr_br_img" alt=""></div>
+                        <div class="img"><img v-lazy="$imgUrl  + dataList.jr_br_img" alt=""></div>
                     </div>
                 </div>
             </div>
