@@ -4,7 +4,7 @@
 		<div class="index"> 
             <div class="search-box">
                 <div class="search" id="search" :class="topSearch?'topSearch':''">
-                    <div class="header"><img src="../../assets/img/index/nav.jpg" alt=""></div>
+                    <div class="head"><img src="../../assets/img/index/nav.jpg" alt=""></div>
                     <div class="input">阿迪达斯</div>
                     <div class="tongzhi" @click="onRouter('/myMsg')">
                         <span class="text">消息</span>
@@ -107,7 +107,7 @@ export default {
         padding 0 15px
         height 45px
         background-color #1a1a1a
-        .header
+        .head
             img
                 width 28px
                 border-radius 100%

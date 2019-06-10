@@ -3,7 +3,10 @@
 		<!-- <nut-tabbar class="Bset" @tab-switch="tabSwitch" :bottom="true" :tabbarList="tabList"></nut-tabbar> -->
         <div class="Tabbar">
             <div class="tabbarNav" v-for="(item,index) in tabList" :key="index" @click="onRouter(item.routerUrl,item.tabTitle)">
-                <div class="navIocn"><img :src="curr == index?item.activeIcon:item.icon" alt=""></div>
+                <div class="navIocn">
+                    <img :src="curr == index?item.activeIcon:item.icon" alt="">
+                    <span class="biaoQian" v-if="item.tabTitle == '购物车'">{{cardNum}}</span>
+                </div>
                 <div class="navText" :class="curr == index?'active':''">{{item.tabTitle}}</div>
             </div>
         </div>
@@ -11,6 +14,7 @@
 </template>
 
 <script>
+import { get,post } from '@/axiosApi'
 export default {
 	name: 'Tabbar',
 	props: {
@@ -56,9 +60,13 @@ export default {
                     'activeIcon':require('../assets/img/tabbar/center_Z.png'),
                     'routerUrl': '/center'
                 }
-            ]
-			}
-	},
+            ],
+            cardNum: null
+		}
+    },
+    mounted () {
+        this.getCardData() 
+    },
 	methods: {
 		onRouter (pathUrl,id) {
 			this.$router.push({
@@ -67,7 +75,15 @@ export default {
                     from: id
 				}
 			})
-		}
+        },
+        getCardData () { // 获取购物车
+            let that = this
+            get('/index.php/home/shopCart/info').then(res => {
+                that.cardNum = res.list.length
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
     },
     watch: {
         '$route'(to,from) {
@@ -116,9 +132,20 @@ export default {
             height 22px
             margin-bottom 5px
             margin auto
+            position relative
             >img 
                 width 100%
                 display block
+            .biaoQian
+                line-height 1
+                position absolute
+                top -8px
+                right -12px
+                background-color $background-color
+                color #fff
+                padding 3px
+                font-size 12px
+                border-radius 100%
         .navText
             color #848484
             margin-top 2px

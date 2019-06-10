@@ -3,7 +3,7 @@
 		<!-- <nut-tabbar class="Bset" @tab-switch="tabSwitch" :bottom="true" :tabbarList="tabList"></nut-tabbar> -->
         <div class="ProductDetails" v-if="goodsInfo.goods">
             <div class="header">
-                <div class="name" :class="topIndex == index?'active':''" v-for="(item,index) in topName" @click="onTopNav(index)">{{item}}</div>
+                <div class="name" :class="topIndex == index?'active':''" v-for="(item,index) in topName" :key="index" @click="onTopNav(index)">{{item}}</div>
             </div>
             <div class="swiper" id="anchor-0">
                 <van-swipe :autoplay="4000">
@@ -14,8 +14,8 @@
             </div>
             <div class="moneyDetaild">
                 <div class="money">
-                    <div><span class="moneyIoc">¥</span>{{goodsInfo.goods.price}}</div>
-                    <div class="yuan"><span class="moneyIoc">¥</span>{{goodsInfo.goods.member_price}}</div>
+                    <div><span class="moneyIoc">¥</span>{{goodsInfo.goods.price}} <div class="xiaoLiang">近期销量：{{goodsInfo.goods.max_num}}</div></div>
+                    <div class="yuan"><span class="moneyIoc">¥</span>{{goodsInfo.goods.member_price}}<i class="vip"></i></div>
                 </div>
                 <div class="openVip">
                     <div class="cardName">
@@ -40,8 +40,8 @@
                     <div class="title">请选择：</div>
                     <div class="list">
                         <div class="text">
-                            <div class="name" v-if="kuanshiActive || kuanshiActives">{{kuanshiActive}} {{kuanshiActives}}</div>
-                            <div class="name" v-else>颜色 尺码</div>
+                            <div class="name" v-if="textTishi !== ' '">{{textTishi}}</div>
+                            <div class="name" v-else>规格</div>
                         </div>
                         <div class="rightJ"></div>
                     </div>
@@ -60,7 +60,6 @@
                     <div class="list">
                         <div class="text">
                             <div class="name"><span>至</span><span class="weizhi"></span><span>{{city}}</span></div>
-                            <div class="tip">24:00前完成支付，预计6月7日(周五)送达</div>
                         </div>
                         <div class="rightJ"></div>
                     </div>
@@ -74,50 +73,43 @@
                         <div class="rightJ"></div>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" @click="onshowMsg">
                     <div class="title">服&nbsp;&nbsp;&nbsp;务：</div>
                     <div class="list">
                         <div class="text">
                             <div class="tip">
-                                <span v-for="(item,index) in goodsInfo.goods.fuwu" :key="index">{{item}}</span>
+                                <span v-for="(item,index) in textFuWu" :key="index">{{item.name}}</span>
                             </div>
                         </div>
                         <div class="rightJ"></div>
                     </div>
                 </div>
             </div>
+            <!-- 评论 -->
             <div class="pinLun" id="anchor-1">
                 <div class="item">
                     <div class="list">
                         <div class="text">
-                            <div class="name">其他小伙伴们说(412)</div>
+                            <div class="name">其他小伙伴们说<span>({{goodsInfo.count_com == null?'0':goodsInfo.count_com}})</span></div>
                         </div>
-                        <div class="rightJ"></div>
+                        <div class="rightJ">好评率({{goodsInfo.good_favorable}})</div>
                     </div>
                 </div>
-                <div class="container">
-                    <div class="list">
-                        <div class="headerImg">
-                            <div class="img"><img v-lazy="$imgUrl" alt=""></div>
-                            <div class="name">y***9</div>
+                <div class="container" v-if="commentData">
+                    <div class="list" v-for="(item,index) in commentData" :key="index">
+                        <div class="two">
+                            <div class="headerImg">
+                                <div class="img"><img v-lazy="$imgUrl + item.img" alt=""></div>
+                                <div class="name">{{item.names}}</div>
+                            </div>
+                            <div class="text">{{item.content}}</div>
                         </div>
-                        <div class="text">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    </div>
-                    <div class="list">
-                        <div class="headerImg">
-                            <div class="img"><img v-lazy="$imgUrl" alt=""></div>
-                            <div class="name">y***9</div>
+                        <div class="twoImg" v-if="item.pimg">
+                            <img v-lazy="$imgUrl + item.pimg[0]" alt="">
+                            <div class="tip">{{item.pimg.length}}张图</div>
                         </div>
-                        <div class="text">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
                     </div>
-                    <div class="list">
-                        <div class="headerImg">
-                            <div class="img"><img v-lazy="$imgUrl" alt=""></div>
-                            <div class="name">y***9</div>
-                        </div>
-                        <div class="text">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    </div>
-                    <div class="list more">
+                    <div class="list more" v-if="commentData.length > 2">
                         <div class="pR">
                             <div class="moreText"><span>更多评论</span></div>
                             <div class="See">See more</div>
@@ -129,9 +121,9 @@
                 <div class="item">
                     <div class="list">
                         <div class="box">
-                            <div class="logo"><img src="../assets/img/index/indexNewUp/nav.jpg" alt=""></div>
+                            <div class="logo"><img v-lazy="$imgUrl + PUser.img" alt=""></div>
                             <div class="text">
-                                <div class="name">欧蔓莎</div>
+                                <div class="name">{{PUser.names}}</div>
                                 <div class="tip">我的大象店铺</div>
                             </div>
                         </div>
@@ -141,14 +133,14 @@
                             <img src="../assets/img/kefu2.png" alt="">
                             <div>客服</div>
                         </div>
-                        <div class="fenxiang">
+                        <div class="fenxiang" @click="getShare($route.query.id)">
                             <img src="../assets/img/fenxiang.png" alt="">
                             <div>分享</div>
                         </div>
                     </div>
                 </div>
                 <div class="container">
-                    <div class="list" v-for="(item,index) in goodsInfo.goods_day">
+                    <div class="list" v-for="(item,index) in goodsInfo.goods_day" :key="index" @click="onRouter('/ProductDetails',item.id)">
                         <div class="img"><img v-lazy="$imgUrl + item.img" alt=""></div>
                         <div class="name">{{item.title}}</div>
                         <div class="money">
@@ -164,16 +156,22 @@
             <div class="detailsImg" id="anchor-3">
                 <div class="topName">商品信息</div>
                 <div  class="descInfoBox">
-                    <div class="descInfo" v-for="(item,index) in summaryListThree">
-                        <div class="descTip">{{item.title}}</div>
-                        <div class="descCont">{{item.name}}</div>
+                    <div class="descInfo">
+                        <div class="descTip">
+                            <div  v-for="(item,index) in goodsInfo.goods.des1.dec1" :key="index">{{item}}</div>
+                        </div>
+                        <div class="descCont">
+                            <div v-for="(item,index) in goodsInfo.goods.des1.dec2" :key="index">{{item}}</div>
+                        </div>
                     </div>
                 </div>
-                <div class="zhanKai" @click="onZhanKai" v-if="!onMore"><span>展开</span><img src="../assets/img/rightT.png" alt=""></div>
-                <div class="shouQi" @click="onZhanKai" v-else><span>收起</span><img src="../assets/img/rightT.png" alt=""></div>
-                <div class="shangpinImg">
-                    <img src="../assets/img/index/2222.jpg" alt="">
+                <div v-if="goodsInfo.goods.des1.dec1">
+                    <div v-if="goodsInfo.goods.des1.dec1.length > 3">
+                        <div class="zhanKai" @click="onZhanKai" v-if="!onMore"><span>展开</span><img src="../assets/img/rightT.png" alt=""></div>
+                        <div class="shouQi" @click="onZhanKai" v-else><span>收起</span><img src="../assets/img/rightT.png" alt=""></div>
+                    </div>
                 </div>
+                <div class="shangpinImg" v-html="goodsInfo.goods.content"></div>
             </div>
         </div>
         <!-- 底部选项卡 -->
@@ -182,13 +180,13 @@
                 icon-class="indexIocnImg"
                 class="indexIocn"
                 text="主页"
-                @click="onClickMiniBtn"
+                @click="onRouter('/')"
             />
             <van-goods-action-mini-btn
-                icon-class="likeIocnImg"
+                :icon-class="goodsInfo.collect == null?'likeIocnImg':'likeIocnImgs'"
                 class="likeIocn"
-                text="收藏"
-                @click="onClickMiniBtn"
+                :text="goodsInfo.collect == null?'收藏':'已收藏'"
+                @click="getCollect($route.query.id)"
             />
             <van-goods-action-mini-btn
                 icon-class="cartIocnImg"
@@ -220,23 +218,26 @@
                     <div class="headerT" v-if="goodsInfo.goods">
                         <div class="img"><img v-lazy="$imgUrl + goodsInfo.goods.img" alt=""></div>
                         <div class="text">
-                            <div class="money">¥{{goodsInfo.goods.price}}</div>
-                            <div class="tip" v-if="kuanshiActive || kuanshiActives">{{kuanshiActive}} {{kuanshiActives}}</div>
-                            <div class="tip" v-else>请选择 款式 颜色</div>
+                            <div class="money">
+                                <div>¥{{goodsInfo.goods.price}}</div>
+                                <div class="yuan"><span class="moneyIoc">¥</span>{{goodsInfo.goods.member_price}}<i class="vip"></i></div>
+                            </div>
+                            <div class="tip" v-if="textTishi !== ' '">{{textTishi}}</div>
+                            <div class="tip" v-else>请选择 规格</div>
+                            <div class="tip">库存 {{kuCun}}</div>
                             <div class="close" @click="onHiddenActionSheet"></div>
                         </div>
                     </div>
+                    <!-- 规格 -->
                     <div class="main" v-if="goodsInfo.attr">
-                        <div class="xuanBox" v-if="goodsInfo.attr[0]">
-                            <div class="name">{{goodsInfo.attr[0].name}}</div>
+                        <div class="xuanBox" v-for="(item,n) in gugeValue" :key="n">
+                            <div class="name">{{item.name}}</div>
                             <div class="listBox">
-                                <div class="item" :class="kuanshiActive == itemList?'active':''" v-for="(itemList,index) in goodsInfo.attr[0].value" :key="index" @click="onClickItemK(goodsInfo.attr[0],itemList)">{{itemList}}</div>
-                            </div>
-                        </div>
-                        <div class="xuanBox" v-if="goodsInfo.attr[1]">
-                            <div class="name">{{goodsInfo.attr[1].name}}</div>
-                            <div class="listBox">
-                                <div class="item" :class="kuanshiActives == itemList?'active':''" v-for="(itemList,index) in goodsInfo.attr[1].value" :key="index" @click="onClickItemKS(goodsInfo.attr[1],itemList)">{{itemList}}</div>
+                                <div class="item" 
+                                    v-for="(items,index) in item.values" 
+                                    v-on:click="specificationBtn(items.name,n,$event,index)" 
+                                    v-bind:class="[items.isShow?'':'',subIndex[n] == index?'active':'']"
+                                    :key="index">{{items.name}}</div>
                             </div>
                         </div>
                         <div class="xuanBox">
@@ -247,16 +248,43 @@
                         </div>
                     </div>
                 </div>
-                <div class="btn" @click="onHiddenActionSheet">确定</div>
+                <div class="btn" @click="onHiddenActionSheetTwo">确定</div>
             </div>
         </nut-actionsheet>
+        <!-- 服务详情 -->
+        <nut-actionsheet :is-visible="showMsg" @close="onshowMsg" :isClickCloseMask="false">
+            <div slot="custom" class="fuWuBox">
+                <div class="fuWuBoxHead">
+                    <div class="left"></div>
+                    <div class="text">服务说明</div>
+                    <div class="close" @click="onshowMsg"></div>
+                </div>
+                <div class="conten">
+                    <div class="list" v-for="(item,index) in textFuWu" :key="index">
+                        <div class="img"><img v-lazy="$imgUrl + item.img" alt=""></div>
+                        <div class="text">
+                            <div class="textN">{{item.name}}</div>
+                            <div class="textT">{{item.des}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nut-actionsheet>
+        <!-- 分享图片 -->
+        <van-popup v-model="shareBoxShow" class="shareBoxPopup">
+            <div class="shareBox">
+                <img :src="$imgUrl + shareData.pic" alt="">
+                <div>长按图片保存</div>
+            </div>
+        </van-popup>
 	</div>
 </template>
 
 <script>
-import { Swipe, SwipeItem,Area,GoodsAction,GoodsActionBigBtn,GoodsActionMiniBtn,Stepper } from 'vant'
+import { Swipe, SwipeItem,Area,GoodsAction,GoodsActionBigBtn,GoodsActionMiniBtn,Stepper,Popup } from 'vant'
 import { get,post,toast } from '@/axiosApi'
 import AddressInfo from '../assets/js/area'
+import { log } from 'util';
 export default {
 	name: 'ProductDetails',
 	props: {
@@ -270,6 +298,7 @@ export default {
         [GoodsActionMiniBtn.name]: GoodsActionMiniBtn,
         [GoodsActionBigBtn.name]: GoodsActionBigBtn,
         [Stepper.name]: Stepper,
+        [Popup.name]: Popup,
 	},
 	data () {
 		return {
@@ -283,13 +312,11 @@ export default {
             ],
             addressShow:false,
             areaList: AddressInfo,
-            kuanShiData: new Array(6),
-            kuanshiActive: '',
-            kuanshiActives: '',
             YanSeActive: null,
             list: true,
             isVisible: false,
             addressShow: false,
+            showMsg:false,
             scrollTop: null,
             showList: 1,
             num: 1,
@@ -312,9 +339,23 @@ export default {
                 }
             ],
             summaryListThree: [],
+            gugeValue: [],
             onMore: false,
-            cardNum: null
-		}
+            cardNum: null,
+            textFuWu: [],
+            shareBoxShow: false,
+            shareData: [],
+            commentData: [],
+            PUser: [],
+            kuCun: 1,
+            //
+            textTishi: ' ',
+            selectArr: [], //存放被选中的值
+            shopItemInfo: {}, //存放要和选中的值进行匹配的数据
+            subIndex: [], //是否选中 因为不确定是多规格还是但规格，所以这里定义数组来判断
+        }
+    },
+    created: function () {
     },
     mounted() {
         this.getGoodsInfo() 
@@ -325,19 +366,111 @@ export default {
             let params = {
                 id: that.$route.query.id
             }
+            that.goodsInfo = []
+            that.commentData = []
 			get('/index.php/home/goods/goodsInfo',params).then(res => {
                 that.goodsInfo = res
+                that.gugeValue = res.attr
                 that.summaryListThree = that.summaryList.slice(0,3)
+                that.cardNum = res.shop_cart_num
+                let ids = that.goodsInfo.goods.fuwu.join(',')
+                that.getFuWu(ids)
+                that.getComment()
+                that.getPUser()
             }).catch(function (error) {
                 console.log(error)
             })
         },
-        onTopNav (index) {
+        getFuWu (ids) { // 获取服务信息
+            let that = this
+            let params = {
+                ids: ids
+            }
+			get('/index.php/home/goods/otherFuwu',params).then(res => {
+                that.textFuWu = res
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        getCollect (id) { // 收藏
+            let that = this
+            let params = {
+                id: id
+            }
+			get('/index.php/home/goods/ajax_collect',params).then(res => {
+                if (res.con == '收藏') {
+                    toast(res.data)
+                    that.goodsInfo.collect = null
+                } else if (res.con == '已收藏') {
+                    toast(res.data)
+                    that.goodsInfo.collect = 1
+                }
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        getShare (id) { // 分享图片
+            let that = this
+            let params = {
+                id: id
+            }
+			get('/index.php/home/goods/share',params).then(res => {
+                console.log(res);
+                that.shareData = res
+                that.shareBoxShow = !that.shareBoxShow
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        getComment () { // 获取评论列表
+            let that = this
+            let params = {
+                g_id: that.$route.query.id,
+                limit: 1,
+            }
+			get('/index.php/home/goods/getComment',params).then(res => {
+                if (res) {
+                    that.commentData = res.slice(0,3)
+                }
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        getPUser () { // 获取当前用户推广人的信息
+            let that = this
+			get('/index.php/home/com/pUser').then(res => {
+                that.PUser  = res
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        getFinAttr (postText) { // 商品详情页获取不同规格信息
+            let that = this
+            let params = {
+                id: that.goodsInfo.goods.id, //商品id
+                num: that.num, //数量
+                a_id: postText, // 	商品规格(字符串，逗号隔开) 尺寸-颜色|1.8m（6英尺）床,心动"
+                isOrder: 1, // 是否订单 1是
+            }
+			post('/index.php/home/goods/ajax_find_attr',params).then(res => {
+                if (res.data.id !== undefined) {
+                    that.goodsInfo.goods.img = res.data.attr_img
+                    that.goodsInfo.goods.price = res.data.attr_price
+                    that.kuCun = res.data.attr_num
+                    that.goodsInfo.goods.member_price = res.data.attr_mem_price
+                } else {
+                    that.kuCun = 1
+                }
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        onTopNav (index) { // 顶部定位
             this.topIndex = index
             document.querySelector("#anchor-" + index).scrollIntoView(true)  
             document.scrollingElement.scrollTop = document.scrollingElement.scrollTop - 60
         },
-        onZhanKai () {
+        onZhanKai () { // 商品使用方法
             if (this.onMore) {
                 this.summaryListThree = this.summaryList.slice(0,3)
             } else {
@@ -364,23 +497,80 @@ export default {
             }
             this.isVisible = !this.isVisible
         },
-        onClickItemK (value,items) {
-            this.kuanshiActive = items
-            // var list = this.goodsInfo.sku_list.split(",")
-            // // let coinId = list.find(person => person.attrs == data2)
-            // console.log(typeof(this.goodsInfo.sku_list)) 
-            // console.log(typeof(list));
-            // for(let i in list){
-            //     console.log(list[i])
-                
-            // }
+        onHiddenActionSheetTwo () {
+            if (this.Kucun < this.num) {
+                toast('库存不足。请选择其他产品！')
+                return false
+            }
+            console.log(this.selectArr);
+            console.log(this.selectArr.length);
+            document.body.classList.remove('scrollFixed')
+            document.scrollingElement.scrollTop = this.scrollTop
+            this.isVisible = !this.isVisible
         },
-        onClickItemKS (value,items) {
-            this.kuanshiActives = items
+        onshowMsg () { // 服务详情
+            if (this.showMsg) {
+                document.body.classList.remove('scrollFixed')
+                document.scrollingElement.scrollTop = this.scrollTop
+            } else {
+                this.scrollTop = document.scrollingElement.scrollTop
+                document.body.classList.add('scrollFixed')
+                document.body.style.top = - this.scrollTop + 'px'
+            }
+            this.showMsg = !this.showMsg
         },
-        onClickItemS (index) {
-            this.YanSeActive = index
+        specificationBtn (item, n, event, index) {// 选择规格
+            var that = this;
+            if (that.selectArr[n] != item) {
+                that.selectArr[n] = item;
+                that.subIndex[n] = index;
+ 
+            } else {
+                that.selectArr[n] = "";
+                that.subIndex[n] = -1; //去掉选中的颜色 
+            }
+            that.checkItem();
+            // 未选择规格提示
+            let tip = []
+            for (let i in that.gugeValue) {
+                tip.push(that.gugeValue[i].name)
+            }
+            let tipTip = tip.join('')
+            let textGuige = that.selectArr.join(' ')
+            that.textTishi = textGuige
+
+            let textTip = tip.join('-')
+            let textSS = that.selectArr.join(',')
+            let postText = textTip + '|' + textSS
+            that.getFinAttr(postText)
         },
+        checkItem () {
+            var that = this;
+            var option = that.gugeValue;
+            var result = [];  //定义数组存储被选中的值
+            for (var i in option) {
+                result[i] = that.selectArr[i] ? that.selectArr[i] : "";
+            }
+            for (var i in option) {
+                var last = result[i];  //把选中的值存放到字符串last去
+                for (var k in option[i].item) {
+                    result[i] = option[i].item[k].name; //赋值，存在直接覆盖，不存在往里面添加name值
+                    option[i].item[k].isShow = that.isMay(result); //在数据里面添加字段isShow来判断是否可以选择
+                }
+                result[i] = last; //还原，目的是记录点下去那个值，避免下一次执行循环时避免被覆盖
+ 
+            }
+            that.$forceUpdate(); //重绘
+        },
+        isMay (result) {
+            for (var i in result) { 
+                if (result[i] == '') {
+                    return true; //如果数组里有为空的值，那直接返回true
+                }
+            }
+            return this.shopItemInfo[result].active ? false : true; //匹配选中的数据的库存，若不为空返回true反之返回false
+        },
+        //
         onClickMiniBtn() {
             console.log('点击图标')
         },
@@ -405,43 +595,52 @@ export default {
             document.scrollingElement.scrollTop = this.scrollTop
             this.addressShow = !this.addressShow
         },
-        onBuyCard () {
+        onBuyCard () { // 加入购物车
             let that = this
-            let text
-            if (that.kuanshiActive == '' || that.kuanshiActives == '') {
+            console.log(that.selectArr);
+            if (that.selectArr.length <= 0) {
                 toast('请选择规格')
                 return false
             }
-            if (that.goodsInfo.attr[0]) {
-                text = `${that.goodsInfo.attr[0].name}|${that.kuanshiActive}`
+            // 奇葩的方式总有办法解决
+            let text = []
+            for (let j in that.gugeValue) {
+                text.push(that.gugeValue[j].name)
             }
-            if (that.goodsInfo.attr[0] && that.goodsInfo.attr[1]) {
-                text = `${that.goodsInfo.attr[0].name}-${that.goodsInfo.attr[1].name}|${that.kuanshiActive},${that.kuanshiActives}`
-            }
+            let textTip = text.join('-')
+            let textGuige = that.selectArr.join(',')
+            let postText = textTip + '|' + textGuige
             let params = {
                 goods_id: that.goodsInfo.goods.id, //商品id
                 num: that.num, //数量
-                attr_name: text, // 	商品规格(字符串，逗号隔开) 尺寸-颜色|1.8m（6英尺）床,心动"
+                attr_name: postText, // 	商品规格(字符串，逗号隔开) 尺寸-颜色|1.8m（6英尺）床,心动"
                 addcar: 1, // 添加到购物车
                 fx_price: that.jianJia, //分享减价
                 join_pt: that.pinTuan, // 加入拼团
                 fq_pt: that.faPinTuan, //发起拼团
             }
             post('/index.php/home/cart/ajax_add_order',params).then(res => {
-                toast('加入成功')
-                that.cardNum = res.num
+                if (res.err == 1) {
+                    toast(res.data)
+                } else {
+                    toast('加入成功')
+                    that.cardNum = res.num
+                }
             }).catch(function (error) {
                 console.log(error)
             })
         },
     },
     watch: {
+        '$route' (to, from) {
+            this.getGoodsInfo() 
+        }
     }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="stylus" scoped>
+<style lang="stylus">
 .ProductDetails
     margin-bottom 60px
 .header
@@ -505,9 +704,23 @@ export default {
             font-size 14px
             font-weight normal
             margin-right 5px
+        .xiaoLiang
+            font-size 12px
+            color #333
+            display inline-block
+            float right
     .yuan
         color #666
         font-size 20px
+        .vip
+            background-image url('../assets/img/index/vip.png')
+            background-repeat no-repeat
+            background-size 100%
+            width 25px
+            height 14px
+            margin-left 5px
+            display inline-block
+            vertical-align middle
     .openVip
         display flex
         align-items center
@@ -694,13 +907,13 @@ export default {
                     align-items center
             .rightJ
                 background-image url('../assets/img/rightT.png')
-                width 20px
-                height 20px
-                background-size 100%
-                background-position 50%
-                background-size 14% 50%
+                background-position 100%
+                background-size 6px
                 background-repeat no-repeat
-                flex 0 0 40px
+                flex 0 0 120px
+                text-align right
+                padding-right 15px
+                color $color
     .container
         display flex
         align-items: center
@@ -718,28 +931,50 @@ export default {
             background-color #fff
             height 100px
             border-right 1px dashed #e5e5e5
-            .headerImg
-                display flex
-                align-items: center
-                .img
-                    width 40px
-                    height 40px
-                    img 
-                        width 100%
-                        display block
-                        border-radius 100%
-                .name
-                    flex 1
-                    color #666
-            .text
-                margin-top 10px
-                overflow hidden
-                text-overflow ellipsis
-                display -webkit-box
-                -webkit-line-clamp 3
-                -webkit-box-orient vertical
-                font-size 13px
-                color #333
+            display flex
+            align-items center
+            .two
+                flex 1
+                .headerImg
+                    display flex
+                    align-items center
+                    .img
+                        width 40px
+                        height 40px
+                        img 
+                            width 100%
+                            display block
+                            border-radius 100%
+                    .name
+                        flex 1
+                        color #666
+                .text
+                    margin-top 10px
+                    overflow hidden
+                    text-overflow ellipsis
+                    display -webkit-box
+                    -webkit-line-clamp 3
+                    -webkit-box-orient vertical
+                    font-size 13px
+                    color #333
+            .twoImg
+                flex 0 0 110px
+                position relative
+                img
+                    width 100%
+                    display block
+                    border-radius 100%
+                .tip
+                    position absolute
+                    right 0
+                    bottom 0
+                    width 48px
+                    height 17px
+                    line-height 17px
+                    text-align center
+                    background rgba(0,0,0,.6)
+                    color #fff
+                    font-size 11px
         .more
             flex 0 0 100px
             text-align center
@@ -749,6 +984,7 @@ export default {
                 border solid 1px #ccc
                 box-sizing border-box
                 height 100px
+                flex 1
                 .moreText
                     span 
                         border-bottom 1px solid #ccc
@@ -778,6 +1014,13 @@ export default {
         font-family PingFangSC-Medium
         .likeIocnImg
             background-image url('../assets/img/like.png')
+            width 18px
+            height 20px
+            background-size 100%
+            background-repeat no-repeat
+            margin-bottom 2px
+        .likeIocnImgs
+            background-image url('../assets/img/likeH.png')
             width 18px
             height 20px
             background-size 100%
@@ -937,6 +1180,7 @@ export default {
                 -webkit-box-orient vertical
                 margin 5px 0
                 line-height 1.5
+                height 35px
             .money
                 color $color
                 font-size 14px
@@ -1079,13 +1323,15 @@ export default {
                 flex 0 0 100px
                 text-align center
                 color #666
-                padding 10px 0
+                div 
+                    padding 10px 0
             .descCont
                 flex 1
                 color #333
                 text-align left
                 border-left solid 1px #f1f1f1
-                padding 10px 10px
+                div 
+                    padding 10px 10px
     .zhanKai
         border-top solid 1px #f1f1f1
         padding 10px 0
@@ -1115,6 +1361,7 @@ export default {
         img
             width 100%
             display block
+            margin auto
 .actionsheetBox
     padding 0 15px 20px 15px
     background-color #fff
@@ -1138,6 +1385,26 @@ export default {
             .money
                 font-size 16px
                 color $color
+                margin-bottom 5px
+                display flex
+                align-items center
+            .yuan
+                color #666
+                font-size 14px
+                .moneyIoc
+                    font-size 12px
+                    font-weight normal
+                    margin-left 5px
+                .vip
+                    background-image url('../assets/img/index/vip.png')
+                    background-repeat no-repeat
+                    background-size 100%
+                    width 25px
+                    height 14px
+                    margin-left 5px
+                    display inline-block
+                    vertical-align middle
+            .tip
                 margin-bottom 5px
             .close
                 background-image url('../assets/img/x.png')
@@ -1177,4 +1444,56 @@ export default {
     font-size 14px
     background-color $background-color
     line-height 45px
+.shareBoxPopup
+    width 70%
+    background-color transparent
+    .shareBox
+        img
+            width 100%
+            margin auto
+            border-radius $border-radius
+        div 
+            font-size 16px
+            background-color #fff
+            margin-top 10px
+            line-height 40px
+            font-weight 500
+            border-radius $border-radius
+.fuWuBoxHead
+    display flex
+    align-items center
+    height 35px
+    .text
+        flex 1
+        font-size 14px
+        text-align left
+        padding 0 15px
+    .close
+        background-image url('../assets/img/x.png')
+        flex 0 0 25px
+        height 25px
+        background-size 100%
+        top 5px
+        right 0
+.conten
+    .list
+        display flex
+        text-align left
+        padding 10px 15px
+        .img
+            flex 0 0 20px
+            img
+                display block
+                width 100%
+        .text
+            padding 0px 10px 10px 10px
+            flex 1
+            border-bottom solid 1px #f1f1f1
+            .textN
+                font-size 14px
+                color #333
+                margin-bottom 10px
+            .textT
+                font-size 14px
+                color #666
 </style>

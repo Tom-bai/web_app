@@ -22,12 +22,13 @@
 		props: [],
 		data () {
             return {
-                showTabber: true
+                showTabber: true,
             }
         },
         mounted () {
         },
-		methods: {},
+		methods: {
+        },
 		watch: {
             '$route'(to,from) {
                 switch (to.name) {
