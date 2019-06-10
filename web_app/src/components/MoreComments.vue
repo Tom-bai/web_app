@@ -16,13 +16,14 @@
                     </div>
                     <div class="content">{{item.content}}</div>
                     <div class="pimg" v-if="item.pimg">
-                        <div class="item" v-for="(img,index) in item.pimg">
+                        <div class="item" v-for="(img,index) in item.pimg" :key="index">
                             <img v-lazy="$imgUrl + img.img" alt="" @click="onSeeImg(item.pimg,index)">
                         </div>
                     </div>
                     <div class="zan">
-                        <div @click="onZan"><img src="../assets/img/index/zanh.png" alt=""></div>
-                        <div>20</div>
+                        <div @click="onZan(item.id,index)" v-if="item.islike == 0"><img src="../assets/img/index/zanh.png" alt=""></div>
+                        <div @click="onZan(item.id,index)" v-else><img src="../assets/img/index/zan.png" alt=""></div>
+                        <div>{{item.like_num}}</div>
                     </div>
                 </div>
             </div>
@@ -47,7 +48,6 @@ export default {
     mounted() {
         this.getComment()
         this.getTags()
-        this.onZan()
     },
     methods: {
         onSeeImg (imgs,index) { // 预览图片
@@ -87,15 +87,20 @@ export default {
         onBack () {
 			this.$router.go(-1)
         },
-        onZan () {
+        onZan (id,index) {
             let that = this
             let params = {
-                id: that.$route.query.id,
-                status: 0
+                id: id
             }
 			get('/index.php/home/goods/ajax_comment',params).then(res => {
                console.log(res);
-               
+               if (res.status == 1) {
+                   that.commentData[index].islike = 1
+                   that.commentData[index].like_num += 1
+               } else {
+                   that.commentData[index].islike = 0
+                   that.commentData[index].like_num -= 1
+               }
             }).catch(function (error) {
                 console.log(error)
             })

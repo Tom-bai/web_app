@@ -6,8 +6,8 @@
                     <router-view v-if="$route.meta.keepAlive"></router-view>
                 </keep-alive>
                 <router-view v-if="!$route.meta.keepAlive"></router-view>
-                <nut-backtop :distance="500" :bottom="80" :right="10" class="myTop"></nut-backtop>
-                <Tabbar v-if="showTabber"></Tabbar>
+                <nut-backtop :distance="500" :bottom="120" :right="10" class="myTop"></nut-backtop>
+                <Tabbar v-if="showTabber" :style="ProductDetails?'display: none;':''"></Tabbar>
             </div>
         </div>
 	</div>
@@ -23,6 +23,7 @@
 		data () {
             return {
                 showTabber: true,
+                ProductDetails: false
             }
         },
         mounted () {
@@ -34,21 +35,31 @@
                 switch (to.name) {
                     case 'index':
                         this.showTabber = true
+                        this.ProductDetails = false
                         break;
                     case 'buy':
                         this.showTabber = true
+                        this.ProductDetails = false
                         break;
                     case 'vip':
                         this.showTabber = true
+                        this.ProductDetails = false
                         break;
                     case 'cart':
                         this.showTabber = true
+                        this.ProductDetails = false
                         break;
                     case 'center':
                         this.showTabber = true
+                        this.ProductDetails = false
+                        break;
+                    case 'ProductDetails':
+                        this.showTabber = true
+                        this.ProductDetails = true
                         break;
                     default:
                         this.showTabber = false
+                        this.ProductDetails = false
                         break;
                 }
             }

@@ -88,7 +88,7 @@ export default {
             for (let i in this.allCheckedList) {
                 price += (parseInt(this.allCheckedList[i].price) * parseInt(this.allCheckedList[i].num))
             }
-            return price
+            return price.toFixed(2)
         },
     },
 	methods: {
