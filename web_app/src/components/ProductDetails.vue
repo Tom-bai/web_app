@@ -88,7 +88,7 @@
             <!-- 评论 -->
             <div class="pinLun" id="anchor-1">
                 <div class="item">
-                    <div class="list">
+                    <div class="list" @click="onRouter('/MoreComments',$route.query.id,goodsInfo.good_favorable)">
                         <div class="text">
                             <div class="name">其他小伙伴们说<span>({{goodsInfo.count_com == null?'0':goodsInfo.count_com}})</span></div>
                         </div>
@@ -105,12 +105,12 @@
                             <div class="text">{{item.content}}</div>
                         </div>
                         <div class="twoImg" v-if="item.pimg">
-                            <img v-lazy="$imgUrl + item.pimg[0]" alt="">
+                            <img v-lazy="$imgUrl + item.pimg[0].img" alt="">
                             <div class="tip">{{item.pimg.length}}张图</div>
                         </div>
                     </div>
                     <div class="list more" v-if="commentData.length > 2">
-                        <div class="pR">
+                        <div class="pR" @click="onRouter('/MoreComments',$route.query.id,goodsInfo.good_favorable)">
                             <div class="moreText"><span>更多评论</span></div>
                             <div class="See">See more</div>
                         </div>
@@ -270,6 +270,8 @@
                 </div>
             </div>
         </nut-actionsheet>
+        <!-- 评论详情 -->
+        <router-view></router-view>
         <!-- 分享图片 -->
         <van-popup v-model="shareBoxShow" class="shareBoxPopup">
             <div class="shareBox">
@@ -310,6 +312,7 @@ export default {
                 'https://img.yzcdn.cn/1.jpg',
                 'https://img.yzcdn.cn/2.jpg'
             ],
+            showPinLun: false,
             addressShow:false,
             areaList: AddressInfo,
             YanSeActive: null,
@@ -320,24 +323,6 @@ export default {
             scrollTop: null,
             showList: 1,
             num: 1,
-            summaryList: [ // 测试
-                {
-                    "title": "适用季节",
-                    "name": "全季"
-                },
-                {
-                    "title": "适用对象",
-                    "name": "成人，家庭"
-                },
-                {
-                    "title": "输出功率",
-                    "name": "800W以下"
-                },
-                {
-                    "title": "服务信息",
-                    "name": "由商家从国内发货"
-                }
-            ],
             summaryListThree: [],
             gugeValue: [],
             onMore: false,
@@ -355,7 +340,7 @@ export default {
             subIndex: [], //是否选中 因为不确定是多规格还是但规格，所以这里定义数组来判断
         }
     },
-    created: function () {
+    created () {
     },
     mounted() {
         this.getGoodsInfo() 
@@ -371,7 +356,6 @@ export default {
 			get('/index.php/home/goods/goodsInfo',params).then(res => {
                 that.goodsInfo = res
                 that.gugeValue = res.attr
-                that.summaryListThree = that.summaryList.slice(0,3)
                 that.cardNum = res.shop_cart_num
                 let ids = that.goodsInfo.goods.fuwu.join(',')
                 that.getFuWu(ids)
@@ -422,7 +406,7 @@ export default {
                 console.log(error)
             })
         },
-        getComment () { // 获取评论列表
+        getComment () { // 获取评论列表 三个的
             let that = this
             let params = {
                 g_id: that.$route.query.id,
@@ -471,18 +455,14 @@ export default {
             document.scrollingElement.scrollTop = document.scrollingElement.scrollTop - 60
         },
         onZhanKai () { // 商品使用方法
-            if (this.onMore) {
-                this.summaryListThree = this.summaryList.slice(0,3)
-            } else {
-                this.summaryListThree = this.summaryList
-            }
             this.onMore = !this.onMore
         },
-		onRouter (pathUrl,id) {
+		onRouter (pathUrl,id,type) {
 			this.$router.push({
 				path: pathUrl,
 				query: {
-                    id: id
+                    id: id,
+                    type: type
 				}
 			})
         },
@@ -576,6 +556,17 @@ export default {
         },
         onClickBigBtn() {
             console.log('点击按钮')
+        },
+        onshowPinLun () { // 选择评论
+            if (this.showPinLun) {
+                document.body.classList.remove('scrollFixed')
+                document.scrollingElement.scrollTop = this.scrollTop
+            } else {
+                this.scrollTop = document.scrollingElement.scrollTop
+                document.body.classList.add('scrollFixed')
+                document.body.style.top = - this.scrollTop + 'px'
+            }
+            this.showPinLun = !this.showPinLun
         },
         onAddressShow() { // 选择地址
             this.scrollTop = document.scrollingElement.scrollTop
@@ -943,6 +934,7 @@ export default {
                         height 40px
                         img 
                             width 100%
+                            height 40px
                             display block
                             border-radius 100%
                     .name
@@ -958,12 +950,13 @@ export default {
                     font-size 13px
                     color #333
             .twoImg
-                flex 0 0 110px
+                flex 0 0 80px
                 position relative
                 img
                     width 100%
+                    height 80px
                     display block
-                    border-radius 100%
+                    border-radius $border-radius
                 .tip
                     position absolute
                     right 0
@@ -998,6 +991,7 @@ export default {
     border none
 .myBottom
     border-top solid 1px #f1f1f1
+
     .indexIocn
         font-size 12px
         font-family PingFangSC-Medium
@@ -1496,4 +1490,10 @@ export default {
             .textT
                 font-size 14px
                 color #666
+.pinLunBox
+    position absolute
+    width 100%
+    heigth 100%
+    top 0
+    left 0
 </style>

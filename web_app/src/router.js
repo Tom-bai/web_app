@@ -149,7 +149,16 @@ export default new Router({
                 title: '商品详情',
                 keepAlive: false
             },
-            component: () => import('./components/ProductDetails.vue')  // 商品详情
+            component: () => import('./components/ProductDetails.vue'),  // 商品详情
+        },
+        { 
+            path: '/MoreComments',
+            name: 'MoreComments',
+            meta:{
+                title: '更多评论',
+                keepAlive: false
+            },
+            component: () => import('./components/MoreComments.vue') // 查看更多评论
         },
 		{// Tab买手
 			path: '/buy',

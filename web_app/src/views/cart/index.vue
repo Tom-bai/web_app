@@ -22,11 +22,11 @@
                                 <img v-lazy="$imgUrl + item.image" alt="">
                             </div>
                             <div class="textBox">
-                                <div class="name">{{item.goods_name}}</div>
+                                <div class="name" @click="onRouter('/ProductDetails',item.goods_id)">{{item.goods_name}}</div>
                                 <div class="guiGe">{{item.goods_sku}}</div>
                                 <div class="money">
                                     <div class="moneyN">¥{{item.price}}</div>
-                                    <div class="numN"><van-stepper v-model="item.num" /></div>
+                                    <div class="numN"><van-stepper v-model="item.num" :disable-input="true"  async-change @change="postUpdatenum(index,item.num)" /></div>
                                 </div>
                             </div>
                         </div>
@@ -37,19 +37,19 @@
             <!-- 结算按钮 -->
             <div class="submitBar">
                 <div class="box">
-                    <div class="allC"><van-checkbox v-model="checked">全选</van-checkbox></div>
+                    <div class="allC"><van-checkbox v-model="allChecked" checked-color="#f1002d" @click="allCheckBox">全选</van-checkbox></div>
                     <div class="moneyT">
                         <div class="money">
-                            <span>总价</span>
-                            <span class="mTip">(不含税)</span> 
-                            <span class="moneyNum">¥499</span>
+                            <span>总价：</span>
+                            <!-- <span class="mTip">(不含税)</span>  -->
+                            <span class="moneyNum">¥{{total_price}}</span>
                         </div>
                         <div class="tip">
-                            <span>预估税费：</span>
+                            <span>活动优惠：</span>
                             <span class="suiMoney">¥499</span>
                         </div>
                     </div>
-                    <div class="btnJ">结算<span>(1)</span></div>
+                    <div class="btnJ">结算<span>({{allCheckedList.length}})</span></div>
                 </div>
             </div>
 		</div>
@@ -73,23 +73,116 @@ export default {
 		return {
             cardData: [],
             checked: false,
-            num: 1
+            allChecked: false,
+            allCheckedList: [],
+            num: 1,
+            toTal: 0
         }
     },
     mounted() {
         this.getCardData() 
     },
+    computed:{
+        total_price() {
+            let price = 0　　　　　　　　　　　　　　　　　　　　　　　　
+            for (let i in this.allCheckedList) {
+                price += (parseInt(this.allCheckedList[i].price) * parseInt(this.allCheckedList[i].num))
+            }
+            return price
+        },
+    },
 	methods: {
-        toggle (index) {
+        onRouter (pathUrl,id) {
+			this.$router.push({
+				path: pathUrl,
+				query: {
+                    id: id
+				}
+			})
+        },
+        postUpdatenum (index,val) { // 增加商品数量
+            let that = this
+            if (that.changing) {
+                return;
+            }
+            that.changing = true;
+            setTimeout(() => {
+                that.changing = false;
+                that.cardData.list[index].num = val
+                let params = {
+                    id: that.cardData.list[index].id,
+                    num: that.cardData.list[index].num
+                }
+                get('/index.php/home/shopCart/updatenum',params).then(res => {
+                    console.log(res);
+                }).catch(function (error) {
+                    console.log(error)
+                })
+            }, 500);
+            
+        },
+        allCheckBox () { // 全选
+            let that = this
+            if (!that.allChecked) { // 勾
+
+                that.allCheckedList = []
+                for (let i in that.cardData.list) {
+                    that.cardData.list[i].is_default = '1'
+                    that.postGouxuan(that.cardData.list[i].id,that.cardData.list[i].is_default)
+                    that.allCheckedList.push(that.cardData.list[i])
+                }
+
+            } else { // 不勾
+
+                for (let i in that.cardData.list) {
+                    that.cardData.list[i].is_default = '0'
+                    that.postGouxuan(that.cardData.list[i].id,that.cardData.list[i].is_default)
+                }
+                that.allCheckedList = []
+                
+            }
+        },
+        toggle (index) { //  勾选商品
             let that = this
             // let coinId = that.cardData.list.find((person) => (person.id == index.id))
-            if (that.cardData.list[index].is_default == 0) {
+            if (that.cardData.list[index].is_default == 0) { // 勾
+
                 that.cardData.list[index].is_default = '1'
-            } else if (that.cardData.list[index].is_default = 1) {
+                that.postGouxuan(that.cardData.list[index].id,that.cardData.list[index].is_default)
+                that.allCheckedList.push(that.cardData.list[index])
+                that.toTal = (parseInt(that.toTal) + parseInt(that.cardData.list[index].price)).toFixed(2)
+
+            } else if (that.cardData.list[index].is_default = 1) {  // 不勾
+
                 that.cardData.list[index].is_default = '0'
+                that.allChecked = false
+                that.postGouxuan(that.cardData.list[index].id,that.cardData.list[index].is_default)
+                that.toTal = (parseInt(that.toTal) - parseInt(that.cardData.list[index].price)).toFixed(2)
+                for (let i in that.allCheckedList) {
+                    if (that.cardData.list[index] == that.allCheckedList[i]) {
+                        that.allCheckedList.splice(i, 1);
+                        that.allChecked = false
+                    }
+                }
+
             }
-            console.log(that.cardData.list[index])
-            
+
+            if (that.cardData.list.length == that.allCheckedList.length) {
+                that.allChecked = true
+            }
+
+        },
+        postGouxuan (id,def) { // 勾选
+            let that = this
+            let params = {
+                id: id,
+                def: def
+            }
+			get('/index.php/home/shopCart/updatedef',params).then(res => {
+                // console.log(res);
+            }).catch(function (error) {
+                console.log(error)
+            })
         },
         getCardData () { // 获取商品详情
             let that = this
@@ -98,22 +191,30 @@ export default {
             }
 			get('/index.php/home/shopCart/info').then(res => {
                 that.cardData = res
+                for (let i in that.cardData.list) {
+                    if (that.cardData.list[i].is_default == 0) {
+                        that.allChecked = false
+                    } else {
+                        that.allChecked = true
+                        that.allCheckedList.push(that.cardData.list[i])
+                    }
+                }
+                console.log(that.allCheckedList);
+                
             }).catch(function (error) {
                 console.log(error)
             })
         },
-        onSubmit () {
-            console.log(22);
-            
-        }
     },
 	watch: {}
 };
 </script>
 <style lang="stylus" scoped>
 .mainBox
+    margin-bottom 120px
     .list
-        margin-top 10px
+        margin-bottom 10px
+        background-color #fff
         .head
             display flex
             align-items center
@@ -220,6 +321,7 @@ export default {
                     font-size 12px
             .tip
                 margin-top 2px
+                color $color 
         .btnJ
             flex 0 0 120px
             background-color $background-color

@@ -4,7 +4,7 @@
 		<div class="index"> 
             <div class="search-box">
                 <div class="search" id="search" :class="topSearch?'topSearch':''">
-                    <div class="head"><img src="../../assets/img/index/nav.jpg" alt=""></div>
+                    <div class="head"><img v-lazy="$imgUrl + userData.img" alt=""></div>
                     <div class="input">阿迪达斯</div>
                     <div class="tongzhi" @click="onRouter('/myMsg')">
                         <span class="text">消息</span>
@@ -52,11 +52,13 @@ export default {
 	data () {
 		return {
             unreadData: [],
-            topSearch: false
+            topSearch: false,
+            userData: JSON.parse(this.$store.state.USER_DATA)
 		}
 	},
 	mounted() {
         this.getUnread()
+        this.getUser()
         window.addEventListener('scroll', this.handleScroll)
         document.body.classList.remove('scrollFixed')
     },
@@ -76,6 +78,14 @@ export default {
 			let that = this
 			post('/index.php/home/article/unread').then(res => {
 				that.unreadData = res
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        getUser () { // 获取用户信息
+			let that = this
+			get('/index.php/home/member/userInfo').then(res => {
+                that.$store.commit('set_USER_DATA', JSON.stringify(res))
             }).catch(function (error) {
                 console.log(error)
             })
