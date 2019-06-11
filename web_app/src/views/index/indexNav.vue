@@ -216,8 +216,6 @@ export default {
             }
 			get('/index.php/home/index/cate',params).then(res => {
                 that.dataNav = res
-                console.log(res);
-                
             }).catch(function (error) {
                 console.log(error)
             })

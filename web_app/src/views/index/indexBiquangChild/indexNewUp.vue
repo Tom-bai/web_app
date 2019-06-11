@@ -2,7 +2,10 @@
 	<!-- 新品上市 -->
     <div>
         <div class="indexNewUp">
-            <div class="header">
+            <!-- <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
+
+            </nut-infiniteloading> -->
+            <div class="head">
                 <img src="../../../assets/img/index/indexNewUp/banner.jpg" alt="">
                 <div class="bg">
                     <div class="box">
@@ -15,40 +18,50 @@
                 </div>
             </div>
             <div class="tab">
-                <div class="list"><span>价格</span><span><i class="up"></i><i class="down"></i></span></div>
-                <div class="list">上新</div>
-                <div class="list">综合</div>
+                <div class="list" :class="tabActive == 2 || tabActive == 3?'tabActive':''">
+                    <span>价格</span>
+                    <span>
+                        <i class="up" @click="onUpAndDwom(2)"></i>
+                        <i class="down" @click="onUpAndDwom(3)"></i>
+                    </span>
+                </div>
+                <div class="list" :class="tabActive == 1?'tabActive':''" @click="onNewAndJ(1)">上新</div>
+                <div class="list" :class="tabActive == 0?'tabActive':''" @click="onNewAndJ(0)">综合</div>
                 <div class="list" @click="onMore"><i class="more" :class="list?'':'noMore'"></i></div>
             </div>
             <div class="listMain" v-if="list">
-                <div class="listBox">
-                    <div class="list" v-for="(item,index) in listDD">
-                        <div class="img">
-                            <img  src="../../../assets/img/index/2222.jpg" alt="">
-                        </div>
-                        <div class="name">TINCOCO 【2条装】6D薄款任意剪透明丝袜连裤袜</div>
-                        <div class="money">
-                            <span>¥639 </span>
-                            <span class="vip"></span>
+                <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
+                    <div class="listBox">
+                        <div class="list" v-for="(item,index) in dataList">
+                            <div class="img">
+                                <img v-lazy="$imgUrl + item.img" alt="">
+                            </div>
+                            <div class="name">{{item.title}}</div>
+                            <div class="money">
+                                <span>¥{{item.price}} </span>
+                                <span class="vip"></span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </nut-infiniteloading>
             </div>
             <div class="itemMain" v-else>
-                <div class="itembox">
-                    <div class="item" v-for="item in listDD">
-                        <div class="img">
-                            <img  src="../../../assets/img/index/2222.jpg" alt="">
-                        </div>
-                        <div class="textbox">
-                            <div class="money">
-                                <span class="vip"></span>
-                                <span>¥639 </span>
+                <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
+                    <div class="itembox">
+                        <div class="item" v-for="item in dataList">
+                            <div class="img">
+                                <img v-lazy="$imgUrl + item.img" alt="">
                             </div>
-                            <div class="name">TINCOCO 【2条装】6D薄款任意剪透明丝袜连裤袜</div>
+                            <div class="textbox">
+                                <div class="money">
+                                    <span class="vip"></span>
+                                    <span> ¥{{item.price}}</span>
+                                </div>
+                                <div class="name">{{item.title}}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </nut-infiniteloading>
             </div>
         </div>
      </div>
@@ -65,29 +78,78 @@ export default {
 	data () {
 		return {
             dataList: [],
-            listDD: new Array(10),
-            list: true
+            list: true,
+            tabActive: null,
+            limit: 1,
+            isprice: 0,
+            pricetype: 0,
+            isnew: 0,
+            isLoading: false,
+            isHasMore: false
         }
 	},
 	mounted() {
         this.getList()
+    },
+    destroyed () {
     },
     created(){
     },
     beforeDestroy() {
     },
 	methods: {
+        onInfinite () { // 上拉更多
+            let that = this
+            if (that.isHasMore) {
+                that.isLoading = true
+                that.limit++
+                that.getList()
+                
+            }
+        },
         onMore () {
            this.list = !this.list 
         },
-        getList () { // nav导航分类
+        onNewAndJ (val) { // 上新
+            this.isnew = val
+            this.dataList = []
+            this.tabActive = val
+            setTimeout(() => {
+                this.getList()
+            }, 100);
+        },
+        onUpAndDwom (val) { // 价格排序
+            let newVal
+            if (val == 2) {
+                newVal = 0
+            } else if (val == 3) {
+                newVal = 1
+            }
+            this.pricetype = newVal
+            this.dataList = []
+            this.tabActive = val
+            setTimeout(() => {
+                this.getList()
+            }, 100);
+        },
+        getList () { // 新品上市
             let that = this
             let params = {
-                type: that.$route.query.id
+                limit: that.limit,
+                isprice: that.isprice,
+                pricetype: that.pricetype,
+                isnew: that.isnew,
             }
-			get('/index.php/home/index/manjian_cate',params).then(res => {
-                console.log(res);
-                that.dataList = res
+			get('/index.php/home/news/new_goods',params).then(res => {
+                if (res.length == undefined) {
+                    that.isLoading = false
+                    that.isHasMore = false
+                } else {
+                    that.dataList = that.dataList.concat(res)
+                    that.isLoading = false
+                    that.isHasMore = true
+                    that.myHasMore = true
+                }
             }).catch(function (error) {
                 console.log(error)
             })
@@ -97,7 +159,7 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.header
+.head
     position relative
     >img 
         width 100%
@@ -161,6 +223,8 @@ export default {
         font-size 14px
         display flex
         justify-content center
+        align-items center
+        line-height 1
         .up
             background-image url('../../../assets/img/index/indexNewUp/up.png')
             background-repeat no-repeat
@@ -186,6 +250,8 @@ export default {
             display inline-block
         .noMore
             background-image url('../../../assets/img/index/indexNewUp/more2.png')
+    .tabActive
+        color $color
 .listMain
     .topName
         display flex
@@ -199,7 +265,7 @@ export default {
         align-items center
         flex-wrap wrap 
         justify-content flex-start
-        padding 3%
+        padding 3% 3% 0 3%
         .list
             flex 0 0 48.5%
             text-align left 

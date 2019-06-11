@@ -1,7 +1,7 @@
 <template>
-    <!-- 商品详情 -->
+    <!-- 拼团商品详情 -->
 	<div>
-        <div class="ProductDetails" v-if="goodsInfo.goods">
+        <div class="ProductDetailsPinTuan" v-if="goodsInfo.goods">
             <div class="header">
                 <div class="name" :class="topIndex == index?'active':''" v-for="(item,index) in topName" :key="index" @click="onTopNav(index)">{{item}}</div>
             </div>
@@ -288,7 +288,7 @@ import { get,post,toast } from '@/axiosApi'
 import AddressInfo from '../assets/js/area'
 import { log } from 'util';
 export default {
-	name: 'ProductDetails',
+	name: 'ProductDetailsPinTuan',
 	props: {
 		msg: String
     },
@@ -349,11 +349,11 @@ export default {
         getGoodsInfo () { // 获取商品详情
             let that = this
             let params = {
-                id: that.$route.query.id
+                pid: that.$route.query.id
             }
             that.goodsInfo = []
             that.commentData = []
-			get('/index.php/home/goods/goodsInfo',params).then(res => {
+			get('/index.php/home/index/ajax_pin',params).then(res => {
                 that.goodsInfo = res
                 that.gugeValue = res.attr
                 that.cardNum = res.shop_cart_num
@@ -632,7 +632,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus">
-.ProductDetails
+.ProductDetailsPinTuan
     margin-bottom 60px
 .header
     position sticky 

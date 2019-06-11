@@ -28,6 +28,7 @@
 <script>
 import Bus from '@/bus.js'
 import Address from './Address'
+import { get,post } from '@/axiosApi'
 export default {
 	name: 'SelectAddress',
     props: {},
@@ -39,14 +40,30 @@ export default {
             addressData: new Array(5),
             addressAddShow: false
 		}
-	},
+    },
+    mounted() {
+        this.getAddress()
+        
+    },
 	methods: {
         onRouter (pathUrl,id) {
 			this.$router.push({
 				path: pathUrl,
 				query: {}
 			})
-		},
+        },
+         getAddress () { // 获取地址
+            let that = this
+            let params = {
+                id: that.$route.query.id
+            }
+			get('/index.php/home/member/user_address').then(res => {
+                console.log(res);
+                
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
         onAddressShow() { 
             Bus.$emit('addressShowB', false)
         },

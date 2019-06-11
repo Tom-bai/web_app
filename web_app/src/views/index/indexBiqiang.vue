@@ -11,7 +11,7 @@
                 <div class="listTwo">
                     <!-- 新品上市 -->
                     <div class="item" @click="onRouter('/indexNewUp',2)">
-                        <div class="header">
+                        <div class="head">
                             <p>{{dataList.jr_tl_bt}}</p>
                         </div>
                         <div class="img"><img v-lazy="$imgUrl  + dataList.jr_tl_img" alt=""></div>
@@ -20,7 +20,7 @@
                 <div class="listTwo">
                     <!-- 满减 传值 id = 2-->
                     <div class="item" @click="onRouter('/indexMan',2)">
-                        <div class="header">
+                        <div class="head">
                             <p>{{dataList.jr_tr_bt}}</p>
                         </div>
                         <div class="img"><img v-lazy="$imgUrl  + dataList.jr_tr_img" alt=""></div>
@@ -31,7 +31,7 @@
                 <div class="listThree">
                     <!-- 砍价 -->
                     <div class="item boderRL" @click="onRouter('/indexKanFree',2)">
-                        <div class="header">
+                        <div class="head">
                             <p>{{dataList.jr_bl_bt}}</p>
                             <p class="tip">{{dataList.jr_bl_fbt}}</p>
                         </div>
@@ -41,7 +41,7 @@
                 <div class="listThree">
                     <!-- 拼团 -->
                     <div class="item" @click="onRouter('/indexManPinTuan')">
-                        <div class="header">
+                        <div class="head">
                             <p>{{dataList.jr_bm_bt}}</p>
                             <p class="tip">{{dataList.jr_bm_fbt}}</p>
                         </div>
@@ -51,7 +51,7 @@
                 <div class="listThree">
                     <!-- 满件减 传值 id = 1 -->
                     <div class="item boderRB" @click="onRouter('/indexManJJ',1)">
-                        <div class="header">
+                        <div class="head">
                             <p>{{dataList.jr_br_bt}}</p>
                             <p class="tip">{{dataList.jr_br_fbt}}</p>
                         </div>
@@ -140,7 +140,7 @@ export default {
             .item
                 padding 8px
                 background-color #fff
-                .header
+                .head
                     font-size 16px
                     height 30px
                     p
@@ -160,7 +160,7 @@ export default {
             .item
                 padding 8px
                 background-color #fff
-                .header
+                .head
                     font-size 16px
                     height 45px
                     p

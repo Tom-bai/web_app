@@ -7,7 +7,7 @@
             <div class="main">
                 <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
                     <div class="listBox" v-if="dataList.length > 0">
-                        <div class="list" v-for="(item,index) in dataList">
+                        <div class="list" v-for="(item,index) in dataList" @click="onRouter('/ProductDetails',item.click)">
                             <div class="img">
                                 <img  v-lazy="$imgUrl + item.img" alt="">
                             </div>
@@ -63,6 +63,14 @@ export default {
         this.$Bus.$off('navBtn');
     },
 	methods: {
+        onRouter (pathUrl,id) {
+			this.$router.push({
+				path: pathUrl,
+				query: {
+                    id: id
+				}
+			})
+		},
         onInfinite () { //加载更多
             let that = this
             if (that.myHasMore) {

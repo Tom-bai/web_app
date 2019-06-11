@@ -2,7 +2,7 @@
 	<!-- 满件减活动 -->
     <div>
         <div class="indexVipQuan">
-            <div class="banner" v-if="dataList.banner"><img v-lazy="$imgUrl + '/Uploads/' + dataList.banner.img" alt=""></div>
+            <div class="banner" v-if="dataList.banner"><img v-lazy="$imgUrl + dataList.banner.img" alt=""></div>
             <div class="newTop">
                 <div class="topName" v-if="dataList.thisProm">
                     <div>{{dataList.thisProm.title}}</div>

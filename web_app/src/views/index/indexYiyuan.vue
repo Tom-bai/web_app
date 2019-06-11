@@ -89,7 +89,7 @@
                                 <div class="progress">
                                     <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
                                 </div>
-                                <div class="btn">
+                                <div class="btnZ">
                                     <i class="iocn"></i>
                                     <span>{{item.cdf_num}}人支撑</span>
                                     <span class="zhichi">支撑项目</span>
@@ -102,7 +102,7 @@
                 <div v-if="activeZC == 1">
                     <div class="list" v-for="(item,index) in dataZongList.data_coming">
                         <div class="item">
-                            <div class="img"><img v-lazy="$imgUrl + '/Uploads/' + item.pro_img" alt=""></div>
+                            <div class="img"><img v-lazy="$imgUrl + item.pro_img" alt=""></div>
                             <div class="text">
                                 <div class="name">{{item.title}}</div>
                                 <div class="money">
@@ -111,7 +111,7 @@
                                 <div class="progress">
                                     <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
                                 </div>
-                                <div class="btn">
+                                <div class="btnZ">
                                     <i class="iocn"></i>
                                     <span>{{item.cdf_num}}人支撑</span>
                                     <span class="zhichi">支撑项目</span>
@@ -130,7 +130,7 @@
                 <div v-if="activeZCD == 0">
                     <div class="list" v-for="(item,index) in dataZongList.datanum">
                         <div class="item">
-                            <div class="img"><img v-lazy="$imgUrl + '/Uploads/' + item.pro_img" alt=""></div>
+                            <div class="img"><img v-lazy="$imgUrl + item.pro_img" alt=""></div>
                             <div class="text">
                                 <div class="name">{{item.title}}</div>
                                 <div class="money">
@@ -139,7 +139,7 @@
                                 <div class="progress">
                                     <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
                                 </div>
-                                <div class="btn">
+                                <div class="btnZ">
                                     <i class="iocn"></i>
                                     <span>{{item.cdf_num}}人支撑</span>
                                     <span class="zhichi">支撑项目</span>
@@ -152,7 +152,7 @@
                 <div v-if="activeZCD == 1">
                     <div class="list" v-for="(item,index) in dataZongList.datamen">
                         <div class="item">
-                            <div class="img"><img v-lazy="$imgUrl + '/Uploads/' + item.pro_img" alt=""></div>
+                            <div class="img"><img v-lazy="$imgUrl + item.pro_img" alt=""></div>
                             <div class="text">
                                 <div class="name">{{item.title}}</div>
                                 <div class="money">
@@ -161,7 +161,7 @@
                                 <div class="progress">
                                     <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
                                 </div>
-                                <div class="btn">
+                                <div class="btnZ">
                                     <i class="iocn"></i>
                                     <span>{{item.cdf_num}}人支撑</span>
                                     <span class="zhichi">支撑项目</span>
@@ -179,7 +179,7 @@
                 <div>
                     <div class="list" v-for="(item,index) in dataZongList.dataover">
                         <div class="item">
-                            <div class="img"><img v-lazy="$imgUrl + '/Uploads/' + item.pro_img" alt=""></div>
+                            <div class="img"><img v-lazy="$imgUrl + item.pro_img" alt=""></div>
                             <div class="text">
                                 <div class="name">{{item.title}}</div>
                                 <div class="money">
@@ -188,7 +188,7 @@
                                 <div class="progress">
                                     <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
                                 </div>
-                                <div class="btn">
+                                <div class="btnZ">
                                     <i class="iocn"></i>
                                     <span>{{item.cdf_num}}人支撑</span>
                                     <span class="zhichi">支撑项目</span>
@@ -539,7 +539,7 @@ export default {
                         .myProgress
                             >>>.nut-progress-outer
                                 border-radius $border-radius
-                    .btn
+                    .btnZ
                         display flex
                         align-items center
                         margin-top 15px

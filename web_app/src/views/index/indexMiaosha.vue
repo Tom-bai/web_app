@@ -12,7 +12,7 @@
 <script>
 // @ is an alias to /src
 import { get } from '@/axiosApi'
-import NavTwo from '../../components/NavTwo'
+import NavTwo from '@/components/NavTwo'
 export default {
 	name: "indexMiaosha",
 	components: {
@@ -21,12 +21,25 @@ export default {
 	props: [],
 	data () {
 		return {
+            limit: 1
 		}
 	},
 	mounted() {
+        this.getSecKill()
     },
 	methods: {
-
+        getSecKill () { // 获取秒杀商品详情
+            let that = this
+            let params = {
+                limit: that.limit
+            }
+			get('/index.php/home/index/seckill_goods_list',params).then(res => {
+                console.log(res);
+                
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
 	},
 	watch: {}
 };

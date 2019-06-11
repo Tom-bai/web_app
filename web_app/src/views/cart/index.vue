@@ -49,7 +49,7 @@
                             <span class="suiMoney">¥499</span>
                         </div>
                     </div>
-                    <div class="btnJ">结算<span>({{allCheckedList.length}})</span></div>
+                    <div class="btnJ" @click="postBuy">结算<span>({{allCheckedList.length}})</span></div>
                 </div>
             </div>
 		</div>
@@ -198,13 +198,21 @@ export default {
                         that.allChecked = true
                         that.allCheckedList.push(that.cardData.list[i])
                     }
-                }
-                console.log(that.allCheckedList);
-                
+                } 
             }).catch(function (error) {
                 console.log(error)
             })
         },
+        postBuy () { // 结算
+            let that = this
+            console.log(that.allCheckedList);
+            this.$router.push({
+				path: '/AddOrder',
+				query: {
+                    id: that.allCheckedList
+				}
+			})
+        }
     },
 	watch: {}
 };

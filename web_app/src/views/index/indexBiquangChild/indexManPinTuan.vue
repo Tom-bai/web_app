@@ -4,8 +4,8 @@
         <div class="indexManPinTuan">
             <div class="banner" v-if="dataBanner.img1"><img v-lazy="$imgUrl + 'Uploads/' + dataBanner.img.img"></div>
             <div class="topName">
-                <div>今日必拼</div>
-                <div class="tip">4月9日</div>
+                <div>热销</div>
+                <!-- <div class="tip">4月9日</div> -->
             </div>
             <div class="swiper">
                 <swiper :options="swiperOption" v-if="bannerData.length>0">
@@ -41,24 +41,24 @@
                     <!-- <div class="swiper-pagination" slot="pagination"></div> -->
                 </swiper>
             </div>
-            <div class="bannerTitle" v-if="dataBanner.img1"><img v-lazy="$imgUrl + 'Uploads/' + dataBanner.img1.img"></div>
+            <div class="bannerTitle" v-if="dataBanner.img1"><img v-lazy="$imgUrl + dataBanner.img1.img"></div>
             <div class="mainBox">
                 <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
                     <div class="item" v-for="(item,index) in dataList" :key="index">
                         <div class="img"><img v-lazy="$imgUrl + item.img" alt=""></div>
                         <div class="text">
                             <div class="top">{{item.title}}</div>
-                            <div class="tip">{{item.title}}</div>
+                            <!-- <div class="tip">{{item.title}}</div> -->
                             <div class="yipin"><span class="tag">已拼{{item.pnum}}件</span></div>
                             <div class="money">
                                 <div class="pM">
                                     <div>
-                                        <span class="tag">{{item.num}}人团</span>
+                                        <span class="tag">{{item.pnum}}人团</span>
                                         <span class="num">¥{{item.s_price}}</span>
                                     </div>
                                     <div class="danmai">单买价<span>¥{{item.price}}</span></div>
                                 </div>
-                                <div class="btn"><span>去拼团</span></div>
+                                <div class="btnP" @click="onRouter('/ProductDetailsPinTuan',item.id)"><span>去拼团</span></div>
                             </div>
                         </div>
                     </div>
@@ -87,6 +87,7 @@ export default {
             isLoading: false,
             limit: 1,
             dataBanner: [],
+            dataHotGoods: [],
             bannerData: new Array(3),
             swiperOption: {
 				loop: true,
@@ -109,6 +110,7 @@ export default {
 	mounted() {
         this.geBanner()
         this.getData()
+        this.getPinHotGoods()
     },
     created(){
     },
@@ -117,14 +119,14 @@ export default {
         this.$Bus.$off('navBtn');
     },
 	methods: {
-        // getBanners () { // 获取banner数据
-		// 	let that = this
-		// 	get('/index.php/home/index/banner').then(res => {
-		// 		that.bannerData = res
-        //     }).catch(function (error) {
-        //         console.log(error)
-        //     })
-        // },
+        getPinHotGoods () { // 拼团热销
+			let that = this
+			get('/index.php/home/pin/pinHotGoods').then(res => {
+                that.dataHotGoods = res
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
         onInfinite () { // 全部
             let that = this
             if (that.isHasMore) {
@@ -133,7 +135,7 @@ export default {
                 that.getData()
             }
         },
-        geBanner () { // 拼团banner
+        geBanner () { // 拼团banner横幅
             let that = this
             let params = {
                 type: that.$route.query.id
@@ -163,6 +165,14 @@ export default {
                 console.log(error)
             })
         },
+        onRouter (pathUrl,id) {
+			this.$router.push({
+				path: pathUrl,
+				query: {
+                    id: id
+				}
+			})
+		},
 	},
 	watch: {}
 };
@@ -267,6 +277,7 @@ export default {
                 -webkit-line-clamp 1
                 -webkit-box-orient vertical
                 overflow hidden
+                margin-bottom 5px
             .tip
                 font-weight 400
                 color #000
@@ -278,6 +289,7 @@ export default {
                 overflow hidden
                 margin  5px 0
             .yipin
+                padding 5px 0
                 .tag
                     color #fff
                     text-align center
@@ -298,7 +310,7 @@ export default {
                         font-weight 700
                     .danmai
                         color #999
-            .btn
+            .btnP
                 color #fff
                 text-align center
                 background-color $background-color

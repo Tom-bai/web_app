@@ -151,6 +151,24 @@ export default new Router({
             },
             component: () => import('./components/ProductDetails.vue'),  // 商品详情
         },
+        {  // 拼团商品详情
+			path: '/ProductDetailsPinTuan',
+            name: 'ProductDetailsPinTuan',
+            meta:{
+                title: '拼团商品详情',
+                keepAlive: false
+            },
+            component: () => import('./components/ProductDetailsPinTuan.vue'),  // 拼团商品详情
+        },
+        {  // 提交订单
+			path: '/AddOrder',
+            name: 'AddOrder',
+            meta:{
+                title: '提交订单',
+                keepAlive: false
+            },
+            component: () => import('./components/AddOrder.vue'),  // 提交订单
+        },
         { 
             path: '/MoreComments',
             name: 'MoreComments',
