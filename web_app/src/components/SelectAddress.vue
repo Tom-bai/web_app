@@ -3,10 +3,10 @@
         <div class="SelectAddress">
             <div class="header">选择收货地址<i class="close" @click="onAddressShow"></i></div>
             <div class="listBox">
-                <div class="list" v-for="(item,index) in addressData" @click="onClickAddress" :key="index">
+                <div class="list" v-for="(item,index) in addressData" @click="onClickAddress(item)" :key="index">
                     <div class="text">
-                        <div class="name">白白白，18578640282</div>
-                        <div class="address">广东省广州市天河区</div>
+                        <div class="name">{{item.name}},{{item.mobile}}</div>
+                        <div class="address">{{item.address}}</div>
                     </div>
                     <div class="rightJ"></div>
                 </div>
@@ -37,7 +37,7 @@ export default {
 	},
 	data () {
 		return {
-            addressData: new Array(5),
+            addressData: [],
             addressAddShow: false
 		}
     },
@@ -59,19 +59,23 @@ export default {
             }
 			get('/index.php/home/member/user_address').then(res => {
                 console.log(res);
-                
+                that.addressData = res
             }).catch(function (error) {
                 console.log(error)
             })
         },
         onAddressShow() { 
-            Bus.$emit('addressShowB', false)
+            if (this.$route.query.type == 'card') {
+                this.$router.go(-1)
+            } else {
+                Bus.$emit('addressShowB', false)
+            }
         },
-        onClickAddress () { //确定地址
+        onClickAddress (item) { //确定地址
             Bus.$emit('dialogShow', false)
             this.$dialog({
                 title: "请确认您的收货地址",
-                content: "白白白，18578640282，广东省广州市天河区",
+                content: `${item.name},${item.mobile}<br>${item.address}`,
                 onOkBtn(event) {  //确定按钮点击事件
                     this.close(); //关闭对话框
                 },

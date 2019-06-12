@@ -49,7 +49,7 @@
                             <span class="suiMoney">¥499</span>
                         </div>
                     </div>
-                    <div class="btnJ">结算<span>({{allCheckedList.length}})</span></div>
+                    <div class="btnJ" @click="postBuy">结算<span>({{allCheckedList.length}})</span></div>
                 </div>
             </div>
 		</div>
@@ -88,7 +88,7 @@ export default {
             for (let i in this.allCheckedList) {
                 price += (parseInt(this.allCheckedList[i].price) * parseInt(this.allCheckedList[i].num))
             }
-            return price
+            return price.toFixed(2)
         },
     },
 	methods: {
@@ -124,16 +124,13 @@ export default {
         allCheckBox () { // 全选
             let that = this
             if (!that.allChecked) { // 勾
-
                 that.allCheckedList = []
                 for (let i in that.cardData.list) {
                     that.cardData.list[i].is_default = '1'
                     that.postGouxuan(that.cardData.list[i].id,that.cardData.list[i].is_default)
                     that.allCheckedList.push(that.cardData.list[i])
                 }
-
             } else { // 不勾
-
                 for (let i in that.cardData.list) {
                     that.cardData.list[i].is_default = '0'
                     that.postGouxuan(that.cardData.list[i].id,that.cardData.list[i].is_default)
@@ -146,14 +143,11 @@ export default {
             let that = this
             // let coinId = that.cardData.list.find((person) => (person.id == index.id))
             if (that.cardData.list[index].is_default == 0) { // 勾
-
                 that.cardData.list[index].is_default = '1'
                 that.postGouxuan(that.cardData.list[index].id,that.cardData.list[index].is_default)
                 that.allCheckedList.push(that.cardData.list[index])
                 that.toTal = (parseInt(that.toTal) + parseInt(that.cardData.list[index].price)).toFixed(2)
-
             } else if (that.cardData.list[index].is_default = 1) {  // 不勾
-
                 that.cardData.list[index].is_default = '0'
                 that.allChecked = false
                 that.postGouxuan(that.cardData.list[index].id,that.cardData.list[index].is_default)
@@ -164,13 +158,10 @@ export default {
                         that.allChecked = false
                     }
                 }
-
             }
-
             if (that.cardData.list.length == that.allCheckedList.length) {
                 that.allChecked = true
             }
-
         },
         postGouxuan (id,def) { // 勾选
             let that = this
@@ -198,13 +189,21 @@ export default {
                         that.allChecked = true
                         that.allCheckedList.push(that.cardData.list[i])
                     }
-                }
-                console.log(that.allCheckedList);
-                
+                } 
             }).catch(function (error) {
                 console.log(error)
             })
         },
+        postBuy () { // 结算
+            let that = this
+            this.$router.push({
+				path: '/AddOrder',
+				query: {
+                    id: that.allCheckedList,
+                    type: 'card'
+				}
+			})
+        }
     },
 	watch: {}
 };

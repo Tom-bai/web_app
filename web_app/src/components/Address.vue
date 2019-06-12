@@ -49,7 +49,7 @@
             <div class="btn">保存</div>
             <!-- 选择地址 -->
             <nut-actionsheet :is-visible="addressShow" @close="onAddressShow" :isClickCloseMask="true">
-                <van-area :area-list="areaList" slot="custom" />
+                <van-area :area-list="areaList" slot="custom" confirm-button-text="完成" @confirm="onConfirm" @cancel="onCancel" />
             </nut-actionsheet>
         </div>
 	</div>
@@ -82,6 +82,14 @@ export default {
         onAddressShow() { // 选择地址
             this.addressShow = !this.addressShow
         },
+        onConfirm (data) { // 地址确定
+            this.addressShow = !this.addressShow
+            this.city = data[0].name + ' ' + data[1].name + ' ' + data[2].name 
+            
+        },
+        onCancel () { // 地址取消
+            this.addressShow = !this.addressShow
+        },
     },
     watch: {
     }
@@ -104,11 +112,17 @@ export default {
         font-size 14px
         font-weight 500
         border-bottom solid 1px #f1f1f1
+        background-color #fff
     .main
         padding 0 15px
+        background-color #fff
         .name
             border-bottom solid 1px #f1f1f1
             text-align left 
+            >>>.nut-cell
+                background none
+            &:last-child
+                border-bottom none
 .btn
     background-color $background-color
     color #fff

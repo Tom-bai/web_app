@@ -121,17 +121,15 @@ export default new Router({
                 keepAlive: false
             },
             component: () => import('./views/index/indexBiquangChild/indexKanFree'), // 砍价免费拿
-            children: [
-                { 
-                    path: '/Address',
-                    name: 'Address',
-                    meta:{
-                        title: '填写地址',
-                        keepAlive: false
-                    },
-                    component: () => import('./components/Address.vue') // 填写地址
-                },
-            ]
+        },
+        { 
+            path: '/Address',
+            name: 'Address',
+            meta:{
+                title: '填写地址',
+                keepAlive: false
+            },
+            component: () => import('./components/Address.vue') // 填写地址
         },
         { 
 			path: '/indexMeiZhuang',
