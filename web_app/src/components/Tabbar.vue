@@ -143,7 +143,9 @@ export default {
                 right -12px
                 background-color $background-color
                 color #fff
-                padding 3px
+                width 18px
+                height 18px
+                line-height 18px
                 font-size 12px
                 border-radius 100%
         .navText

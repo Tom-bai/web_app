@@ -41,7 +41,7 @@
                         <div class="money" v-else>0.00 元</div>
                     </div>
                     <div class="right">
-                        <nut-switch :active="true" @change="onChangeX"></nut-switch>
+                        <nut-switch :active="false" @change="onChangeX"></nut-switch>
                     </div>
                 </div>
                 <div class="list">
@@ -51,7 +51,7 @@
                         <div class="money" v-else>0.00 元</div>
                     </div>
                     <div class="right">
-                        <nut-switch :active="true" @change="onChangeY"></nut-switch>
+                        <nut-switch :active="false" @change="onChangeY"></nut-switch>
                     </div>
                 </div>
                 <div class="list">
@@ -69,12 +69,49 @@
                 </div>
             </div>
             <div class="shangPingList">
-                <div class="list" @click="onHiddenActionSheet">
+                <div class="list">
                     <div class="text">
                         <div class="name">商品金额 </div>
                     </div>
                     <div class="right">
-                        ¥000
+                        <span>¥{{total_price}}</span>
+                    </div>
+                </div>
+                <div class="list">
+                    <div class="text">
+                        <div class="name">运费 </div>
+                    </div>
+                    <div class="right">
+                        <span>+ ¥{{total_price}}</span>
+                    </div>
+                </div>
+                <div class="list" v-if="xBi >= 0">
+                    <div class="text">
+                        <div class="name">X币 </div>
+                    </div>
+                    <div class="right">
+                        <span>- ¥{{youHuiData.xbi}}</span>
+                    </div>
+                </div>
+                <div class="list" v-if="balance >= 0">
+                    <div class="text">
+                        <div class="name">余额 </div>
+                    </div>
+                    <div class="right">
+                        <span>- ¥{{youHuiData.balance}}</span>
+                    </div>
+                </div>
+                <div class="list">
+                    <div class="text">
+                        <div class="name"><span class="tip">提交订单则表示您同意</span> <span>《用户购买协议》</span></div>
+                    </div>
+                </div>
+                <div class="list">
+                    <div class="text">
+                        <div class="name">支付方式 </div>
+                    </div>
+                    <div class="right">
+                        <span>微信支付</span>
                     </div>
                 </div>
             </div>
@@ -106,14 +143,29 @@ export default {
             orderData: [],
             xieShang: null,
             youHuiData: [],
-            isVisible: false
+            isVisible: false,
+            xBi: 0,
+            balance: 0,
+            youHui: 0
 		}
+    },
+    computed:{
+        total_price() {
+            let price = 0　　　　　　　　　　　　　　　　　　　　　　　　
+            for (let i in this.orderData.list) {
+                price += (parseInt(this.orderData.list[i].price) * parseInt(this.orderData.list[i].num)) - parseInt(this.xBi) - parseInt(this.balance) - parseInt(this.youHui)
+            }
+            return price.toFixed(2)
+        },
     },
     mounted() {
         this.getCartOrder()
         
     },
 	methods: {
+        cc () {
+
+        },
         getCartOrder () { // 获取订单数据
             let that = this
             let postData = []
@@ -141,11 +193,27 @@ export default {
                 console.log(error)
             })
         },
-        onChangeX (status) {
-            console.log(status); 
+        onChangeX (status) { // X币
+            if (status) {
+                if (this.youHuiData.xbi == null) {
+                    this.xBi = 0
+                } else {
+                    this.xBi = parseInt(this.youHuiData.xbi)
+                }
+            } else {
+                this.xBi = 0
+            }
         },
-        onChangeY (status) {
-            console.log(status);
+        onChangeY (status) { // 余额
+            if (status) {
+                if (this.youHuiData.balance == null) {
+                    this.balance = 0
+                } else {
+                    this.balance = parseInt(this.youHuiData.balance)
+                }
+            } else {
+                this.balance = 0
+            }
         },
         onHiddenActionSheet () {
             this.isVisible = !this.isVisible
@@ -213,6 +281,7 @@ export default {
         .textBox
             padding-left 15px
             text-align left 
+            flex 1
             .name
                 font-size 14px
                 font-weight 700
@@ -289,6 +358,7 @@ export default {
             font-size 13px
             display flex
             align-items center
+            color #333
             .address
                 overflow hidden
                 text-overflow ellipsis
@@ -303,9 +373,12 @@ export default {
                 flex 1
                 input 
                     font-size 12px
-        .rightJ
-            background-image url('../assets/img/right.png')
-            width 25px
-            height 25px
-            background-size 100%
+            .name
+                display flex
+                align-items center
+                flex 1
+                .tip
+                    color #666
+        .right
+            font-size 14px
 </style>
