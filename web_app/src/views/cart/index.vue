@@ -205,11 +205,11 @@ export default {
         },
         postBuy () { // 结算
             let that = this
-            console.log(that.allCheckedList);
             this.$router.push({
 				path: '/AddOrder',
 				query: {
-                    id: that.allCheckedList
+                    id: that.allCheckedList,
+                    type: 'card'
 				}
 			})
         }

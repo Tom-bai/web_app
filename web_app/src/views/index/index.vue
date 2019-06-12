@@ -59,6 +59,7 @@ export default {
 	mounted() {
         this.getUnread()
         this.getUser()
+        this.getVIP()
         window.addEventListener('scroll', this.handleScroll)
         document.body.classList.remove('scrollFixed')
     },
@@ -86,6 +87,16 @@ export default {
 			let that = this
 			get('/index.php/home/member/userInfo').then(res => {
                 that.$store.commit('set_USER_DATA', JSON.stringify(res))
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        getVIP () { // 获取用户是否VIP
+			let that = this
+			get('/index.php/home/member/isvip').then(res => {
+                that.$store.commit('set_VIP', JSON.stringify(res))
+                console.log(res);
+                
             }).catch(function (error) {
                 console.log(error)
             })
