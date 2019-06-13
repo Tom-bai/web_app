@@ -5,7 +5,7 @@
             <div class="search-box">
                 <div class="search" id="search" :class="topSearch?'topSearch':''">
                     <div class="head"><img v-lazy="$imgUrl + userData.img" alt=""></div>
-                    <div class="input">阿迪达斯</div>
+                    <div class="input" @click="onRouter('/indexSearch')">搜索喜欢的宝贝</div>
                     <div class="tongzhi" @click="onRouter('/myMsg')">
                         <span class="text">消息</span>
                         <span class="num">{{unreadData.count}}</span>
@@ -146,6 +146,7 @@ export default {
             background-size 15px
             background-position 10px 50%
             background-repeat no-repeat
+            color #999
         .tongzhi
             position relative
             height 40px

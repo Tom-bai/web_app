@@ -26,11 +26,11 @@
                                 <div class="guiGe">{{item.goods_sku}}</div>
                                 <div class="money">
                                     <div class="moneyN">¥{{item.price}}</div>
-                                    <div class="numN"><van-stepper v-model="item.num" :disable-input="true"  async-change @change="postUpdatenum(index,item.num)" /></div>
+                                    <div class="numN"><van-stepper v-model="item.num" :disable-input="true"  async-change  /></div>
                                 </div>
                             </div>
                         </div>
-                        <span slot="right" class="del">删除</span>
+                        <span slot="right" class="del" @click="postDel(item.id,index)">删除</span>
                     </van-swipe-cell>
                 </div>
             </div>
@@ -58,7 +58,7 @@
 
 <script>
 // @ is an alias to /src
-import { get,post } from '@/axiosApi'
+import { get,post,toast } from '@/axiosApi'
 import { SubmitBar,Checkbox,Stepper,SwipeCell  } from 'vant'
 export default {
 	name: "cart",
@@ -99,6 +99,30 @@ export default {
                     id: id
 				}
 			})
+        },
+        postDel (id,index) { // 删除商品
+            let that = this
+            let params = {
+                id: id,
+            }
+            get('/index.php/home/shopCart/updatedel',params).then(res => {
+                if (res.status == 1) {
+                    toast('删除成功!')
+                    for (let i in that.allCheckedList) {
+                        if (that.cardData.list[index].id == that.allCheckedList[i].id) {
+                            that.allCheckedList.splice(i, 1);
+                            that.allChecked = false
+                        }
+                    }
+                    that.cardData.list.splice(index, 1)
+                    that.$store.commit('set_CARD_STATE', that.cardData.list.length)
+                } else {
+                    toast(res.msg)
+                }
+            }).catch(function (error) {
+                console.log(error)
+            })
+            
         },
         postUpdatenum (index,val) { // 增加商品数量
             let that = this
@@ -205,7 +229,8 @@ export default {
 			})
         }
     },
-	watch: {}
+	watch: {
+    }
 };
 </script>
 <style lang="stylus" scoped>

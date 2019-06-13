@@ -8,6 +8,7 @@ export default new Vuex.Store({
         INDEX_STATE: 0,
         USER_DATA: localStorage.getItem("USER_DATA") || null,
         VIP: localStorage.getItem("USER_DATA") || null,
+        CARD_STATE: null
     },
     mutations: {
         set_INDEX_STATE(state, val) { // 存众筹状态
@@ -21,6 +22,9 @@ export default new Vuex.Store({
             localStorage.setItem("VIP", val)
             state.VIP = val     
         },
+        set_CARD_STATE (state, val) { // 存取购物车数量状态
+            state.CARD_STATE = val     
+        },
     },
     actions: {
         set_INDEX_STATE(state, val) { // 存众筹状态
@@ -33,6 +37,9 @@ export default new Vuex.Store({
         set_VIP (state, val) { // 存取vip状态
             localStorage.setItem("VIP", val)
             state.VIP = val     
+        },
+        set_CARD_STATE (state, val) { // 存取购物车数量状态
+            state.CARD_STATE = val     
         },
     }
 })

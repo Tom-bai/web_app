@@ -82,18 +82,18 @@
                         <div class="name">运费 </div>
                     </div>
                     <div class="right">
-                        <span>+ ¥{{total_price}}</span>
+                        <span>+ ¥{{orderData.yf == 0?'0.00':orderData.yf}}</span>
                     </div>
                 </div>
-                <div class="list" v-if="xBi >= 0">
+                <div class="list" v-if="xBiShow">
                     <div class="text">
                         <div class="name">X币 </div>
                     </div>
                     <div class="right">
-                        <span>- ¥{{youHuiData.xbi}}</span>
+                        <span>- ¥{{youHuiData.xbi == null?'0.00':youHuiData.xbi}}</span>
                     </div>
                 </div>
-                <div class="list" v-if="balance >= 0">
+                <div class="list" v-if="balanceShow">
                     <div class="text">
                         <div class="name">余额 </div>
                     </div>
@@ -106,6 +106,8 @@
                         <div class="name"><span class="tip">提交订单则表示您同意</span> <span>《用户购买协议》</span></div>
                     </div>
                 </div>
+            </div>
+            <div class="zhiFu">
                 <div class="list">
                     <div class="text">
                         <div class="name">支付方式 </div>
@@ -115,10 +117,32 @@
                     </div>
                 </div>
             </div>
+            <!-- 结算按钮 -->
+            <div class="submitBar">
+                <div class="box">
+                    <div class="moneyT">
+                        <div class="money">
+                            <span>实付金额：</span>
+                            <!-- <span class="mTip">(不含税)</span>  -->
+                            <span class="moneyNum">¥{{newPay}}</span>
+                        </div>
+                    </div>
+                    <div class="btnJ">立即支付</div>
+                </div>
+            </div>
             <!-- 选择优惠券 -->
             <nut-actionsheet :is-visible="isVisible" @close="onHiddenActionSheet" :isClickCloseMask="false">
                 <div slot="custom" class="custom-wrap">
-                    啊实打实
+                    <div class="head">
+                        <div class="name">可用优惠券(1)</div>
+                        <div class="name">不可用优惠券(4)</div>
+                        <div class="close" @click="onHiddenActionSheet"></div>
+                    </div>
+                    <div class="main">
+                        <div class="list" v-for="(item,index) in youHuiData.yhqList">
+                            {{item.title}}
+                        </div>
+                    </div>
                     <!-- <div class="btn" @click="onHiddenActionSheetTwo">确定</div> -->
                 </div>
             </nut-actionsheet>
@@ -145,7 +169,9 @@ export default {
             youHuiData: [],
             isVisible: false,
             xBi: 0,
+            xBiShow: false,
             balance: 0,
+            balanceShow: false,
             youHui: 0
 		}
     },
@@ -153,19 +179,23 @@ export default {
         total_price() {
             let price = 0　　　　　　　　　　　　　　　　　　　　　　　　
             for (let i in this.orderData.list) {
-                price += (parseInt(this.orderData.list[i].price) * parseInt(this.orderData.list[i].num)) - parseInt(this.xBi) - parseInt(this.balance) - parseInt(this.youHui)
+                price += (parseInt(this.orderData.list[i].price) * parseInt(this.orderData.list[i].num))
             }
             return price.toFixed(2)
+        },
+        newPay () {
+            let newPay = 0　　　　　　　　　　　　　　　　　　　　　　　　
+            for (let i in this.orderData.list) {
+                newPay += (parseInt(this.orderData.list[i].price) * parseInt(this.orderData.list[i].num)) 
+            }
+            
+            return (newPay - parseInt(this.xBi) - parseInt(this.balance) - parseInt(this.youHui)).toFixed(2)
         },
     },
     mounted() {
         this.getCartOrder()
-        
     },
 	methods: {
-        cc () {
-
-        },
         getCartOrder () { // 获取订单数据
             let that = this
             let postData = []
@@ -194,6 +224,7 @@ export default {
             })
         },
         onChangeX (status) { // X币
+            this.xBiShow = status
             if (status) {
                 if (this.youHuiData.xbi == null) {
                     this.xBi = 0
@@ -205,6 +236,7 @@ export default {
             }
         },
         onChangeY (status) { // 余额
+            this.balanceShow = status
             if (status) {
                 if (this.youHuiData.balance == null) {
                     this.balance = 0
@@ -216,6 +248,14 @@ export default {
             }
         },
         onHiddenActionSheet () {
+            if (this.isVisible) {
+                document.body.classList.remove('scrollFixed')
+                document.scrollingElement.scrollTop = this.scrollTop
+            } else {
+                this.scrollTop = document.scrollingElement.scrollTop
+                document.body.classList.add('scrollFixed')
+                document.body.style.top = - this.scrollTop + 'px'
+            }
             this.isVisible = !this.isVisible
         }
 	}
@@ -311,6 +351,7 @@ export default {
                     font-weight 700
                 .numN
                     margin-left auto
+                    font-size 13px
 .youHuiQuan
     margin-top 10px
     .list
@@ -381,4 +422,105 @@ export default {
                     color #666
         .right
             font-size 14px
+.zhiFu
+    margin-top 10px
+    margin-bottom 70px
+    .list
+        display flex
+        align-items center
+        text-align left 
+        background-color #fff
+        height 45px
+        padding 0 15px
+        .text
+            flex 1
+            font-size 13px
+            display flex
+            align-items center
+            color #333
+            .address
+                overflow hidden
+                text-overflow ellipsis
+                display -webkit-box
+                -webkit-box-orient vertical
+                -webkit-line-clamp 1
+                white-space initial
+            .money
+                margin-left auto
+                margin-right 10px
+            .xieShang
+                flex 1
+                input 
+                    font-size 12px
+            .name
+                display flex
+                align-items center
+                flex 1
+                .tip
+                    color #666
+        .right
+            font-size 13px
+.submitBar
+    bottom 0
+    left: 0
+    width 100%
+    z-index 100
+    position fixed
+    user-select none
+    background-color #fff
+    .box
+        display flex
+        align-items center
+        height 50px
+        line-height 50px
+        border-top solid 1px #f1f1f1
+        .allC
+            flex 0 0 80px
+        .moneyT
+            flex 1
+            line-height 1.3
+            text-align right 
+            padding 0 10px
+            .money
+                font-size 14px
+                display flex
+                align-items center
+                justify-content flex-end
+                .mTip
+                    font-size 12px
+            .tip
+                margin-top 2px
+                color $color 
+        .btnJ
+            flex 0 0 120px
+            background-color $background-color
+            color #fff
+            font-size 16px
+.custom-wrap
+    height 450px
+    overflow-y auto
+    background-color #fff
+    .head
+        display flex
+        align-items center
+        font-size 14px
+        height 50px
+        border-bottom solid 1px #f1f1f1
+        padding 0 15px
+        .name
+            flex 1
+        .close
+            flex 0 0 30px
+            background-image url('../assets/img/x.png')
+            height 25px
+            background-size 100%
+            background-position 50%
+    .main
+        padding 0 15px
+        .list
+            background-image url('../assets/img/yhq.jpg')
+            height 90px
+            background-size 100% 100%
+            background-repeat no-repeat
+            margin-top 10px
 </style>

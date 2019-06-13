@@ -32,6 +32,15 @@ export default new Router({
                 keepAlive: true
             },
 			component: Index
+        },
+        {
+			path: '/indexSearch',
+            name: 'indexSearch',
+            meta:{
+                title: '搜索商品',
+                keepAlive: false
+            },
+			component: () => import('./views/index/indexBiquangChild/indexSearch') // 搜索商品
 		},
 		{
 			path: '/myMsg',

@@ -9,6 +9,7 @@ import {VueMasonryPlugin} from 'vue-masonry'
 import VueLazyload from 'vue-lazyload'
 import imgUrl from '../src/imgUrl'
 import Bus from '../src/bus'
+import wx from 'weixin-js-sdk'
 Vue.use(VueLazyload,{
     error: require('../src/assets/img/moren.jpg'),
     loading: require('../src/assets/img/moren.jpg'),
@@ -19,6 +20,7 @@ NutUI.install(Vue)
 Vue.config.productionTip = false
 Vue.prototype.$imgUrl = imgUrl
 Vue.prototype.$Bus = Bus
+Vue.prototype.$wxSDK = wx
 new Vue({
   router,
   store,
