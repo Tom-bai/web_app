@@ -30,7 +30,11 @@
             <div class="youHuiQuan">
                 <div class="list" @click="onHiddenActionSheet">
                     <div class="text">
-                        <div class="name">优惠券</div>
+                        <div class="YHname">
+                            <div>优惠券</div>
+                            <div class="sheng" v-if="yhMoney !== 0">已省 ¥ {{yhMoney}}</div>
+                        </div>
+
                     </div>
                     <div class="rightJ"></div>
                 </div>
@@ -134,16 +138,51 @@
             <nut-actionsheet :is-visible="isVisible" @close="onHiddenActionSheet" :isClickCloseMask="false">
                 <div slot="custom" class="custom-wrap">
                     <div class="head">
-                        <div class="name">可用优惠券(1)</div>
-                        <div class="name">不可用优惠券(4)</div>
+                        <div class="name" :class="youHuiShow?'active':''" v-if="youHuiData.yhqCanUse" @click="onyouHuiShow(true)">可用优惠券({{youHuiData.yhqCanUse.length}})</div>
+                        <div class="name" :class="youHuiShow?'':'active'"  v-if="youHuiData.yhqCannotUse" @click="onyouHuiShow(false)">不可用优惠券({{youHuiData.yhqCannotUse.length}})</div>
                         <div class="close" @click="onHiddenActionSheet"></div>
                     </div>
-                    <div class="main">
-                        <div class="list" v-for="(item,index) in youHuiData.yhqList">
-                            {{item.title}}
+                    <div class="main" v-if="youHuiShow">
+                        <div class="list" v-for="(item,index) in youHuiData.yhqCanUse" @click="toggle(index)">
+                            <div class="money">
+                                <div class="num">¥<span>{{item.price}}</span></div>
+                                <div class="numM">满 ¥ {{item.min_price}} 使用</div>
+                            </div>
+                            <div class="tip">
+                                <div class="tipT">{{item.title}}</div>
+                                <div class="tipTime" v-if="item.ub_time == 0">无限制</div>
+                                <div class="tipTime" v-else>{{ times(item.ub_time)}}至{{times(item.u_time)}}</div>
+                            </div>
+                            <div class="ckBox">
+                                <div class="van-checkbox">
+                                    <div class="van-checkbox__icon van-checkbox__icon--round" :class="yhStatus == index && yhStatusA?'van-checkbox__icon--checked':''">
+                                        <i class="van-icon van-icon-success" :style="yhStatus == index && yhStatusA?'border-color: #f1002d; background-color: #f1002d;':''"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <!-- <div class="btn" @click="onHiddenActionSheetTwo">确定</div> -->
+                    <div class="main" v-else>
+                        <div class="list no" v-for="(item,index) in youHuiData.yhqCannotUse">
+                            <div class="money">
+                                <div class="num">¥<span>{{item.price}}</span></div>
+                                <div class="numM">满 ¥ {{item.min_price}} 使用</div>
+                            </div>
+                            <div class="tip">
+                                <div class="tipT">{{item.title}}</div>
+                                <div class="tipTime" v-if="item.ub_time == 0">无限制</div>
+                                <div class="tipTime" v-else>{{ times(item.ub_time)}}至{{times(item.u_time)}}</div>
+                            </div>
+                            <!-- <div class="ckBox">
+                                <div class="van-checkbox">
+                                    <div class="van-checkbox__icon van-checkbox__icon--round" :class="yhStatus == index && yhStatusA?'van-checkbox__icon--checked':''">
+                                        <i class="van-icon van-icon-success" :style="yhStatus == index && yhStatusA?'border-color: #f1002d; background-color: #f1002d;':''"></i>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="btn">确认 (共省 ¥ {{yhMoney}})</div>
                 </div>
             </nut-actionsheet>
             <!-- <SelectAddress></SelectAddress> -->
@@ -152,7 +191,8 @@
 </template>
 
 <script>
-import { get,post } from '@/axiosApi'
+import { get,post,formatTime,toast } from '@/axiosApi'
+import { Checkbox  } from 'vant'
 import SelectAddress from '@/components/SelectAddress'
 export default {
 	name: 'AddOrder',
@@ -160,10 +200,15 @@ export default {
 		msg: String
     },
     components: {
-		SelectAddress
+        SelectAddress,
+        [Checkbox.name]: Checkbox,
 	},
 	data () {
 		return {
+            youHuiShow: true,
+            yhStatus: null,
+            yhStatusA: false,
+            yhMoney: 0,
             orderData: [],
             xieShang: null,
             youHuiData: [],
@@ -215,7 +260,7 @@ export default {
         getUserInfos () { // 获取优惠信息
             let that = this
             let params = {
-                para: ['yhqList','xbi','balance']
+                para: ['yhqCanUse','xbi','balance','yhqCannotUse']
             }
 			get('/index.php/home/member/userInfos',params).then(res => {
                 that.youHuiData = res
@@ -257,6 +302,28 @@ export default {
                 document.body.style.top = - this.scrollTop + 'px'
             }
             this.isVisible = !this.isVisible
+        },
+        times (time) {
+            let times = JSON.parse(time) * 1000
+            return formatTime(new Date(times), 'yyyy-MM-dd')
+        },
+        toggle (index) { //  勾选优惠券
+            let that = this
+            if (that.newPay < that.youHuiData.yhqCanUse[index].min_price) {
+                toast(`未满 ¥ ${that.youHuiData.yhqCanUse[index].min_price} 不可使用`)
+                return false
+            } else {
+                that.yhStatus = index
+                that.yhStatusA = !that.yhStatusA
+                if (that.yhStatusA) {
+                    that.yhMoney = parseInt(that.youHuiData.yhqCanUse[index].price).toFixed(2)
+                } else {
+                    that.yhMoney = 0
+                }
+            }
+        },
+        onyouHuiShow (val) {
+            this.youHuiShow = val
         }
 	}
 }
@@ -366,6 +433,12 @@ export default {
             font-size 13px
             display flex
             align-items center
+            .YHname 
+                display flex
+                align-items center
+                flex 1
+                .sheng
+                    margin-left auto
             .address
                 overflow hidden
                 text-overflow ellipsis
@@ -500,6 +573,7 @@ export default {
     height 450px
     overflow-y auto
     background-color #fff
+    padding-bottom 60px
     .head
         display flex
         align-items center
@@ -507,8 +581,16 @@ export default {
         height 50px
         border-bottom solid 1px #f1f1f1
         padding 0 15px
+        position sticky
+        top 0
+        left 0
+        background-color: #fff
+        z-index 9
         .name
             flex 1
+        .active
+            font-weight 700
+            font-size 15px
         .close
             flex 0 0 30px
             background-image url('../assets/img/x.png')
@@ -523,4 +605,43 @@ export default {
             background-size 100% 100%
             background-repeat no-repeat
             margin-top 10px
+            display flex
+            align-items center
+            .money
+                flex 0 0 30%
+                .num
+                    font-weight 700
+                    font-size 16px
+                    span 
+                        font-size 26px
+                        margin-left 4px
+                .numM
+                   font-size 12px 
+                   font-weight 700
+            .tip
+                flex 1
+                padding 0 15px
+                text-align left
+                .tipT
+                    font-size 14px
+                    font-weight 700
+                    margin-top 5px
+                .tipTime
+                    font-size 12px
+                    font-weight normal
+                    color #999
+                    margin-top 6px
+            .ckBox
+                padding-right 15px
+        .no
+            background-image url('../assets/img/yhqH.jpg')
+    .btn
+        position fixed
+        width 100%
+        bottom 0
+        left 0
+        background-color $background-color
+        line-height 45px
+        font-size 14px
+        color #fff
 </style>
