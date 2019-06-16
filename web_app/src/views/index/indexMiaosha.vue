@@ -11,7 +11,7 @@
 
 <script>
 // @ is an alias to /src
-import { get } from '@/axiosApi'
+import { get,post } from '@/axiosApi'
 import NavTwo from '@/components/NavTwo'
 export default {
 	name: "indexMiaosha",
@@ -28,12 +28,9 @@ export default {
         this.getSecKill()
     },
 	methods: {
-        getSecKill () { // 获取秒杀商品详情
+        getSecKill () { // 获取秒杀时间
             let that = this
-            let params = {
-                limit: that.limit
-            }
-			get('/index.php/home/index/seckill_goods_list',params).then(res => {
+			get('/index.php/home/index/seckill_goods').then(res => {
                 console.log(res);
                 
             }).catch(function (error) {
