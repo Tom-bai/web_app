@@ -61,7 +61,7 @@
         <nut-actionsheet :is-visible="isVisible" @close="onHiddenActionSheet" :isClickCloseMask="false">
             <div slot="custom" class="custom-wrap">
                 <div class="actionsheetBox">
-                    <div class="header">
+                    <div class="head">
                         <div class="img"><img src="../../../assets/img/index/2222.jpg" alt=""></div>
                         <div class="text">
                             <div class="money">¥10</div>
@@ -314,7 +314,7 @@ export default {
 .actionsheetBox
     padding 0 15px
     margin-bottom 20px
-    .header
+    .head
         display flex
         align-items center
         border-bottom solid 1px #f1f1f1

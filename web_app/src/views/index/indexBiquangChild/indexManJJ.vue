@@ -7,7 +7,7 @@
             <div class="main">
                 <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
                     <div class="listBox" v-if="dataList.length > 0">
-                        <div class="list" v-for="(item,index) in dataList" @click="onRouter('/ProductDetails',item.click)">
+                        <div class="list" v-for="(item,index) in dataList" :key="index" @click="onRouter('/ProductDetails',item.g_id)">
                             <div class="img">
                                 <img  v-lazy="$imgUrl + item.img" alt="">
                             </div>

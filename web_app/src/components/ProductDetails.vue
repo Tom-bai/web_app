@@ -46,11 +46,11 @@
                         <div class="rightJ"></div>
                     </div>
                 </div>
-                <div class="item" v-if="goodsInfo.goods.pro_des">
+                <div class="item" v-if="goodsInfo.isPro">
                     <div class="title">促&nbsp;&nbsp;&nbsp;销：</div>
                     <div class="list">
                         <div class="text cuxiao">
-                            <div class="name">{{goodsInfo.goods.pro_des}}</div>
+                            <div class="name">{{goodsInfo.isPro.title}}</div>
                         </div>
                         <div class="rightJ"></div>
                     </div>
