@@ -5,7 +5,7 @@
             <div>限时秒杀</div>
             <!-- <div class="tip">高品质爆款抢先不断</div> -->
         </div>
-        <NavTwo></NavTwo>
+        <NavTwo ></NavTwo>
     </div>
 </template>
 
@@ -21,22 +21,11 @@ export default {
 	props: [],
 	data () {
 		return {
-            limit: 1
 		}
 	},
 	mounted() {
-        this.getSecKill()
     },
 	methods: {
-        getSecKill () { // 获取秒杀时间
-            let that = this
-			get('/index.php/home/index/seckill_goods').then(res => {
-                console.log(res);
-                
-            }).catch(function (error) {
-                console.log(error)
-            })
-        },
 	},
 	watch: {}
 };

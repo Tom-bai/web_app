@@ -84,14 +84,14 @@
                             <div class="text">
                                 <div class="name">{{item.title}}</div>
                                 <div class="money">
-                                    <span><small>¥</small>{{item.g_price}}</span><small>起</small>
+                                    <span><small>¥</small>{{item.cdf_price}}</span><small>起</small>
                                 </div>
                                 <div class="progress">
                                     <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
                                 </div>
                                 <div class="btnZ">
                                     <i class="iocn"></i>
-                                    <span>{{item.cdf_num}}人支撑</span>
+                                    <span>{{item.cdf_join_num}}人支撑</span>
                                     <span class="zhichi">支撑项目</span>
                                 </div>
                             </div>
@@ -549,7 +549,7 @@ export default {
                             background-size 100% 100%
                             width 15px
                             height 18px
-                            margin-right 10px
+                            margin-right 5px
                         .zhichi
                             border 1px solid $color
                             padding 2px 10px

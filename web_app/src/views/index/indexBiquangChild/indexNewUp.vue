@@ -18,11 +18,11 @@
                 </div>
             </div>
             <div class="tab">
-                <div class="list" :class="tabActive == 2 || tabActive == 3?'tabActive':''">
+                <div class="list" :class="tabActive == null?'tabActive':''" @click="onUpAndDwom">
                     <span>价格</span>
                     <span>
-                        <i class="up" @click="onUpAndDwom(2)"></i>
-                        <i class="down" @click="onUpAndDwom(3)"></i>
+                        <i class="up" :class="jActive && tabActive == null?'jActiveU':''"></i>
+                        <i class="down" :class="!jActive && tabActive == null?'jActiveD':''"></i>
                     </span>
                 </div>
                 <div class="list" :class="tabActive == 1?'tabActive':''" @click="onNewAndJ(1)">上新</div>
@@ -32,7 +32,7 @@
             <div class="listMain" v-if="list">
                 <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
                     <div class="listBox">
-                        <div class="list" v-for="(item,index) in dataList">
+                        <div class="list" v-for="(item,index) in dataList" @click="onRouter('/ProductDetails',item.id)">
                             <div class="img">
                                 <img v-lazy="$imgUrl + item.img" alt="">
                             </div>
@@ -48,7 +48,7 @@
             <div class="itemMain" v-else>
                 <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
                     <div class="itembox">
-                        <div class="item" v-for="item in dataList">
+                        <div class="item" v-for="item in dataList" @click="onRouter('/ProductDetails',item.id)">
                             <div class="img">
                                 <img v-lazy="$imgUrl + item.img" alt="">
                             </div>
@@ -80,8 +80,9 @@ export default {
             dataList: [],
             list: true,
             tabActive: null,
+            jActive: false,
             limit: 1,
-            isprice: 0,
+            isprice: 1,
             pricetype: 0,
             isnew: 0,
             isLoading: false,
@@ -98,6 +99,14 @@ export default {
     beforeDestroy() {
     },
 	methods: {
+        onRouter (pathUrl,id) {
+			this.$router.push({
+				path: pathUrl,
+				query: {
+                    id: id
+				}
+			})
+		},
         onInfinite () { // 上拉更多
             let that = this
             if (that.isHasMore) {
@@ -120,14 +129,17 @@ export default {
         },
         onUpAndDwom (val) { // 价格排序
             let newVal
-            if (val == 2) {
-                newVal = 0
-            } else if (val == 3) {
+            console.log(val);
+            
+            if (this.jActive) {
+                newVal = 2
+            } else {
                 newVal = 1
             }
+            this.jActive = !this.jActive
             this.pricetype = newVal
             this.dataList = []
-            this.tabActive = val
+            this.tabActive = null
             setTimeout(() => {
                 this.getList()
             }, 100);
@@ -250,6 +262,11 @@ export default {
             display inline-block
         .noMore
             background-image url('../../../assets/img/index/indexNewUp/more2.png')
+        .jActiveD
+            background-image url('../../../assets/img/index/indexNewUp/upc.png')
+            transform rotate(180deg)
+        .jActiveU
+            background-image url('../../../assets/img/index/indexNewUp/upc.png')
     .tabActive
         color $color
 .listMain
@@ -276,8 +293,10 @@ export default {
             &:nth-child(2n+0)
                 margin-right 0
             .img
+                height 175px
                 img
                     width 100%
+                    height 100%
                     display block
                     border-radius $border-radius $border-radius 0 0
             .name
@@ -289,6 +308,8 @@ export default {
                 white-space initial
                 font-weight 400
                 padding 5px 5px 0 5px
+                line-height 1.4
+                height 30px
             .money
                 font-size 16px
                 color $color

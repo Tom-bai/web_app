@@ -3,86 +3,26 @@
         <div class="navBox">
             <div class="topic-list-inner">
                 <div class="nav" ref="nav">
-                    <div class="box" v-for="(item,index) in list" :key="index" @click="queryTopic(item,index)" :class="{active:navActiveIndex==index}">
+                    <div class="box" v-for="(item,index) in timeData" :key="index" @click="queryTopic(item,index)" :class="{active:navActiveIndex==index}">
                         <div :class="{activeS:navActiveIndex==index}">{{item.time}}</div>
-                        <div class="item">{{item.title}}</div>
+                        <div class="item">{{item.status_name}}</div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container">
-            <div class="list">
-                <div class="img"><img src="../assets/img/index/2222.jpg" alt=""></div>
+            <div class="list" v-for="(item,index) in timeDataList">
+                <div class="img"><img v-lazy="$imgUrl + item.img" alt=""></div>
                 <div class="box">
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                    <div class="name">{{item.title}}</div>
                     <div class="tip">国际潮流品牌低至六折</div>
                     <div class="jindu">
                         <span class="xian"><b style="width:20%"></b></span>
                         <span>即将售罄</span>
                     </div>
                     <div class="money">
-                        <div>¥399.00 <span class="zhuan">赚¥50</span></div>
-                        <div class="btn" style="background: #f1002d;">马上抢</div>
-                    </div>
-                </div>
-            </div>
-            <div class="list">
-                <div class="img"><img src="../assets/img/index/2222.jpg" alt=""></div>
-                <div class="box">
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="tip">国际潮流品牌低至六折</div>
-                    <div class="jindu">
-                        <span class="xian"><b style="width:20%"></b></span>
-                        <span>即将售罄</span>
-                    </div>
-                    <div class="money">
-                        <div>¥399.00 <span class="zhuan">赚¥50</span></div>
-                        <div class="btn" style="background: #f1002d;">马上抢</div>
-                    </div>
-                </div>
-            </div>
-            <div class="list">
-                <div class="img"><img src="../assets/img/index/2222.jpg" alt=""></div>
-                <div class="box">
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="tip">国际潮流品牌低至六折</div>
-                    <div class="jindu">
-                        <span class="xian"><b style="width:20%"></b></span>
-                        <span>即将售罄</span>
-                    </div>
-                    <div class="money">
-                        <div>¥399.00 <span class="zhuan">赚¥50</span></div>
-                        <div class="btn" style="background: #f1002d;">马上抢</div>
-                    </div>
-                </div>
-            </div>
-            <div class="list">
-                <div class="img"><img src="../assets/img/index/2222.jpg" alt=""></div>
-                <div class="box">
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="tip">国际潮流品牌低至六折</div>
-                    <div class="jindu">
-                        <!-- <span class="xian"><b style="width:20%"></b></span> -->
-                        <span>已有9673人收藏</span>
-                    </div>
-                    <div class="money">
-                        <div>¥399.00 <span class="zhuan">赚¥50</span></div>
-                        <div class="btn" style="background: #1a1a1a;">即将开抢</div>
-                    </div>
-                </div>
-            </div>
-            <div class="list">
-                <div class="img"><img src="../assets/img/index/2222.jpg" alt=""></div>
-                <div class="box">
-                    <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                    <div class="tip">国际潮流品牌低至六折</div>
-                    <div class="jindu">
-                        <!-- <span class="xian"><b style="width:20%"></b></span> -->
-                        <span>已有9673人收藏</span>
-                    </div>
-                    <div class="money">
-                        <div>¥399.00 <span class="zhuan">赚¥50</span></div>
-                        <div class="btn" style="background: #1a1a1a;">即将开抢</div>
+                        <div>¥{{item.seckill_price}} <span class="zhuan">赚 ¥{{item.sec_price}}</span></div>
+                        <div class="btn" style="background: #f1002d;"  @click="onRouter('/ProductDetails',item.g_id)">马上抢</div>
                     </div>
                 </div>
             </div>
@@ -92,6 +32,7 @@
 <script>
 import $ from '@/assets/js/jquery.min.js'
 import AutoScroll from '@/assets/js/autoScroll'
+import { get,post } from '@/axiosApi'
 let autoScrollInstance = null  //关键点：在加载的插件之前的就要定义个变量的，如果定在data中 ，则会报错
 export default {
     name: 'navScroll',
@@ -131,6 +72,8 @@ export default {
                     title: '抢购中',
                 },
             ],
+            timeData: [],
+            timeDataList: [],
             navActiveIndex: 0, //当前高亮的tab选项卡index
             selectTag: null,   //传递个子组件（modal）的数据的
         }
@@ -138,6 +81,14 @@ export default {
     components: {
     },
     methods: {
+        onRouter (pathUrl,id) {
+			this.$router.push({
+				path: pathUrl,
+				query: {
+                    id: id
+				}
+			})
+		},
         queryTopic(data, index) {
             //点击谁，谁就高亮 ，定一个变量，click事件的赋值使其相等，而在:class 中 判断是否相等，即可
             this.navActiveIndex = index;
@@ -145,14 +96,38 @@ export default {
             if (autoScrollInstance) { //确保的插件加载成功
                 autoScrollInstance.scrollTo(this.$refs.nav.childNodes[index])
             }
+            this.getSecPro(data.id)
         },
+        getSecKill () { // 获取秒杀时间
+            let that = this
+			get('/index.php/home/index/seckill_goods').then(res => {
+                that.timeData = res
+                that.getSecPro(that.timeData[0].id)
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        getSecPro (id) { // 获取秒杀商品
+            let that = this
+            let params = {
+                id: id
+            }
+			get('/index.php/home/index/secPro',params).then(res => {
+                that.timeDataList = res
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        
     },
     mounted() {
         //写在掉接口的里面的
         this.$nextTick(() => {
             autoScrollInstance = new AutoScroll(this.$refs.nav, {spaceBetween: 0})//节点 nav
         })
-    }
+        this.getSecKill()
+        
+    },
 }
 </script>
 <style lang="stylus" scoped>
@@ -214,6 +189,8 @@ export default {
                     -webkit-line-clamp 2
                     -webkit-box-orient vertical
                     font-size 14px
+                    line-height 1.3
+                    height 35px
                 .tip
                     box-orient vertical
                     overflow hidden

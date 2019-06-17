@@ -6,15 +6,19 @@
                 <div class="name" :class="topIndex == index?'active':''" v-for="(item,index) in topName" :key="index" @click="onTopNav(index)">{{item}}</div>
             </div>
             <div class="swiper" id="anchor-0">
-                <van-swipe :autoplay="4000">
+                <van-swipe :autoplay="4000" @change="onChange">
                     <van-swipe-item v-for="(image, index) in goodsInfo.goods.more_img" :key="index" class="swiperImg">
                         <img v-lazy="$imgUrl + image" />
                     </van-swipe-item>
+                    <div class="custom-indicator" slot="indicator">
+                        {{ current + 1 }}/4
+                    </div>
+                    <div class="xiaoLiang">近期销量：{{goodsInfo.goods.max_num}}</div>
                 </van-swipe>
             </div>
             <div class="moneyDetaild">
                 <div class="money">
-                    <div><span class="moneyIoc">¥</span>{{goodsInfo.goods.price}} <div class="xiaoLiang">近期销量：{{goodsInfo.goods.max_num}}</div></div>
+                    <div><span class="moneyIoc">¥</span>{{goodsInfo.goods.price}}</div>
                     <div class="yuan"><span class="moneyIoc">¥</span>{{goodsInfo.goods.member_price}}<i class="vip"></i></div>
                 </div>
                 <div class="openVip">
@@ -204,7 +208,7 @@
                 primary
                 class="nowBuy"
                 text="立即购买"
-                @click="onClickBigBtn"
+                @click=""
             />
         </van-goods-action>
         <!-- 选择地址 -->
@@ -235,8 +239,8 @@
                             <div class="listBox">
                                 <div class="item" 
                                     v-for="(items,index) in item.values" 
-                                    v-on:click="specificationBtn(items.name,n,$event,index)" 
-                                    v-bind:class="[items.isShow?'':'',subIndex[n] == index?'active':'']"
+                                    @click="specificationBtn(items.name,n,$event,index)" 
+                                    :class="[items.isShow?'':'',subIndex[n] == index?'active':'']"
                                     :key="index">{{items.name}}</div>
                             </div>
                         </div>
@@ -308,10 +312,6 @@ export default {
             topIndex: 0,
             goodsInfo: [],
             city: '北京市 北京市 东城区',
-            images: [
-                'https://img.yzcdn.cn/1.jpg',
-                'https://img.yzcdn.cn/2.jpg'
-            ],
             showPinLun: false,
             addressShow:false,
             areaList: AddressInfo,
@@ -333,6 +333,7 @@ export default {
             commentData: [],
             PUser: [],
             kuCun: 1,
+            current: 1,
             //
             textTishi: ' ',
             selectArr: [], //存放被选中的值
@@ -466,6 +467,9 @@ export default {
 				}
 			})
         },
+        onChange(index) {
+        this.current = index;
+        },
         onHiddenActionSheet() { // 选择款式
             if (this.isVisible) {
                 document.body.classList.remove('scrollFixed')
@@ -480,6 +484,11 @@ export default {
         onHiddenActionSheetTwo () {
             if (this.Kucun < this.num) {
                 toast('库存不足。请选择其他产品！')
+                return false
+            }
+            if (this.selectArr.length <= 0) {
+                toast('请选择规格！')
+                this.textTishi = ' '
                 return false
             }
             console.log(this.selectArr);
@@ -510,15 +519,17 @@ export default {
                 that.subIndex[n] = -1; //去掉选中的颜色 
             }
             that.checkItem();
-            // 未选择规格提示
             let tip = []
             for (let i in that.gugeValue) {
                 tip.push(that.gugeValue[i].name)
             }
             let tipTip = tip.join('')
             let textGuige = that.selectArr.join(' ')
-            that.textTishi = textGuige
-
+            if (textGuige == '') {
+                that.textTishi = ' '
+            } else {
+                that.textTishi = textGuige
+            }
             let textTip = tip.join('-')
             let textSS = that.selectArr.join(',')
             let postText = textTip + '|' + textSS
@@ -549,13 +560,6 @@ export default {
                 }
             }
             return this.shopItemInfo[result].active ? false : true; //匹配选中的数据的库存，若不为空返回true反之返回false
-        },
-        //
-        onClickMiniBtn() {
-            console.log('点击图标')
-        },
-        onClickBigBtn() {
-            console.log('点击按钮')
         },
         onshowPinLun () { // 选择评论
             if (this.showPinLun) {
@@ -631,7 +635,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="stylus">
+<style lang="stylus" scoped>
 .ProductDetails
     margin-bottom 60px
 .header
@@ -678,11 +682,20 @@ export default {
         background-repeat no-repeat
         background-position 50%
 .swiper
-    .swiperImg
-        >img 
-            width 100%
-            height 360px
-            border-radius 3px
+    .van-swipe
+        padding-bottom 20px
+        background-color #fff
+        .swiperImg
+            >img 
+                width 100%
+                height 360px
+                border-radius 3px
+        .custom-indicator
+            position absolute
+            left 50%
+            bottom 7px
+            transform translate(-50%)
+            font-size 14px
 .moneyDetaild
     padding 20px 15px 15px 15px
     text-align left
@@ -691,10 +704,13 @@ export default {
         color $color
         font-size 27px
         font-weight 700
+        display flex
+        align-items flex-end
+        line-height 1
         .moneyIoc
             font-size 14px
             font-weight normal
-            margin-right 5px
+            margin-right 2px
         .xiaoLiang
             font-size 12px
             color #333
@@ -703,6 +719,7 @@ export default {
     .yuan
         color #666
         font-size 20px
+        margin-left 10px
         .vip
             background-image url('../assets/img/index/vip.png')
             background-repeat no-repeat
@@ -1453,43 +1470,46 @@ export default {
             line-height 40px
             font-weight 500
             border-radius $border-radius
-.fuWuBoxHead
-    display flex
-    align-items center
-    height 35px
-    .text
-        flex 1
-        font-size 14px
-        text-align left
-        padding 0 15px
-    .close
-        background-image url('../assets/img/x.png')
-        flex 0 0 25px
-        height 25px
-        background-size 100%
-        top 5px
-        right 0
-.conten
-    .list
+.fuWuBox
+    height 350px
+    overflow-y auto
+    .fuWuBoxHead
         display flex
-        text-align left
-        padding 10px 15px
-        .img
-            flex 0 0 20px
-            img
-                display block
-                width 100%
+        align-items center
+        height 35px
         .text
-            padding 0px 10px 10px 10px
             flex 1
-            border-bottom solid 1px #f1f1f1
-            .textN
-                font-size 14px
-                color #333
-                margin-bottom 10px
-            .textT
-                font-size 14px
-                color #666
+            font-size 14px
+            text-align left
+            padding 0 15px
+        .close
+            background-image url('../assets/img/x.png')
+            flex 0 0 25px
+            height 25px
+            background-size 100%
+            top 5px
+            right 0
+    .conten
+        .list
+            display flex
+            text-align left
+            padding 10px 15px
+            .img
+                flex 0 0 20px
+                img
+                    display block
+                    width 100%
+            .text
+                padding 0px 10px 10px 10px
+                flex 1
+                border-bottom solid 1px #f1f1f1
+                .textN
+                    font-size 14px
+                    color #333
+                    margin-bottom 10px
+                .textT
+                    font-size 14px
+                    color #666
 .pinLunBox
     position absolute
     width 100%
