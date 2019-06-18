@@ -31,17 +31,13 @@
                     <div class="cha">查看详情</div>
                 </div>
             </div> -->
-            <swiper :options="swiperOption" v-if="navBtn.length>0" class="swiperBox">
+            <swiper :options="swiperOption" v-if="dataNav.length>0" class="swiperBox">
                 <swiper-slide v-for="(item,index) in dataNav" :key="index" class="swiperB">
-                    <div class="navBtnbox">
+                    <div class="navBtnbox" v-for="(itemL,index) in item">
                         <div class="navBtn">
                             <div class="list">
-                                <div><img v-lazy="$imgUrl + item.img" alt=""></div>
-                                <div>{{item.name}}</div>
-                            </div>
-                            <div class="list">
-                                <div><img v-lazy="$imgUrl + item.img" alt=""></div>
-                                <div>{{item.name}}</div>
+                                <div><img v-lazy="$imgUrl + itemL.img" alt=""></div>
+                                <div>{{itemL.name}}</div>
                             </div>
                         </div>
                     </div>
@@ -75,126 +71,6 @@ export default {
                 },
             },
             dataNav: [],
-            navBtn: [
-                {
-                    id: 1,
-                    nav: [
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                    ]
-                },
-                {
-                    id: 2,
-                    nav: [
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                    ]
-                },
-                {
-                    id: 1,
-                    nav: [
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                    ]
-                },
-                {
-                    id: 1,
-                    nav: [
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                    ]
-                },
-                {
-                    id: 1,
-                    nav: [
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                    ]
-                },
-                {
-                    id: 1,
-                    nav: [
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                    ]
-                },
-                {
-                    id: 1,
-                    nav: [
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                    ]
-                },
-                {
-                    id: 1,
-                    nav: [
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                    ]
-                },
-                {
-                    id: 1,
-                    nav: [
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                        {
-                            img: require('../../assets/img/index/nav.jpg'),
-                            text: '美妆护肤'
-                        },
-                    ]
-                },
-                
-            ]
 		}
 	},
 	mounted() {
@@ -209,13 +85,21 @@ export default {
 				}
 			})
         },
+        group (array, subGroupLength) {
+            let index = 0;
+            let newArray = [];
+            while(index < array.length) {
+                newArray.push(array.slice(index, index += subGroupLength));
+            }
+            return newArray;
+        },
         getData () { // 一元
             let that = this
             let params = {
                 limit: that.limitY
             }
 			get('/index.php/home/index/cate',params).then(res => {
-                that.dataNav = res
+                that.dataNav = that.group(res,2)
             }).catch(function (error) {
                 console.log(error)
             })

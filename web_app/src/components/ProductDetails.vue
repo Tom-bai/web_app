@@ -11,10 +11,10 @@
                         <img v-lazy="$imgUrl + image" />
                     </van-swipe-item>
                     <div class="custom-indicator" slot="indicator">
-                        {{ current + 1 }}/4
+                        {{ current + 1 }}/{{goodsInfo.goods.more_img.length}}
                     </div>
-                    <div class="xiaoLiang">近期销量：{{goodsInfo.goods.max_num}}</div>
                 </van-swipe>
+                <div class="xiaoLiang">近期销量：{{goodsInfo.goods.max_num}} 笔</div>
             </div>
             <div class="moneyDetaild">
                 <div class="money">
@@ -208,7 +208,7 @@
                 primary
                 class="nowBuy"
                 text="立即购买"
-                @click=""
+                @click="onNowBuy(goodsInfo.goods)"
             />
         </van-goods-action>
         <!-- 选择地址 -->
@@ -625,6 +625,17 @@ export default {
                 console.log(error)
             })
         },
+        onNowBuy (id) {
+            let that = this
+            let newData =  [id]
+            this.$router.push({
+				path: '/AddOrder',
+				query: {
+                    id: newData,
+                    type: 'ProductDetails'
+				}
+			})
+        }
     },
     watch: {
         '$route' (to, from) {
@@ -633,11 +644,37 @@ export default {
     }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
-.ProductDetails
-    margin-bottom 60px
+.swiper
+    position relative
+    .van-swipe
+        padding-bottom 20px
+        background-color #fff
+        .swiperImg
+            >img 
+                width 100%
+                height 360px
+                border-radius 3px
+        .custom-indicator
+            position absolute
+            bottom 10px
+            left 50%
+            width 40px
+            background-color rgba(0, 0, 0, 0.4)
+            text-align center
+            padding 5px 5px
+            border-radius 3px
+            line-height 1
+            color #fff
+            transform translate(-50%)
+            font-size 14px
+    .xiaoLiang
+        font-size 12px
+        color #333
+        display inline-block
+        position absolute
+        right 20px
+        bottom 0
 .header
     position sticky 
     left 0
@@ -681,21 +718,11 @@ export default {
         height 25px
         background-repeat no-repeat
         background-position 50%
-.swiper
-    .van-swipe
-        padding-bottom 20px
-        background-color #fff
-        .swiperImg
-            >img 
-                width 100%
-                height 360px
-                border-radius 3px
-        .custom-indicator
-            position absolute
-            left 50%
-            bottom 7px
-            transform translate(-50%)
-            font-size 14px
+</style>
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="stylus">
+.ProductDetails
+    margin-bottom 60px
 .moneyDetaild
     padding 20px 15px 15px 15px
     text-align left
@@ -711,11 +738,6 @@ export default {
             font-size 14px
             font-weight normal
             margin-right 2px
-        .xiaoLiang
-            font-size 12px
-            color #333
-            display inline-block
-            float right
     .yuan
         color #666
         font-size 20px
@@ -733,7 +755,7 @@ export default {
         display flex
         align-items center
         background-color #f7f7f7
-        height 60px
+        height 35px
         padding-left 15px
         border-radius $border-radius
         margin-top 10px
@@ -760,16 +782,16 @@ export default {
                 margin-top 5px
         .cardBtn
             flex 0 0 60px
-            height 60px
-            line-height 60px
+            height 35px
+            line-height 35px
             background #f3eee3
             text-align center
             span
                 width 30px
                 display inline-block
-                line-height 1.3
+                line-height 1.2
                 font-size 12px
-                margin-top 16px
+                margin-top 5px
                 position relative
                 &:after
                     position absolute

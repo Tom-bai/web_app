@@ -26,7 +26,7 @@
                                 <div class="guiGe">{{item.goods_sku}}</div>
                                 <div class="money">
                                     <div class="moneyN">¥{{item.price}}</div>
-                                    <div class="numN"><van-stepper v-model="item.num" :disable-input="true"  async-change  /></div>
+                                    <div class="numN"><van-stepper v-model="item.num" :disable-input="true" async-change  @plus="postUpdatenum(index)" @minus="postUpdatenum(index)"  /></div>
                                 </div>
                             </div>
                         </div>
@@ -124,25 +124,24 @@ export default {
             })
             
         },
-        postUpdatenum (index,val) { // 增加商品数量
+        postUpdatenum (index) { // 增加商品数量
             let that = this
             if (that.changing) {
                 return;
             }
             that.changing = true;
-            setTimeout(() => {
-                that.changing = false;
-                that.cardData.list[index].num = val
-                let params = {
-                    id: that.cardData.list[index].id,
-                    num: that.cardData.list[index].num
+            let params = {
+                id: that.cardData.list[index].id,
+                num: that.cardData.list[index].num
+            }
+            get('/index.php/home/shopCart/updatenum',params).then(res => {
+                if ( res.status == 0 ) {
+                    toast(res.msg)
                 }
-                get('/index.php/home/shopCart/updatenum',params).then(res => {
-                    console.log(res);
-                }).catch(function (error) {
-                    console.log(error)
-                })
-            }, 500);
+                that.changing = false
+            }).catch(function (error) {
+                console.log(error)
+            })
             
         },
         allCheckBox () { // 全选
@@ -220,13 +219,18 @@ export default {
         },
         postBuy () { // 结算
             let that = this
-            this.$router.push({
-				path: '/AddOrder',
-				query: {
-                    id: that.allCheckedList,
-                    type: 'card'
-				}
-			})
+            if (that.allCheckedList.length <= 0 ) {
+                toast('请勾选商品!')
+                return false
+            } else {
+                that.$router.push({
+                    path: '/AddOrder',
+                    query: {
+                        id: that.allCheckedList,
+                        type: 'card'
+                    }
+                })
+            }
         }
     },
 	watch: {

@@ -102,7 +102,7 @@
                         <div class="name">余额 </div>
                     </div>
                     <div class="right">
-                        <span>- ¥{{youHuiData.balance}}</span>
+                        <span>- ¥{{yuMoney}}</span>
                     </div>
                 </div>
                 <div class="list">
@@ -217,18 +217,19 @@ export default {
             xBiShow: false,
             balance: 0,
             balanceShow: false,
-            youHui: 0
+            youHui: 0,
+            postData: []
 		}
     },
     computed:{
-        total_price() {
+        total_price() { // 商品金额
             let price = 0　　　　　　　　　　　　　　　　　　　　　　　　
             for (let i in this.orderData.list) {
                 price += (parseInt(this.orderData.list[i].price) * parseInt(this.orderData.list[i].num))
             }
             return price.toFixed(2)
         },
-        newPay () {
+        newPay () { // 支付金额
             let newPay = 0　　　　　　　　　　　　　　　　　　　　　　　　
             for (let i in this.orderData.list) {
                 newPay += (parseInt(this.orderData.list[i].price) * parseInt(this.orderData.list[i].num)) 
@@ -236,19 +237,30 @@ export default {
             
             return (newPay - parseInt(this.xBi) - parseInt(this.balance) - parseInt(this.youHui)).toFixed(2)
         },
+        yuMoney () {  //优惠后额余额　　　　　　
+            if (parseInt(this.total_price) > parseInt(this.balance) ) {
+                return parseInt(this.balance).toFixed(2)
+            } else {
+                return parseInt(this.total_price).toFixed(2)
+            }　　　　　　　　　　
+        }
     },
     mounted() {
         this.getCartOrder()
     },
+    destroyed () {
+        this.postData = []
+    },
 	methods: {
         getCartOrder () { // 获取订单数据
             let that = this
-            let postData = []
+            console.log(that.$route.query.id);
+            
             for ( let i in that.$route.query.id) {
-                postData.push(that.$route.query.id[i].id)
+                that.postData.push(that.$route.query.id[i].id)
             }
             let params = {
-                s_id: postData
+                s_id: that.postData
             }
 			post('/index.php/home/shopCart/cartOrder',params).then(res => {
                  that.orderData = res
