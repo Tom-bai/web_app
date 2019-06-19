@@ -20,6 +20,7 @@
                     <div class="textBox">
                         <div class="name" @click="onRouter('/ProductDetails',item.goods_id)">{{item.goods_name}}</div>
                         <div class="guiGe">{{item.goods_sku}}</div>
+                        <div class="tip">{{item.finalCart.s_type_name}}</div>
                         <div class="money">
                             <div class="moneyN">¥{{item.price}}</div>
                             <div class="numN">x {{item.num}}</div>
@@ -182,7 +183,7 @@
                             </div> -->
                         </div>
                     </div>
-                    <div class="btn">确认 (共省 ¥ {{yhMoney}})</div>
+                    <div class="btn" @click="onHiddenActionSheet">确认 (共省 ¥ {{yhMoney}})</div>
                 </div>
             </nut-actionsheet>
             <!-- <SelectAddress></SelectAddress> -->
@@ -217,7 +218,6 @@ export default {
             xBiShow: false,
             balance: 0,
             balanceShow: false,
-            youHui: 0,
             postData: []
 		}
     },
@@ -225,26 +225,26 @@ export default {
         total_price() { // 商品金额
             let price = 0　　　　　　　　　　　　　　　　　　　　　　　　
             for (let i in this.orderData.list) {
-                price += (parseInt(this.orderData.list[i].finalCart.total))
+                price += (parseFloat(this.orderData.list[i].finalCart.total))
             }
             return price.toFixed(2)
         },
         newPay () { // 支付金额
-            let myPay = (parseInt(this.total_price) - parseInt(this.xBi) - parseInt(this.balance) - parseInt(this.youHui)).toFixed(2)
+            let myPay = (parseFloat(this.total_price) - parseFloat(this.xBi) - parseFloat(this.balance) - parseFloat(this.yhMoney)).toFixed(2)
             if (myPay <= 0) {
-                myPay = parseInt(0).toFixed(2)
+                myPay = parseFloat(0).toFixed(2)
             }
             return myPay
         },
         yuMoney () {  //优惠后额余额　　　　　　
-            if (parseInt(this.total_price) > parseInt(this.balance) ) {
-                return parseInt(this.balance).toFixed(2)
+            if (parseFloat(this.total_price) > parseFloat(this.balance) ) {
+                return parseFloat(this.balance).toFixed(2)
             } else {
-                return parseInt(this.total_price).toFixed(2)
+                return parseFloat(this.total_price).toFixed(2)
             }　　　　　　　　　　
         },
         youHuiTip () {
-            return  (parseInt(this.yuMoney) +  parseInt(this.xBi) + parseInt(this.youHui)).toFixed(2)
+            return  (parseFloat(this.yuMoney) +  parseFloat(this.xBi) + parseFloat(this.yhMoney)).toFixed(2)
         }
     },
     mounted() {
@@ -256,8 +256,6 @@ export default {
 	methods: {
         getCartOrder () { // 获取订单数据
             let that = this
-            console.log(that.$route.query.id);
-            
             for ( let i in that.$route.query.id) {
                 that.postData.push(that.$route.query.id[i].id)
             }
@@ -288,7 +286,7 @@ export default {
                 if (this.youHuiData.xbi == null) {
                     this.xBi = 0
                 } else {
-                    this.xBi = parseInt(this.youHuiData.xbi)
+                    this.xBi = parseFloat(this.youHuiData.xbi)
                 }
             } else {
                 this.xBi = 0
@@ -300,7 +298,7 @@ export default {
                 if (this.youHuiData.balance == null) {
                     this.balance = 0
                 } else {
-                    this.balance = parseInt(this.youHuiData.balance)
+                    this.balance = parseFloat(this.youHuiData.balance)
                 }
             } else {
                 this.balance = 0
@@ -323,16 +321,14 @@ export default {
         },
         toggle (index) { //  勾选优惠券
             let that = this
-            console.log(that.youHuiData.yhqCanUse[index].min_price);
-            console.log(that.newPay);
-            if (that.newPay < (that.youHuiData.yhqCanUse[index].min_price).toFixed(2)) {
+            if (that.newPay < that.youHuiData.yhqCanUse[index].min_price) {
                 toast(`未满 ¥ ${that.youHuiData.yhqCanUse[index].min_price} 不可使用`)
                 return false
             } else {
                 that.yhStatus = index
                 that.yhStatusA = !that.yhStatusA
                 if (that.yhStatusA) {
-                    that.yhMoney = parseInt(that.youHuiData.yhqCanUse[index].price).toFixed(2)
+                    that.yhMoney = parseFloat(that.youHuiData.yhqCanUse[index].price).toFixed(2)
                 } else {
                     that.yhMoney = 0
                 }
@@ -414,7 +410,6 @@ export default {
                 -webkit-box-orient vertical
                 overflow hidden
                 line-height 1.3
-                height 35px
             .guiGe
                 font-size 12px
                 font-weight 500
@@ -425,6 +420,13 @@ export default {
                 overflow hidden
                 line-height 1.3
                 margin 4px 0
+            .tip
+                color #fff
+                background-color $background-color
+                display inline-block
+                margin 0 0 5px 0
+                padding 2px 5px
+                border-radius $border-radius
             .money
                 display flex
                 align-items center

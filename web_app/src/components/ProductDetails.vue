@@ -486,13 +486,13 @@ export default {
                 toast('库存不足。请选择其他产品！')
                 return false
             }
-            if (this.selectArr.length <= 0) {
-                toast('请选择规格！')
-                this.textTishi = ' '
-                return false
+            if (this.gugeValue !== null) {
+                if (this.selectArr.length <= 0) {
+                    toast('请选择规格！')
+                    this.textTishi = ' '
+                    return false
+                }
             }
-            console.log(this.selectArr);
-            console.log(this.selectArr.length);
             document.body.classList.remove('scrollFixed')
             document.scrollingElement.scrollTop = this.scrollTop
             this.isVisible = !this.isVisible
@@ -592,10 +592,11 @@ export default {
         },
         onBuyCard () { // 加入购物车
             let that = this
-            console.log(that.selectArr);
-            if (that.selectArr.length <= 0) {
-                toast('请选择规格')
-                return false
+            if (that.gugeValue !== null) {
+                if (that.selectArr.length <= 0) {
+                    toast('请选择规格')
+                    return false
+                }
             }
             // 奇葩的方式总有办法解决
             let text = []
