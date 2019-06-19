@@ -132,7 +132,7 @@
                             <span class="moneyNum">¥{{newPay}}</span>
                         </div>
                     </div>
-                    <div class="btnJ">立即支付</div>
+                    <div class="btnJ" @click="onPayOrder">立即支付</div>
                 </div>
             </div>
             <!-- 选择优惠券 -->
@@ -195,6 +195,7 @@
 import { get,post,formatTime,toast } from '@/axiosApi'
 import { Checkbox  } from 'vant'
 import SelectAddress from '@/components/SelectAddress'
+import { log } from 'util';
 export default {
 	name: 'AddOrder',
 	props: {
@@ -336,7 +337,49 @@ export default {
         },
         onyouHuiShow (val) {
             this.youHuiShow = val
-        }
+        },
+        onPayOrder () { // 立即支付下订单
+            let that = this
+            let params = {
+                cartid: that.postData,
+                use_xb: `${that.xBiShow?1:0}`,
+                user_ye: `${that.balanceShow?1:0}`,
+                message: that.xieShang,
+                yhq: that.yhq,
+                address_id: that.orderData.adddata.id,
+            }
+			post('/index.php/home/cart/ajax_cart_order',params).then(res => {
+                that.onPayMoney(res.order)
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        onPayMoney (orderID) { // 立即支付订单付钱
+            let that = this
+            let params = {
+                order: orderID,
+                use_xb: `${that.xBiShow?1:0}`,
+                user_ye: `${that.balanceShow?1:0}`,
+                message: that.xieShang,
+                yhq: that.yhq,
+                address_id: that.orderData.adddata.id,
+            }
+			get('/index.php/home/cart/order_pay',params).then(res => {
+                console.log(res);
+                that.$wxSDK.config({
+                    debug: false, // 开启调试模式,开发时可以开启
+                    appId: res.appId,   // 必填，公众号的唯一标识   由接口返回
+                    timestamp: res.timestamp, // 必填，生成签名的时间戳 由接口返回
+                    nonceStr: res.nonceStr,    // 必填，生成签名的随机串 由接口返回
+                    signature: res.signature,   // 必填，签名 由接口返回
+                    jsApiList: [
+                        'chooseWXPay', 
+                    ] // 此处填你所用到的方法
+                });
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
 	}
 }
 </script>
