@@ -126,8 +126,8 @@
                 <div class="box">
                     <div class="moneyT">
                         <div class="money">
+                            <span class="mTip" v-if="youHuiTip !== '0.00'">已优惠 ¥{{youHuiTip}}</span> 
                             <span>实付金额：</span>
-                            <!-- <span class="mTip">(不含税)</span>  -->
                             <span class="moneyNum">¥{{newPay}}</span>
                         </div>
                     </div>
@@ -225,17 +225,16 @@ export default {
         total_price() { // 商品金额
             let price = 0　　　　　　　　　　　　　　　　　　　　　　　　
             for (let i in this.orderData.list) {
-                price += (parseInt(this.orderData.list[i].price) * parseInt(this.orderData.list[i].num))
+                price += (parseInt(this.orderData.list[i].finalCart.total))
             }
             return price.toFixed(2)
         },
         newPay () { // 支付金额
-            let newPay = 0　　　　　　　　　　　　　　　　　　　　　　　　
-            for (let i in this.orderData.list) {
-                newPay += (parseInt(this.orderData.list[i].price) * parseInt(this.orderData.list[i].num)) 
+            let myPay = (parseInt(this.total_price) - parseInt(this.xBi) - parseInt(this.balance) - parseInt(this.youHui)).toFixed(2)
+            if (myPay <= 0) {
+                myPay = parseInt(0).toFixed(2)
             }
-            
-            return (newPay - parseInt(this.xBi) - parseInt(this.balance) - parseInt(this.youHui)).toFixed(2)
+            return myPay
         },
         yuMoney () {  //优惠后额余额　　　　　　
             if (parseInt(this.total_price) > parseInt(this.balance) ) {
@@ -243,6 +242,9 @@ export default {
             } else {
                 return parseInt(this.total_price).toFixed(2)
             }　　　　　　　　　　
+        },
+        youHuiTip () {
+            return  (parseInt(this.yuMoney) +  parseInt(this.xBi) + parseInt(this.youHui)).toFixed(2)
         }
     },
     mounted() {
@@ -321,7 +323,9 @@ export default {
         },
         toggle (index) { //  勾选优惠券
             let that = this
-            if (that.newPay < that.youHuiData.yhqCanUse[index].min_price) {
+            console.log(that.youHuiData.yhqCanUse[index].min_price);
+            console.log(that.newPay);
+            if (that.newPay < (that.youHuiData.yhqCanUse[index].min_price).toFixed(2)) {
                 toast(`未满 ¥ ${that.youHuiData.yhqCanUse[index].min_price} 不可使用`)
                 return false
             } else {
@@ -573,6 +577,9 @@ export default {
                 justify-content flex-end
                 .mTip
                     font-size 12px
+                    margin-right 5px
+                .moneyNum
+                    color $color
             .tip
                 margin-top 2px
                 color $color 
