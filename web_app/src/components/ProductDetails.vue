@@ -11,7 +11,7 @@
                         <img v-lazy="$imgUrl + image" />
                     </van-swipe-item>
                     <div class="custom-indicator" slot="indicator">
-                        {{ current + 1 }}/{{goodsInfo.goods.more_img.length}}
+                        {{ current + 1}}/{{goodsInfo.goods.more_img.length}}
                     </div>
                 </van-swipe>
                 <div class="xiaoLiang">近期销量：{{goodsInfo.goods.max_num}} 笔</div>
@@ -333,7 +333,7 @@ export default {
             commentData: [],
             PUser: [],
             kuCun: 1,
-            current: 1,
+            current: 0,
             //
             textTishi: ' ',
             selectArr: [], //存放被选中的值
@@ -782,15 +782,14 @@ export default {
                 color #999
                 margin-top 5px
         .cardBtn
-            flex 0 0 60px
+            flex 0 0 80px
             height 35px
             line-height 35px
             background #f3eee3
             text-align center
             span
-                width 30px
                 display inline-block
-                line-height 1.2
+                line-height 1
                 font-size 12px
                 margin-top 5px
                 position relative

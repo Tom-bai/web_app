@@ -46,7 +46,7 @@
                         </div>
                         <div class="tip">
                             <span>活动优惠：</span>
-                            <span class="suiMoney">¥499</span>
+                            <span class="suiMoney">¥{{total_youhui}}</span>
                         </div>
                     </div>
                     <div class="btnJ" @click="postBuy">结算<span>({{allCheckedList.length}})</span></div>
@@ -75,8 +75,9 @@ export default {
             checked: false,
             allChecked: false,
             allCheckedList: [],
+            youListData: [],
             num: 1,
-            toTal: 0
+            toTal: 0,
         }
     },
     mounted() {
@@ -86,9 +87,16 @@ export default {
         total_price() {
             let price = 0　　　　　　　　　　　　　　　　　　　　　　　　
             for (let i in this.allCheckedList) {
-                price += (parseInt(this.allCheckedList[i].price) * parseInt(this.allCheckedList[i].num))
+                price += (parseFloat(this.allCheckedList[i].finalCart.total))
             }
             return price.toFixed(2)
+        },
+        total_youhui() {
+            let youhui = 0　　　　　　　　　　　　　　　　　　　　　　　　
+            for (let i in this.allCheckedList) {
+                youhui += (parseFloat(this.allCheckedList[i].finalCart.jian))
+            }
+            return youhui.toFixed(2)
         },
     },
 	methods: {
@@ -137,6 +145,11 @@ export default {
             get('/index.php/home/shopCart/updatenum',params).then(res => {
                 if ( res.status == 0 ) {
                     toast(res.msg)
+                } else {
+                    that.youhuiMoney = res.goods.jian
+                    // 重新更新优惠信息
+                    that.cardData.list[index].finalCart.total = res.goods.total
+                    that.cardData.list[index].finalCart.jian = res.goods.jian   
                 }
                 that.changing = false
             }).catch(function (error) {
@@ -169,12 +182,12 @@ export default {
                 that.cardData.list[index].is_default = '1'
                 that.postGouxuan(that.cardData.list[index].id,that.cardData.list[index].is_default)
                 that.allCheckedList.push(that.cardData.list[index])
-                that.toTal = (parseInt(that.toTal) + parseInt(that.cardData.list[index].price)).toFixed(2)
+                that.toTal = (parseFloat(that.toTal) + parseFloat(that.cardData.list[index].price)).toFixed(2)
             } else if (that.cardData.list[index].is_default = 1) {  // 不勾
                 that.cardData.list[index].is_default = '0'
                 that.allChecked = false
                 that.postGouxuan(that.cardData.list[index].id,that.cardData.list[index].is_default)
-                that.toTal = (parseInt(that.toTal) - parseInt(that.cardData.list[index].price)).toFixed(2)
+                that.toTal = (parseFloat(that.toTal) - parseFloat(that.cardData.list[index].price)).toFixed(2)
                 for (let i in that.allCheckedList) {
                     if (that.cardData.list[index] == that.allCheckedList[i]) {
                         that.allCheckedList.splice(i, 1);

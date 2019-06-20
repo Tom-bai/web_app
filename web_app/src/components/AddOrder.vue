@@ -366,6 +366,7 @@ export default {
             }
 			get('/index.php/home/cart/order_pay',params).then(res => {
                 console.log(res);
+                alert(res)
                 that.$wxSDK.config({
                     debug: false, // 开启调试模式,开发时可以开启
                     appId: res.appId,   // 必填，公众号的唯一标识   由接口返回
@@ -470,6 +471,7 @@ export default {
                 margin 0 0 5px 0
                 padding 2px 5px
                 border-radius $border-radius
+                line-height 1
             .money
                 display flex
                 align-items center
