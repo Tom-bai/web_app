@@ -1,7 +1,7 @@
 <template>
 	<!-- 购物车 -->
 	<div>
-		<div class="card">
+		<div class="card" v-if="cardData.list !== null">
 			<div class="mainBox">
                 <div class="list" v-for="(item,index) in cardData.list" :key="index">
                     <div class="head">
@@ -53,12 +53,18 @@
                 </div>
             </div>
 		</div>
+        <div class="noCard" v-else>
+            <div class="img"><img src="../../assets/img/z_shopcart_def.jpg" alt=""></div>
+            <div class="goIndex"><span @click="onRouter ('/')">去逛逛</span></div>
+            <Like></Like>
+        </div>
 	</div>
 </template>
 
 <script>
 // @ is an alias to /src
 import { get,post,toast } from '@/axiosApi'
+import Like from '@/components/Like'
 import { SubmitBar,Checkbox,Stepper,SwipeCell  } from 'vant'
 export default {
 	name: "cart",
@@ -67,6 +73,7 @@ export default {
         [Checkbox.name]: Checkbox,
         [Stepper.name]: Stepper,
         [SwipeCell.name]: SwipeCell,
+        Like: Like
 	},
 	props: [],
 	data () {
@@ -211,7 +218,7 @@ export default {
                 console.log(error)
             })
         },
-        getCardData () { // 获取商品详情
+        getCardData () { // 获取购物车详情
             let that = this
             let params = {
                 id: that.$route.query.id
@@ -368,4 +375,21 @@ export default {
             background-color $background-color
             color #fff
             font-size 16px
+.noCard
+    margin-bottom 70px
+    .img
+        img 
+            display block
+            width 100%
+    .goIndex
+        text-align center
+        padding 30px 0
+        background-color #fff
+        span
+            font-size 14px
+            color $color
+            border solid 1px $color
+            padding 6px 15px
+            line-height 1
+            border-radius $border-radius
 </style>

@@ -176,6 +176,15 @@ export default new Router({
             },
             component: () => import('./components/AddOrder.vue'),  // 提交订单
         },
+        {  // 订单详情
+			path: '/OrderDetails',
+            name: 'OrderDetails',
+            meta:{
+                title: '订单详情',
+                keepAlive: false
+            },
+            component: () => import('./components/OrderDetails.vue'),  // 订单详情
+        },
         { 
             path: '/MoreComments',
             name: 'MoreComments',

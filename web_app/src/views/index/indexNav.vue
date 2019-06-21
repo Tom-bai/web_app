@@ -167,7 +167,7 @@ export default {
             flex-wrap wrap
             justify-content center
             .list
-                flex 0 0 20%
+                flex 1
                 margin-bottom 10px
                 img
                     width 50px

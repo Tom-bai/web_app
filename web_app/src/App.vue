@@ -58,8 +58,8 @@
                         this.ProductDetails = true
                         break;
                     default:
-                        this.showTabber = false
-                        this.ProductDetails = false
+                        this.showTabber = true
+                        this.ProductDetails = true
                         break;
                 }
             }

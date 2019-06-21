@@ -349,7 +349,11 @@ export default {
                 address_id: that.orderData.adddata.id,
             }
 			post('/index.php/home/cart/ajax_cart_order',params).then(res => {
-                that.onPayMoney(res.order)
+                if (parseFloat(that.newPay) <= 0) {
+                    that.onRouter('/OrderDetails',res.order)
+                } else {
+                    that.onPayMoney(res.order)
+                }
             }).catch(function (error) {
                 console.log(error)
             })
@@ -365,21 +369,47 @@ export default {
                 address_id: that.orderData.adddata.id,
             }
 			get('/index.php/home/cart/order_pay',params).then(res => {
-                console.log(res);
-                alert(res)
-                that.$wxSDK.config({
-                    debug: false, // 开启调试模式,开发时可以开启
-                    appId: res.appId,   // 必填，公众号的唯一标识   由接口返回
-                    timestamp: res.timestamp, // 必填，生成签名的时间戳 由接口返回
-                    nonceStr: res.nonceStr,    // 必填，生成签名的随机串 由接口返回
-                    signature: res.signature,   // 必填，签名 由接口返回
-                    jsApiList: [
-                        'chooseWXPay', 
-                    ] // 此处填你所用到的方法
-                });
+                WeixinJSBridge.invoke(
+                    'getBrandWCPayRequest',
+                    res.jsApiParameters,
+                    function(res){
+                        alert(JSON.stringify(res));
+                    }
+                );
+                // that.$wxSDK.ready(function () {
+                //     that.$wxSDK.chooseWXPay({
+                //         timestamp: res.jsApiParameters.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+                //         nonceStr: res.jsApiParameters.nonceStr, // 支付签名随机串，不长于 32 位
+                //         package: res.jsApiParameters.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+                //         signType: res.jsApiParameters.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+                //         paySign: res.jsApiParameters.paySign, // 支付签名
+                //         success: function (res) {
+                //             // 支付成功后的回调函数
+                //             alert(JSON.stringify(res) + '成功');
+                            
+                //         },
+                //         fail: function (res) {
+                //             //失败回调函数
+                //             alert(JSON.stringify(res)+ '失败');
+                //         }
+                //     });
+                // });
+                // that.$wxSDK.error(function (res) {
+                //     // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+                //     alert("config信息验证失败")
+                // });
             }).catch(function (error) {
                 console.log(error)
             })
+        },
+        onRouter (pathUrl,id,type) {
+			this.$router.push({
+				path: pathUrl,
+				query: {
+                    id: id,
+                    type: type
+				}
+			})
         },
 	}
 }

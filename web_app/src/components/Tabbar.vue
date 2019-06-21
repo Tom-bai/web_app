@@ -5,7 +5,7 @@
             <div class="tabbarNav" v-for="(item,index) in tabList" :key="index" @click="onRouter(item.routerUrl,item.tabTitle)">
                 <div class="navIocn">
                     <img :src="curr == index?item.activeIcon:item.icon" alt="">
-                    <span class="biaoQian" v-if="item.tabTitle == '购物车'">{{$store.state.CARD_STATE}}</span>
+                    <span class="biaoQian" v-if="item.tabTitle == '购物车' && $store.state.CARD_STATE !== 0">{{$store.state.CARD_STATE}}</span>
                 </div>
                 <div class="navText" :class="curr == index?'active':''">{{item.tabTitle}}</div>
             </div>
@@ -79,7 +79,11 @@ export default {
         getCardData () { // 获取购物车
             let that = this
             get('/index.php/home/shopCart/info').then(res => {
-                that.$store.commit('set_CARD_STATE', res.list.length)
+                if (res.list !== null) {
+                    that.$store.commit('set_CARD_STATE', res.list.length)
+                } else {
+                    that.$store.commit('set_CARD_STATE', 0)
+                }
             }).catch(function (error) {
                 console.log(error)
             })
