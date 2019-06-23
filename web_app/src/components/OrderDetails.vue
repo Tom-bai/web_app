@@ -19,7 +19,7 @@
             </div>
             <div class="shangPin" v-if="orderData.goods">
                 <div class="head">订单: 共 {{orderData.goods.length}} 件商品</div>
-                <div class="shang" v-for="(item,index) in orderData.goods">
+                <div class="shang" v-for="(item,index) in orderData.goods" :key="index">
                     <div class="img"><img :src="$imgUrl + item.image" alt=""></div>
                     <div class="text">
                         <div class="name">{{item.goods_name}}</div>
@@ -28,20 +28,51 @@
                     </div>
                 </div>
             </div>
-            <div class="tipS">
+            <div class="tipS" v-if="orderData.order">
                 <div class="list">
                     <div class="name">实付总额</div>
-                    <div class="num">{{orderData.order.price}}</div>
+                    <div class="num">¥ {{orderData.order.max_price}}</div>
                 </div>
+                <div class="list">
+                    <div class="name">商品总价</div>
+                    <div class="num">¥ {{orderData.order.price}}</div>
+                </div>
+                <div class="list">
+                    <div class="name">运费</div>
+                    <div class="num">¥ {{orderData.order.yun_price}}</div>
+                </div>
+                <div class="list" v-if="orderData.order.pay_type == 0">
+                    <div class="name">微信支付</div>
+                    <div class="num">¥ {{orderData.order.y_price}}</div>
+                </div>
+                <div class="list" v-else>
+                    <div class="name">余额抵扣</div>
+                    <div class="num">¥ {{orderData.order.y_price}}</div>
+                </div>
+            </div>
+            <div class="bianhao" v-if="orderData.order">
+                <div class="list">
+                    <div class="name">订单编号：{{orderData.order.order_number}}</div>
+                    <div class="copy" v-clipboard:copy="orderData.order.order_number" v-clipboard:success="onCopy">复制</div>
+                </div>
+                <div class="list">
+                    <div class="name">下单时间：<time>{{times(orderData.order.u_time)}}</time></div>
+                </div>
+            </div>
+            <div class="kefu">
+                <div class="kefunum">联系客服</div>
+                <div class="tuikuan">申请退款</div>
             </div>
         </div>
 	</div>
 </template>
 
 <script>
-import { Area } from 'vant'
+import Vue       from 'vue'
 import Bus from '@/bus.js'
 import { get,post,formatTime,toast } from '@/axiosApi'
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
 export default {
 	name: 'OrderDetails',
     props: {},
@@ -50,10 +81,13 @@ export default {
 	data () {
 		return {
             orderData: [],
+            copyOrder: 111
 		}
     },
     mounted() {
         this.getPayRes()
+        console.log(Clipboard);
+        
     },
 	methods: {
         getPayRes() { // 获取数据
@@ -61,12 +95,19 @@ export default {
             let params = {
                 order: that.$route.query.id,
             }
-			get('/index.php/home/cart/pay_res',params).then(res => {
+			get('/index.php/home/cart/order_info',params).then(res => {
                 that.orderData = res
             }).catch(function (error) {
                 console.log(error)
             })
         },
+        times (time) { //时间
+            let times = JSON.parse(time) * 1000
+            return formatTime(new Date(times), 'yyyy-MM-dd h:m:s')
+        },
+        onCopy () {
+            toast('复制成功')
+        }
     },
     watch: {
     }
@@ -165,8 +206,56 @@ export default {
 .tipS
     background-color #fff
     margin-top 10px
+    padding 0 15px
     .list
         display flex
         align-items center
         height 35px
+        font-size 14px
+        border-bottom solid 1px #f1f1f1
+        .num
+            margin-left auto
+            font-size 16px
+            color $color
+            font-weight 700
+.bianhao
+    background-color #fff
+    margin-top 10px
+    padding 0 15px
+    margin-bottom 55px
+    .list
+        display flex
+        align-items center
+        height 35px
+        font-size 14px
+        border-bottom solid 1px #f1f1f1
+        .num
+            margin-left auto
+        .copy
+            border solid 1px $color
+            margin-left auto
+            padding 2px 10px
+            line-height 1.3
+            border-radius $border-radius
+.kefu
+    position fixed
+    width 100%
+    bottom 0
+    left 0
+    background-color #ffffff
+    display flex
+    align-items center
+    height 45px
+    line-height 1.3
+    border-bottom solid 1px #f1f1f1
+    .kefunum
+        padding 5PX 15px
+        border solid 1px $color
+        margin 0 15px
+        border-radius $border-radius
+    .tuikuan
+        padding 5PX 15px
+        border solid 1px $color
+        margin 0 15px 0 auto
+        border-radius $border-radius
 </style>
