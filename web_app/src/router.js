@@ -229,6 +229,15 @@ export default new Router({
                 keepAlive: false
             },
 			component: () => import('./views/center/index')
-		},
+        },
+        { // 我的订单
+            path: '/orderList',
+            name: 'orderList',
+            meta:{
+                title: '我的订单',
+                keepAlive: false
+            },
+            component: () => import('./views/center/child/orderList') // 我的订单
+        },
 	]
 })

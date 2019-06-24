@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import Vue       from 'vue'
+import Vue from 'vue'
 import Bus from '@/bus.js'
 import { get,post,formatTime,toast } from '@/axiosApi'
 import VueClipboard from 'vue-clipboard2'
@@ -86,8 +86,6 @@ export default {
     },
     mounted() {
         this.getPayRes()
-        console.log(Clipboard);
-        
     },
 	methods: {
         getPayRes() { // 获取数据
@@ -249,9 +247,10 @@ export default {
     line-height 1.3
     border-bottom solid 1px #f1f1f1
     .kefunum
-        padding 5PX 15px
-        border solid 1px $color
+        padding 5px 15px
+        border solid 1px #f1f1f1
         margin 0 15px
+        background-color #f1f1f1
         border-radius $border-radius
     .tuikuan
         padding 5PX 15px

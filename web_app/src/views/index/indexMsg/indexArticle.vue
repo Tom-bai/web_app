@@ -47,7 +47,7 @@ export default {
     },
 	methods: {
         times (time) {
-            let times = JSON.parse(time)
+            let times = JSON.parse(time) * 1000
             return formatTime(new Date(times), 'yyyy-MM-dd hh:mm:ss')
         },
 		onZan () {
