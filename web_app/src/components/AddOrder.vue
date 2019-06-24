@@ -257,8 +257,12 @@ export default {
 	methods: {
         getCartOrder () { // 获取订单数据
             let that = this
+            console.log(that.$route.query.id);
+            
             for ( let i in that.$route.query.id) {
                 that.postData.push(that.$route.query.id[i].id)
+                console.log(that.postData);
+                
             }
             let params = {
                 s_id: that.postData

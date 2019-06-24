@@ -35,48 +35,48 @@ axios.interceptors.response.use(
 // 发送请求
 export function post(url, params, msg) {
     return new Promise((resolve, reject) => {
-        let loading = Toast.loading({
-            duration: 0,       // 持续展示 toast
-            forbidClick: true, // 禁用背景点击
-            loadingType: 'spinner',
-            message: msg || '加载中...'
-        });
+        // let loading = Toast.loading({
+        //     duration: 0,       // 持续展示 toast
+        //     forbidClick: true, // 禁用背景点击
+        //     loadingType: 'spinner',
+        //     message: msg || '加载中...'
+        // });
         axios({
             method: 'post',
             url: url,
             data: params
         }).then(
             res => {
-                loading.clear()
+                // loading.clear()
                 resolve(res.data)
         })
         .catch(
             err => {
-                loading.clear()
+                // loading.clear()
                 reject(err.data)
         })
     })
 }
 export function get(url, params, msg) {
     return new Promise((resolve, reject) => {
-        let loading = Toast.loading({
-            duration: 0,       // 持续展示 toast
-            forbidClick: true, // 禁用背景点击
-            loadingType: 'spinner',
-            message: msg || '加载中...'
-        });
+        // let loading = Toast.loading({
+        //     duration: 0,       // 持续展示 toast
+        //     forbidClick: true, // 禁用背景点击
+        //     loadingType: 'spinner',
+        //     message: msg || '加载中...'
+        // });
         axios({
             method: 'get',
             url: url,
             params: params
         }).then(
             res => {
-                loading.clear()
+                // loading.clear()
                 resolve(res.data)
         })
         .catch(
             err => {
-                loading.clear()
+                // loading.clear()
                 reject(err)
         })
     })

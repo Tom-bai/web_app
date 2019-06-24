@@ -11,7 +11,7 @@
                             <div class="guangG">{{item.status_name}}</div>
                         </div>
                         <div class="mainBox">
-                            <div class="main" v-for="(itemGoods,index) in item.ord_goods" @click="onRouter('/OrderDetails',item.order_number)">
+                            <div class="main" v-for="(itemGoods,index) in item.ord_goods" :key="index" @click="onRouter('/OrderDetails',item.order_number)">
                                 <div class="imgBox">
                                     <img v-lazy="$imgUrl + itemGoods.image" alt="">
                                 </div>
@@ -29,14 +29,14 @@
                         </div>
                         <div class="orederBtn">
                             <div class="quxiao" v-if="item.status == -1">删除订单</div>
-                            <div class="quxiao" v-if="item.status == 0">取消订单</div>
+                            <div class="quxiao" v-if="item.status == 0" @click="postCancelOrder(item.order_number,index)">取消订单</div>
                             <div class="quxiao" v-if="item.status == 1">申请退款</div>
-                            <div class="pay" v-if="item.status == 0">立即付款</div>
+                            <div class="pay" v-if="item.status == 0" @click="postBuy(item)">立即付款</div>
                         </div>
                     </div>
                 </nut-infiniteloading>
             </div>
-            <Like v-else></Like>
+            <Like v-if="hasLike"></Like>
 		</div>
 	</div>
 </template>
@@ -46,6 +46,7 @@
 import { get,post,formatTime,toast } from '@/axiosApi'
 import Nav from '@/components/Nav'
 import Like from '@/components/Like'
+import { log } from 'util';
 export default {
 	name: "orderList",
 	components: {
@@ -94,6 +95,7 @@ export default {
             status: null,
             isHasMore: true,
             isLoading: false,
+            hasLike: false
 		}
 	},
 	mounted() {
@@ -121,34 +123,29 @@ export default {
                 if (res.length == undefined) {
                     that.isLoading = false
                     that.isHasMore = false
+                    that.hasLike = true
                 } else {
                     that.orderList = that.orderList.concat(res)
                     that.isLoading = false
                     that.isHasMore = true
+                    that.hasLike = false
                 }
             }).catch(function (error) {
                 console.log(error)
             })
             
         },
-        postDel (id,index) { // 删除商品
+        postCancelOrder (id,index) { // 取消订单
             let that = this
             let params = {
-                id: id,
+                order_number: id,
             }
-            get('/index.php/home/shopCart/updatedel',params).then(res => {
-                if (res.status == 1) {
-                    toast('删除成功!')
-                    for (let i in that.allCheckedList) {
-                        if (that.cardData.list[index].id == that.allCheckedList[i].id) {
-                            that.allCheckedList.splice(i, 1);
-                            that.allChecked = false
-                        }
-                    }
-                    that.cardData.list.splice(index, 1)
-                    that.$store.commit('set_CARD_STATE', that.cardData.list.length)
+            get('/index.php/home/member/cancel_order',params).then(res => {
+                if (res.err == 0) {
+                    toast(res.data)
+                    that.orderList.splice(index, 1)
                 } else {
-                    toast(res.msg)
+                    toast(res.data)
                 }
             }).catch(function (error) {
                 console.log(error)
@@ -177,7 +174,18 @@ export default {
                     id: id
 				}
 			})
-		},
+        },
+        postBuy (id) { // 结算
+            let that = this
+            let pay = []
+            pay.push(id)
+            that.$router.push({
+                path: '/AddOrder',
+                query: {
+                    id: pay,
+                }
+            })
+        }
 	},
 	watch: {}
 };
