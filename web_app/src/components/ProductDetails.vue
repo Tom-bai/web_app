@@ -630,7 +630,7 @@ export default {
             let that = this
             if (that.gugeValue !== null) {
                 if (that.selectArr.length <= 0) {
-                    toast('请选择规格')
+                    toast('请选择规格') //
                     return false
                 }
             }

@@ -219,7 +219,7 @@ export default {
             xBiShow: false,
             balance: 0,
             balanceShow: false,
-            postData: []
+            postData: [] //
 		}
     },
     computed:{
