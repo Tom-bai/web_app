@@ -14,19 +14,19 @@
 			</div>
             <div class="orederNav">
                 <div class="box">
-                    <div class="list border" @click="onRouter('/orderList')">
+                    <div class="list border" @click="onRouter('/orderList',0)">
                         <div class="img"><img src="../../assets/img/center/z_mem_myorder.jpg" alt=""></div>
                         <div class="name">我的订单</div>
                     </div>
-                    <div class="list">
+                    <div class="list" @click="onRouter('/orderList',1)">
                         <div class="img"><img src="../../assets/img/center/z_mem_myorder.jpg" alt=""></div>
                         <div class="name">待付款</div>
                     </div>
-                    <div class="list">
+                    <div class="list" @click="onRouter('/orderList',2)">
                         <div class="img"><img src="../../assets/img/center/z_mem_myorder.jpg" alt=""></div>
                         <div class="name">待收货</div>
                     </div>
-                    <div class="list">
+                    <div class="list" >
                         <div class="img"><img src="../../assets/img/center/z_mem_myorder.jpg" alt=""></div>
                         <div class="name">大象说</div>
                     </div>

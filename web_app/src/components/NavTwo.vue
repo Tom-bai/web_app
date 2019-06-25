@@ -1,5 +1,9 @@
 <template>
-    <div class="NavTwo">
+    <div class="NavTwo" v-if="timeDataList.length !== 0">
+        <div class="topName">
+            <div>限时秒杀</div>
+            <!-- <div class="tip">高品质爆款抢先不断</div> -->
+        </div>
         <div class="navBox">
             <div class="topic-list-inner">
                 <div class="nav" ref="nav">
@@ -132,6 +136,18 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .NavTwo
+    .topName
+        display flex
+        align-items center
+        font-size 16px
+        font-weight bold
+        height 50px
+        padding 0 15px
+        .tip
+            margin-left 15px
+            color #999
+            font-size 12px
+            font-weight normal
     .navBox
         position sticky
         left 0

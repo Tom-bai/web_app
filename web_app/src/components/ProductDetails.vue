@@ -626,16 +626,46 @@ export default {
                 console.log(error)
             })
         },
-        onNowBuy (id) {
+        onNowBuy (id) { // 详情页单独购买
             let that = this
-            let newData =  [id]
-            this.$router.push({
-				path: '/AddOrder',
-				query: {
-                    id: newData,
-                    type: 'ProductDetails'
-				}
-			})
+            if (that.gugeValue !== null) {
+                if (that.selectArr.length <= 0) {
+                    toast('请选择规格')
+                    return false
+                }
+            }
+            // 奇葩的方式总有办法解决
+            let text = []
+            for (let j in that.gugeValue) {
+                text.push(that.gugeValue[j].name)
+            }
+            let textTip = text.join('-')
+            let textGuige = that.selectArr.join(',')
+            let postText = textTip + '|' + textGuige
+
+            let params = {
+                goods_id: that.$route.query.id,
+                num: that.num,
+                attr_name: postText,
+                addcar: 0, // 是否添加到购物车
+                fx_price: that.fx_price, // 分享减价
+                join_pt: that.join_pt, // 加入拼团的拼团id
+                fq_pt: that.fq_pt, // 发起拼团
+            }
+			get('/index.php/home/cart/ajax_add_order',params).then(res => {
+                console.log(res);
+                
+            }).catch(function (error) {
+                console.log(error)
+            })
+            // let newData =  [id]
+            // this.$router.push({
+			// 	path: '/AddOrderOne',
+			// 	query: {
+            //         id: id.id,
+            //         type: 'ProductDetails'
+			// 	}
+			// })
         }
     },
     watch: {

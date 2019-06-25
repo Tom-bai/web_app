@@ -30,7 +30,7 @@ import Bus from '@/bus.js'
 let autoScrollInstance = null  //关键点：在加载的插件之前的就要定义个变量的，如果定在data中 ，则会报错
 export default {
     name: 'navScroll',
-    props: ['dataNav'],
+    props: ['dataNav','navActive'],
     data() {
         return {
             navActiveIndex: 0, //当前高亮的tab选项卡index
@@ -63,6 +63,11 @@ export default {
         this.$nextTick(() => {
             autoScrollInstance = new AutoScroll(this.$refs.nav, {spaceBetween: 0})//节点 nav
         })
+        if (this.navActive == undefined) {
+            this.navActiveIndex = 0
+        } else {
+            this.navActiveIndex = this.navActive
+        }
     }
 }
 </script>

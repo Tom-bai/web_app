@@ -176,6 +176,15 @@ export default new Router({
             },
             component: () => import('./components/AddOrder.vue'),  // 提交订单
         },
+        {  // 提交单独订单
+			path: '/AddOrderOne',
+            name: 'AddOrderOne',
+            meta:{
+                title: '提交订单',
+                keepAlive: false
+            },
+            component: () => import('./components/AddOrderOne.vue'),  // 提交单独订单
+        },
         {  // 订单详情
 			path: '/OrderDetails',
             name: 'OrderDetails',
@@ -238,6 +247,15 @@ export default new Router({
                 keepAlive: false
             },
             component: () => import('./views/center/child/orderList') // 我的订单
+        },
+        {
+            path: '/refundGoods',
+            name: 'refundGoods',
+            meta:{
+                title: '申请退款',
+                keepAlive: false
+            },
+            component: () => import('./views/center/child/refundGoods') // 申请退款
         },
 	]
 })

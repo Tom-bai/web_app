@@ -20,7 +20,7 @@
                     <div class="textBox">
                         <div class="name" @click="onRouter('/ProductDetails',item.goods_id)">{{item.goods_name}}</div>
                         <div class="guiGe">{{item.goods_sku}}</div>
-                        <div class="tip" v-if="item.finalCart.s_type_name">{{item.finalCart.s_type_name}}</div>
+                        <div class="tip">{{item.finalCart.s_type_name}}</div>
                         <div class="money">
                             <div class="moneyN">¥{{item.price}}</div>
                             <div class="numN">x {{item.num}}</div>
@@ -257,13 +257,10 @@ export default {
 	methods: {
         getCartOrder () { // 获取订单数据
             let that = this
-            for ( let i in that.$route.query.id) {
-                that.postData.push(that.$route.query.id[i].id) 
-            }
             let params = {
-                s_id: that.postData
+                order: that.$route.query.id
             }
-			post('/index.php/home/shopCart/cartOrder',params).then(res => {
+			get('/index.php/home/cart/order_page',params).then(res => {
                  that.orderData = res
                  that.getUserInfos()
             }).catch(function (error) {

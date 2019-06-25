@@ -2,7 +2,7 @@
 	<!-- 我的订单 -->
 	<div>
 		<div class="orderList">
-			<Nav :dataNav="dataNav" v-if="dataNav"></Nav>
+			<Nav :dataNav="dataNav" :navActive="$route.query.id" v-if="dataNav" ></Nav>
             <div class="mainBox" v-if="orderList.length > 0">
                 <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
                     <div class="list" v-for="(item,index) in orderList" :key="index">
@@ -30,8 +30,8 @@
                         <div class="orederBtn">
                             <div class="quxiao" v-if="item.status == -1">删除订单</div>
                             <div class="quxiao" v-if="item.status == 0" @click="postCancelOrder(item.order_number,index)">取消订单</div>
-                            <div class="quxiao" v-if="item.status == 1">申请退款</div>
-                            <div class="pay" v-if="item.status == 0" @click="postBuy(item)">立即付款</div>
+                            <div class="quxiao" v-if="item.status == 1" @click="onRefund(item)">申请退款</div>
+                            <div class="pay" v-if="item.status == 0" @click="onRouter('/AddOrderOne',item.order_number)">立即付款</div>
                         </div>
                     </div>
                 </nut-infiniteloading>
@@ -46,7 +46,7 @@
 import { get,post,formatTime,toast } from '@/axiosApi'
 import Nav from '@/components/Nav'
 import Like from '@/components/Like'
-import { log } from 'util';
+import Bus from '@/bus.js'
 export default {
 	name: "orderList",
 	components: {
@@ -66,11 +66,11 @@ export default {
                     title: '待付款'
                 },
                 {
-                    id: 2,
+                    id: 1,
                     title: '待发货'
                 },
                 {
-                    id: 3,
+                    id: 2,
                     title: '待收货'
                 },
                 {
@@ -99,12 +99,12 @@ export default {
 		}
 	},
 	mounted() {
-        this.getOrderList() 
+
+        this.getOrderList(this.dataNav[this.$route.query.id].id) 
         this.$Bus.$on('navBtn', (val) => { // 分类
-            this.status = val
             this.orderList = []
             setTimeout(() => {
-                this.getOrderList()
+                this.getOrderList(val)
             }, 100);
         })
     },
@@ -113,11 +113,11 @@ export default {
         this.$Bus.$off('navBtn');
     },
 	methods: {
-		getOrderList () { // 获取订单信息
+		getOrderList (status) { // 获取订单信息
             let that = this
             let params = {
                 limit: that.limit,
-                status: that.status
+                status: status
             }
             get('/index.php/home/member/orderList',params).then(res => {
                 if (res.length == undefined) {
@@ -174,6 +174,14 @@ export default {
                     id: id
 				}
 			})
+        },
+        onRefund (data) { // 退款
+            this.$router.push({
+                path: '/refundGoods',
+                query: {
+                    id: JSON.stringify(data)
+                }
+            })
         },
         postBuy (id) { // 结算
             let that = this
@@ -267,6 +275,8 @@ export default {
                         .num
                             margin-left auto
                             font-size 16px
+                            margin-top 5px
+                            margin-bottom 5px
         .orederName
             .name
                 padding 15px
