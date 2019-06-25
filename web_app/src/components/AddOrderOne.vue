@@ -12,15 +12,15 @@
                 </div>
             </div>
             <div class="orderNum">订单：总计 {{orderData.item_num}} 件商品</div>
-            <div class="showMain" v-if="orderData.list">
-                <div class="main" v-for="(item,index) in orderData.list">
+            <div class="showMain" v-if="orderData">
+                <div class="main" v-for="(item,index) in orderData.goods_list" :key="index">
                     <div class="imgBox">
                         <img v-lazy="$imgUrl + item.image" alt="">
                     </div>
                     <div class="textBox">
                         <div class="name" @click="onRouter('/ProductDetails',item.goods_id)">{{item.goods_name}}</div>
                         <div class="guiGe">{{item.goods_sku}}</div>
-                        <div class="tip">{{item.finalCart.s_type_name}}</div>
+                        <!-- <div class="tip">{{item.finalCart.s_type_name}}</div> -->
                         <div class="money">
                             <div class="moneyN">¥{{item.price}}</div>
                             <div class="numN">x {{item.num}}</div>
@@ -225,8 +225,8 @@ export default {
     computed:{
         total_price() { // 商品金额
             let price = 0　　　　　　　　　　　　　　　　　　　　　　　　
-            for (let i in this.orderData.list) {
-                price += (parseFloat(this.orderData.list[i].finalCart.total))
+            for (let i in this.orderData.goods_list) {
+                price += (parseFloat(this.orderData.goods_list[i].price))
             }
             return price.toFixed(2)
         },
@@ -263,6 +263,8 @@ export default {
 			get('/index.php/home/cart/order_page',params).then(res => {
                  that.orderData = res
                  that.getUserInfos()
+                 console.log(res);
+                 
             }).catch(function (error) {
                 console.log(error)
             })

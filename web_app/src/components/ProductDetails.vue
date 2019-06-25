@@ -652,9 +652,14 @@ export default {
                 join_pt: that.join_pt, // 加入拼团的拼团id
                 fq_pt: that.fq_pt, // 发起拼团
             }
-			get('/index.php/home/cart/ajax_add_order',params).then(res => {
-                console.log(res);
-                
+			post('/index.php/home/cart/ajax_add_order',params).then(res => {
+                that.$router.push({
+                    path: '/AddOrderOne',
+                    query: {
+                        id: res.order_number,
+                        type: 'ProductDetails'
+                    }
+                })
             }).catch(function (error) {
                 console.log(error)
             })
