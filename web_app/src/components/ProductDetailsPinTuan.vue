@@ -1,20 +1,24 @@
 <template>
-    <!-- 拼团商品详情 -->
+    <!-- 商品详情 -->
 	<div>
-        <div class="ProductDetailsPinTuan" v-if="goodsInfo.goods">
+        <div class="ProductDetails" v-if="goodsInfo.goods">
             <div class="header">
                 <div class="name" :class="topIndex == index?'active':''" v-for="(item,index) in topName" :key="index" @click="onTopNav(index)">{{item}}</div>
             </div>
             <div class="swiper" id="anchor-0">
-                <van-swipe :autoplay="4000">
+                <van-swipe :autoplay="4000" @change="onChange">
                     <van-swipe-item v-for="(image, index) in goodsInfo.goods.more_img" :key="index" class="swiperImg">
                         <img v-lazy="$imgUrl + image" />
                     </van-swipe-item>
+                    <div class="custom-indicator" slot="indicator">
+                        {{ current + 1}}/{{goodsInfo.goods.more_img.length}}
+                    </div>
                 </van-swipe>
+                <div class="xiaoLiang">近期销量：{{goodsInfo.goods.max_num}} 笔</div>
             </div>
             <div class="moneyDetaild">
                 <div class="money">
-                    <div><span class="moneyIoc">¥</span>{{goodsInfo.goods.price}} <div class="xiaoLiang">近期销量：{{goodsInfo.goods.max_num}}</div></div>
+                    <div><span class="moneyIoc">¥</span>{{goodsInfo.goods.price}}</div>
                     <div class="yuan"><span class="moneyIoc">¥</span>{{goodsInfo.goods.member_price}}<i class="vip"></i></div>
                 </div>
                 <div class="openVip">
@@ -46,11 +50,11 @@
                         <div class="rightJ"></div>
                     </div>
                 </div>
-                <div class="item" v-if="goodsInfo.goods.pro_des">
+                <div class="item" v-if="goodsInfo.isPro">
                     <div class="title">促&nbsp;&nbsp;&nbsp;销：</div>
                     <div class="list">
                         <div class="text cuxiao">
-                            <div class="name">{{goodsInfo.goods.pro_des}}</div>
+                            <div class="name">{{goodsInfo.isPro.title}}</div>
                         </div>
                         <div class="rightJ"></div>
                     </div>
@@ -83,6 +87,12 @@
                         </div>
                         <div class="rightJ"></div>
                     </div>
+                </div>
+            </div>
+            <!-- 拼团 -->
+            <div class="pinTuan" v-if="goodsInfo.goods.type == 3">
+                <div v-for="item in goodsInfo.pin">
+                     {{item}}
                 </div>
             </div>
             <!-- 评论 -->
@@ -204,7 +214,7 @@
                 primary
                 class="nowBuy"
                 text="立即购买"
-                @click="onClickBigBtn"
+                @click="onNowBuy(goodsInfo.goods)"
             />
         </van-goods-action>
         <!-- 选择地址 -->
@@ -235,8 +245,8 @@
                             <div class="listBox">
                                 <div class="item" 
                                     v-for="(items,index) in item.values" 
-                                    v-on:click="specificationBtn(items.name,n,$event,index)" 
-                                    v-bind:class="[items.isShow?'':'',subIndex[n] == index?'active':'']"
+                                    @click="specificationBtn(items.name,n,$event,index)" 
+                                    :class="[items.isShow?'':'',subIndex[n] == index?'active':'']"
                                     :key="index">{{items.name}}</div>
                             </div>
                         </div>
@@ -288,7 +298,7 @@ import { get,post,toast } from '@/axiosApi'
 import AddressInfo from '../assets/js/area'
 import { log } from 'util';
 export default {
-	name: 'ProductDetailsPinTuan',
+	name: 'ProductDetails',
 	props: {
 		msg: String
     },
@@ -308,10 +318,6 @@ export default {
             topIndex: 0,
             goodsInfo: [],
             city: '北京市 北京市 东城区',
-            images: [
-                'https://img.yzcdn.cn/1.jpg',
-                'https://img.yzcdn.cn/2.jpg'
-            ],
             showPinLun: false,
             addressShow:false,
             areaList: AddressInfo,
@@ -333,6 +339,7 @@ export default {
             commentData: [],
             PUser: [],
             kuCun: 1,
+            current: 0,
             //
             textTishi: ' ',
             selectArr: [], //存放被选中的值
@@ -349,11 +356,11 @@ export default {
         getGoodsInfo () { // 获取商品详情
             let that = this
             let params = {
-                pid: that.$route.query.id
+                id: that.$route.query.id
             }
             that.goodsInfo = []
             that.commentData = []
-			get('/index.php/home/index/ajax_pin',params).then(res => {
+			get('/index.php/home/goods/goodsInfo',params).then(res => {
                 that.goodsInfo = res
                 that.gugeValue = res.attr
                 that.cardNum = res.shop_cart_num
@@ -466,6 +473,9 @@ export default {
 				}
 			})
         },
+        onChange(index) {
+        this.current = index;
+        },
         onHiddenActionSheet() { // 选择款式
             if (this.isVisible) {
                 document.body.classList.remove('scrollFixed')
@@ -482,8 +492,13 @@ export default {
                 toast('库存不足。请选择其他产品！')
                 return false
             }
-            console.log(this.selectArr);
-            console.log(this.selectArr.length);
+            if (this.gugeValue !== null) {
+                if (this.selectArr.length <= 0) {
+                    toast('请选择规格！')
+                    this.textTishi = ' '
+                    return false
+                }
+            }
             document.body.classList.remove('scrollFixed')
             document.scrollingElement.scrollTop = this.scrollTop
             this.isVisible = !this.isVisible
@@ -510,15 +525,17 @@ export default {
                 that.subIndex[n] = -1; //去掉选中的颜色 
             }
             that.checkItem();
-            // 未选择规格提示
             let tip = []
             for (let i in that.gugeValue) {
                 tip.push(that.gugeValue[i].name)
             }
             let tipTip = tip.join('')
             let textGuige = that.selectArr.join(' ')
-            that.textTishi = textGuige
-
+            if (textGuige == '') {
+                that.textTishi = ' '
+            } else {
+                that.textTishi = textGuige
+            }
             let textTip = tip.join('-')
             let textSS = that.selectArr.join(',')
             let postText = textTip + '|' + textSS
@@ -549,13 +566,6 @@ export default {
                 }
             }
             return this.shopItemInfo[result].active ? false : true; //匹配选中的数据的库存，若不为空返回true反之返回false
-        },
-        //
-        onClickMiniBtn() {
-            console.log('点击图标')
-        },
-        onClickBigBtn() {
-            console.log('点击按钮')
         },
         onshowPinLun () { // 选择评论
             if (this.showPinLun) {
@@ -588,10 +598,11 @@ export default {
         },
         onBuyCard () { // 加入购物车
             let that = this
-            console.log(that.selectArr);
-            if (that.selectArr.length <= 0) {
-                toast('请选择规格')
-                return false
+            if (that.gugeValue !== null) {
+                if (that.selectArr.length <= 0) {
+                    toast('请选择规格')
+                    return false
+                }
             }
             // 奇葩的方式总有办法解决
             let text = []
@@ -621,6 +632,52 @@ export default {
                 console.log(error)
             })
         },
+        onNowBuy (id) { // 详情页单独购买
+            let that = this
+            if (that.gugeValue !== null) {
+                if (that.selectArr.length <= 0) {
+                    toast('请选择规格') //
+                    return false
+                }
+            }
+            // 奇葩的方式总有办法解决
+            let text = []
+            for (let j in that.gugeValue) {
+                text.push(that.gugeValue[j].name)
+            }
+            let textTip = text.join('-')
+            let textGuige = that.selectArr.join(',')
+            let postText = textTip + '|' + textGuige
+
+            let params = {
+                goods_id: that.$route.query.id,
+                num: that.num,
+                attr_name: postText,
+                addcar: 0, // 是否添加到购物车
+                fx_price: that.fx_price, // 分享减价
+                join_pt: that.join_pt, // 加入拼团的拼团id
+                fq_pt: that.fq_pt, // 发起拼团
+            }
+			post('/index.php/home/cart/ajax_add_order',params).then(res => {
+                that.$router.push({
+                    path: '/AddOrderOne',
+                    query: {
+                        id: res.order_number,
+                        type: 'ProductDetails'
+                    }
+                })
+            }).catch(function (error) {
+                console.log(error)
+            })
+            // let newData =  [id]
+            // this.$router.push({
+			// 	path: '/AddOrderOne',
+			// 	query: {
+            //         id: id.id,
+            //         type: 'ProductDetails'
+			// 	}
+			// })
+        }
     },
     watch: {
         '$route' (to, from) {
@@ -629,11 +686,37 @@ export default {
     }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="stylus">
-.ProductDetailsPinTuan
-    margin-bottom 60px
+<style lang="stylus" scoped>
+.swiper
+    position relative
+    .van-swipe
+        padding-bottom 20px
+        background-color #fff
+        .swiperImg
+            >img 
+                width 100%
+                height 360px
+                border-radius 3px
+        .custom-indicator
+            position absolute
+            bottom 10px
+            left 50%
+            width 40px
+            background-color rgba(0, 0, 0, 0.4)
+            text-align center
+            padding 5px 5px
+            border-radius 3px
+            line-height 1
+            color #fff
+            transform translate(-50%)
+            font-size 14px
+    .xiaoLiang
+        font-size 12px
+        color #333
+        display inline-block
+        position absolute
+        right 20px
+        bottom 0
 .header
     position sticky 
     left 0
@@ -677,12 +760,11 @@ export default {
         height 25px
         background-repeat no-repeat
         background-position 50%
-.swiper
-    .swiperImg
-        >img 
-            width 100%
-            height 360px
-            border-radius 3px
+</style>
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="stylus">
+.ProductDetails
+    margin-bottom 60px
 .moneyDetaild
     padding 20px 15px 15px 15px
     text-align left
@@ -691,18 +773,17 @@ export default {
         color $color
         font-size 27px
         font-weight 700
+        display flex
+        align-items flex-end
+        line-height 1
         .moneyIoc
             font-size 14px
             font-weight normal
-            margin-right 5px
-        .xiaoLiang
-            font-size 12px
-            color #333
-            display inline-block
-            float right
+            margin-right 2px
     .yuan
         color #666
         font-size 20px
+        margin-left 10px
         .vip
             background-image url('../assets/img/index/vip.png')
             background-repeat no-repeat
@@ -716,7 +797,7 @@ export default {
         display flex
         align-items center
         background-color #f7f7f7
-        height 60px
+        height 35px
         padding-left 15px
         border-radius $border-radius
         margin-top 10px
@@ -742,17 +823,16 @@ export default {
                 color #999
                 margin-top 5px
         .cardBtn
-            flex 0 0 60px
-            height 60px
-            line-height 60px
+            flex 0 0 80px
+            height 35px
+            line-height 35px
             background #f3eee3
             text-align center
             span
-                width 30px
                 display inline-block
-                line-height 1.3
+                line-height 1
                 font-size 12px
-                margin-top 16px
+                margin-top 5px
                 position relative
                 &:after
                     position absolute
@@ -1453,43 +1533,46 @@ export default {
             line-height 40px
             font-weight 500
             border-radius $border-radius
-.fuWuBoxHead
-    display flex
-    align-items center
-    height 35px
-    .text
-        flex 1
-        font-size 14px
-        text-align left
-        padding 0 15px
-    .close
-        background-image url('../assets/img/x.png')
-        flex 0 0 25px
-        height 25px
-        background-size 100%
-        top 5px
-        right 0
-.conten
-    .list
+.fuWuBox
+    height 350px
+    overflow-y auto
+    .fuWuBoxHead
         display flex
-        text-align left
-        padding 10px 15px
-        .img
-            flex 0 0 20px
-            img
-                display block
-                width 100%
+        align-items center
+        height 35px
         .text
-            padding 0px 10px 10px 10px
             flex 1
-            border-bottom solid 1px #f1f1f1
-            .textN
-                font-size 14px
-                color #333
-                margin-bottom 10px
-            .textT
-                font-size 14px
-                color #666
+            font-size 14px
+            text-align left
+            padding 0 15px
+        .close
+            background-image url('../assets/img/x.png')
+            flex 0 0 25px
+            height 25px
+            background-size 100%
+            top 5px
+            right 0
+    .conten
+        .list
+            display flex
+            text-align left
+            padding 10px 15px
+            .img
+                flex 0 0 20px
+                img
+                    display block
+                    width 100%
+            .text
+                padding 0px 10px 10px 10px
+                flex 1
+                border-bottom solid 1px #f1f1f1
+                .textN
+                    font-size 14px
+                    color #333
+                    margin-bottom 10px
+                .textT
+                    font-size 14px
+                    color #666
 .pinLunBox
     position absolute
     width 100%
