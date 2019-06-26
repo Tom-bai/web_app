@@ -1,7 +1,7 @@
 <template>
 	<div>
         <div class="Address">
-            <div class="header">新建收货地址</div>
+            <div class="header">{{$route.query.type == 'onReviseAdd'?'修改收货地址':'新建收货地址'}}</div>
             <div class="main">
                 <div class="name">
                     <nut-textinput 
@@ -43,10 +43,11 @@
                     />
                 </div>
                 <div class="name">
-                    <nut-cell  title = "设置为默认地址" > <nut-switch :active="true" slot="desc"></nut-switch></nut-cell>
+                    <nut-cell  title = "设置为默认地址" > <nut-switch :active="active" @change="onChange" slot="desc"></nut-switch></nut-cell>
                 </div>
             </div>
-            <div class="btn">保存</div>
+            <div class="btn" @click="onReviseAdd" v-if="$route.query.type == 'onReviseAdd'">修改</div>
+            <div class="btn" @click="onAdd" v-else>保存</div>
             <!-- 选择地址 -->
             <nut-actionsheet :is-visible="addressShow" @close="onAddressShow" :isClickCloseMask="true">
                 <van-area :area-list="areaList" slot="custom" confirm-button-text="完成" @confirm="onConfirm" @cancel="onCancel" />
@@ -59,6 +60,7 @@
 import { Area } from 'vant'
 import Bus from '@/bus.js'
 import AddressInfo from '../assets/js/area'
+import { get,post,toast } from '@/axiosApi'
 export default {
 	name: 'Address',
     props: {},
@@ -72,13 +74,80 @@ export default {
             city: null,
             jiedao: null,
             addressShow:false,
+            default: 0,
+            active: false,
             areaList: AddressInfo,
 		}
     },
-    created() {
-    
+    mounted() {
+        if (this.$route.query.type == 'onReviseAdd') {
+            this.name = JSON.parse(this.$route.query.data).name
+            this.phone = JSON.parse(this.$route.query.data).mobile
+            this.city = JSON.parse(this.$route.query.data).address
+            this.jiedao = JSON.parse(this.$route.query.data).address
+            this.default = JSON.parse(this.$route.query.data).default
+            if (this.default == 0) {
+                this.active = false
+            } else {
+                this.active = true
+            }
+        }
     },
 	methods: {
+        onAdd () { // 添加地址
+            let that = this
+            let params = { 
+                name: that.name,
+                mobile: that.phone,
+                address: that.city,
+                add_info: that.jiedao,
+                defaultAddr: that.default,
+            }
+			post('/index.php/home/member/ajax_add_address',params).then(res => {
+                if (res.err == 1) {
+                    toast(res.data)
+                } else {
+                    toast(res.data)
+                    setTimeout(() => {
+                        that.$router.go(-1)
+                    }, 1500);
+                }
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        onReviseAdd () { // 修改地址
+            let that = this
+            let params = { 
+                id: JSON.parse(this.$route.query.data).id,
+                name: that.name,
+                mobile: that.phone,
+                address: that.city,
+                add_info: that.jiedao,
+                defaultAddr: that.default,
+            }
+            console.log(params);
+            
+			post('/index.php/home/member/ajax_save_address',params).then(res => {
+                if (res.err == 1) {
+                    toast(res.data)
+                } else {
+                    toast(res.data)
+                    setTimeout(() => {
+                        that.$router.go(-1)
+                    }, 1500);
+                }
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        onChange(status) {
+            if (status) {
+                this.default = 1
+            } else {
+                this.default = 0
+            }
+        },
         onAddressShow() { // 选择地址
             this.addressShow = !this.addressShow
         },

@@ -3,7 +3,7 @@
         <!-- 订单 -->
         <div class="AddOrder">
             <div class="head">
-                <div class="list" v-if="orderData.adddata">
+                <div class="list" v-if="orderData.adddata" @click="onHiddenAdd">
                     <div class="text">
                         <div class="name"><span>{{orderData.adddata.name}}</span>{{orderData.adddata.mobile}}</div>
                         <div class="address">{{orderData.adddata.address}}</div>
@@ -52,7 +52,7 @@
                 <div class="list">
                     <div class="text">
                         <div class="name">余额</div>
-                        <div class="money" v-if="youHuiData.balance">{{youHuiData.balance}} 元</div>
+                        <div class="money" v-if="youHuiData.balance">{{myYuyue}} 元</div>
                         <div class="money" v-else>0.00 元</div>
                     </div>
                     <div class="right">
@@ -86,8 +86,8 @@
                     <div class="text">
                         <div class="name">运费 </div>
                     </div>
-                    <div class="right">
-                        <span>+ ¥{{orderData.yf == 0?'0.00':orderData.yf}}</span>
+                    <div class="right" v-if="orderData.order">
+                        <span>+ ¥{{orderData.order.y_price}}</span>
                     </div>
                 </div>
                 <div class="list" v-if="xBiShow">
@@ -186,7 +186,10 @@
                     <div class="btn" @click="onHiddenActionSheet">确认 (共省 ¥ {{yhMoney}})</div>
                 </div>
             </nut-actionsheet>
-            <!-- <SelectAddress></SelectAddress> -->
+            <!-- 选择地址 -->
+            <nut-actionsheet :is-visible="isVisibleAdd" @close="onHiddenAdd" :isClickCloseMask="false">
+                <SelectAddress slot="custom"></SelectAddress>
+            </nut-actionsheet>
         </div>
     </div>
 </template>
@@ -215,6 +218,7 @@ export default {
             xieShang: null,
             youHuiData: [],
             isVisible: false,
+            isVisibleAdd: false,
             xBi: 0,
             xBiShow: false,
             balance: 0,
@@ -244,15 +248,26 @@ export default {
                 return parseFloat(this.total_price).toFixed(2)
             }　　　　　　　　　　
         },
-        youHuiTip () {
+        myYuyue () { // 我的余额
+            return parseFloat(this.youHuiData.balance) - this.yuMoney
+        },
+        youHuiTip () { // 优惠提示
             return  (parseFloat(this.yuMoney) +  parseFloat(this.xBi) + parseFloat(this.yhMoney)).toFixed(2)
         }
     },
     mounted() {
         this.getCartOrder()
+        this.$Bus.$on('addressShowB', (val) => { // 
+            this.isVisibleAdd = val
+        }) 
+        this.$Bus.$on('getAddress', (val) => { // 
+            this.orderData.adddata = val
+        }) 
     },
     destroyed () {
         this.postData = []
+        this.$Bus.$off('addressShowB')
+        this.$Bus.$off('getAddress')
     },
 	methods: {
         getCartOrder () { // 获取订单数据
@@ -262,9 +277,7 @@ export default {
             }
 			get('/index.php/home/cart/order_page',params).then(res => {
                  that.orderData = res
-                 that.getUserInfos()
-                 console.log(res);
-                 
+                 that.getUserInfos()   
             }).catch(function (error) {
                 console.log(error)
             })
@@ -315,6 +328,17 @@ export default {
             }
             this.isVisible = !this.isVisible
         },
+        onHiddenAdd () {
+            if (this.isVisibleAdd) {
+                document.body.classList.remove('scrollFixed')
+                document.scrollingElement.scrollTop = this.scrollTop
+            } else {
+                this.scrollTop = document.scrollingElement.scrollTop
+                document.body.classList.add('scrollFixed')
+                document.body.style.top = - this.scrollTop + 'px'
+            }
+            this.isVisibleAdd = !this.isVisibleAdd
+        },
         times (time) {
             let times = JSON.parse(time) * 1000
             return formatTime(new Date(times), 'yyyy-MM-dd')
@@ -339,23 +363,11 @@ export default {
         },
         onPayOrder () { // 立即支付下订单
             let that = this
-            let params = {
-                cartid: that.postData,
-                use_xb: `${that.xBiShow?1:0}`,
-                user_ye: `${that.balanceShow?1:0}`,
-                message: that.xieShang,
-                yhq: that.yhq,
-                address_id: that.orderData.adddata.id,
+            if (parseFloat(that.newPay) <= 0) {
+                that.onRouter('/OrderDetails',that.orderData.order.order_number)
+            } else {
+                that.onPayMoney(that.orderData.order.order_number)
             }
-			post('/index.php/home/cart/ajax_cart_order',params).then(res => {
-                if (parseFloat(that.newPay) <= 0) {
-                    that.onRouter('/OrderDetails',res.order)
-                } else {
-                    that.onPayMoney(res.order)
-                }
-            }).catch(function (error) {
-                console.log(error)
-            })
         },
         onPayMoney (orderID) { // 立即支付订单付钱
             let that = this

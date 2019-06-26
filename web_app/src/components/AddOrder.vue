@@ -3,7 +3,7 @@
         <!-- 订单 -->
         <div class="AddOrder">
             <div class="head">
-                <div class="list" v-if="orderData.adddata">
+                <div class="list" v-if="orderData.adddata"  @click="onHiddenAdd">
                     <div class="text">
                         <div class="name"><span>{{orderData.adddata.name}}</span>{{orderData.adddata.mobile}}</div>
                         <div class="address">{{orderData.adddata.address}}</div>
@@ -52,7 +52,7 @@
                 <div class="list">
                     <div class="text">
                         <div class="name">余额</div>
-                        <div class="money" v-if="youHuiData.balance">{{youHuiData.balance}} 元</div>
+                        <div class="money" v-if="youHuiData.balance">{{myYuyue}} 元</div>
                         <div class="money" v-else>0.00 元</div>
                     </div>
                     <div class="right">
@@ -186,7 +186,10 @@
                     <div class="btn" @click="onHiddenActionSheet">确认 (共省 ¥ {{yhMoney}})</div>
                 </div>
             </nut-actionsheet>
-            <!-- <SelectAddress></SelectAddress> -->
+            <!-- 选择地址 -->
+            <nut-actionsheet :is-visible="isVisibleAdd" @close="onHiddenAdd" :isClickCloseMask="false">
+                <SelectAddress slot="custom"></SelectAddress>
+            </nut-actionsheet>
         </div>
     </div>
 </template>
@@ -215,6 +218,7 @@ export default {
             xieShang: null,
             youHuiData: [],
             isVisible: false,
+            isVisibleAdd: false,
             xBi: 0,
             xBiShow: false,
             balance: 0,
@@ -234,7 +238,7 @@ export default {
             let myPay = (parseFloat(this.total_price) - parseFloat(this.xBi) - parseFloat(this.balance) - parseFloat(this.yhMoney)).toFixed(2)
             if (myPay <= 0) {
                 myPay = parseFloat(0).toFixed(2)
-            }
+            } 
             return myPay
         },
         yuMoney () {  //优惠后额余额　　　　　　
@@ -244,15 +248,26 @@ export default {
                 return parseFloat(this.total_price).toFixed(2)
             }　　　　　　　　　　
         },
-        youHuiTip () {
+        myYuyue () { // 我的余额
+            return parseFloat(this.youHuiData.balance) - this.yuMoney
+        },
+        youHuiTip () { // 优惠提示
             return  (parseFloat(this.yuMoney) +  parseFloat(this.xBi) + parseFloat(this.yhMoney)).toFixed(2)
         }
     },
     mounted() {
         this.getCartOrder()
+        this.$Bus.$on('addressShowB', (val) => { // 
+            this.isVisibleAdd = val
+        }) 
+        this.$Bus.$on('getAddress', (val) => { // 
+            this.orderData.adddata = val
+        }) 
     },
     destroyed () {
         this.postData = []
+        this.$Bus.$off('addressShowB')
+        this.$Bus.$off('getAddress')
     },
 	methods: {
         getCartOrder () { // 获取订单数据
@@ -315,6 +330,17 @@ export default {
                 document.body.style.top = - this.scrollTop + 'px'
             }
             this.isVisible = !this.isVisible
+        },
+        onHiddenAdd () {
+            if (this.isVisibleAdd) {
+                document.body.classList.remove('scrollFixed')
+                document.scrollingElement.scrollTop = this.scrollTop
+            } else {
+                this.scrollTop = document.scrollingElement.scrollTop
+                document.body.classList.add('scrollFixed')
+                document.body.style.top = - this.scrollTop + 'px'
+            }
+            this.isVisibleAdd = !this.isVisibleAdd
         },
         times (time) {
             let times = JSON.parse(time) * 1000

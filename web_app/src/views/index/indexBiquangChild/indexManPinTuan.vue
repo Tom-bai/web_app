@@ -8,34 +8,16 @@
                 <!-- <div class="tip">4月9日</div> -->
             </div>
             <div class="swiper">
-                <swiper :options="swiperOption" v-if="bannerData.length>0">
-                    <swiper-slide v-for="(slide, index) in bannerData" :key="index" class="swiperImg">
-                        <div class="list">
-                            <div class="img"><img src="../../../assets/img/index/2222.jpg"></div>
-                            <div class="name">2盒 l Santen 参天 FX 银装清凉眼药水 12毫升/盒</div>
+                <swiper :options="swiperOption" v-if="dataHotGoods.length>0">
+                    <swiper-slide v-for="(slide, index) in dataHotGoods" :key="index" class="swiperImg">
+                        <div class="list" v-for="(item, index) in slide">
+                            <div class="img"><img :src="$imgUrl + item.img"></div>
+                            <div class="name">{{item.title}}</div>
                             <div class="money">
-                                <span class="tag">2人团</span>
-                                <span class="num">¥96</span>
+                                <span class="tag">{{item.pnum}}人团</span>
+                                <span class="num"> ¥{{item.s_price}}</span>
                             </div>
-                            <div class="yuanjia">¥600</div>
-                        </div>
-                        <div class="list">
-                            <div class="img"><img src="../../../assets/img/index/2222.jpg"></div>
-                            <div class="name">2盒 l Santen 参天 FX 银装清凉眼药水 12毫升/盒</div>
-                            <div class="money">
-                                <span class="tag">2人团</span>
-                                <span class="num">¥96</span>
-                            </div>
-                            <div class="yuanjia">¥600</div>
-                        </div>
-                        <div class="list">
-                            <div class="img"><img src="../../../assets/img/index/2222.jpg"></div>
-                            <div class="name">2盒 l Santen 参天 FX 银装清凉眼药水 12毫升/盒</div>
-                            <div class="money">
-                                <span class="tag">2人团</span>
-                                <span class="num">¥96</span>
-                            </div>
-                            <div class="yuanjia">¥600</div>
+                            <div class="yuanjia">¥ {{item.price}}</div>
                         </div>
                     </swiper-slide>
                     <!-- <div class="swiper-pagination" slot="pagination"></div> -->
@@ -108,8 +90,9 @@ export default {
 		}
 	},
 	mounted() {
-        this.geBanner()
+        this.getBanner()
         this.getData()
+        this.getPinHotGoods()
         this.getPinHotGoods()
     },
     created(){
@@ -119,10 +102,20 @@ export default {
         this.$Bus.$off('navBtn');
     },
 	methods: {
+        group (array, subGroupLength) {
+            let index = 0;
+            let newArray = [];
+            while(index < array.length) {
+                newArray.push(array.slice(index, index += subGroupLength));
+            }
+            return newArray;
+        },
         getPinHotGoods () { // 拼团热销
 			let that = this
 			get('/index.php/home/pin/pinHotGoods').then(res => {
-                that.dataHotGoods = res
+                that.dataHotGoods = that.group(res,3)
+                console.log(that.dataHotGoods);
+                
             }).catch(function (error) {
                 console.log(error)
             })
@@ -135,7 +128,7 @@ export default {
                 that.getData()
             }
         },
-        geBanner () { // 拼团banner横幅
+        getBanner () { // 拼团banner横幅
             let that = this
             let params = {
                 type: that.$route.query.id
@@ -146,7 +139,7 @@ export default {
                 console.log(error)
             })
         },
-        getData () { // 商品列表 满件减
+        getData () { // 商品列表
             let that = this
             let params = {
                 limit: that.limit,
@@ -221,6 +214,8 @@ export default {
                 overflow hidden
             .money
                 color $color
+                line-height 1
+                margin 4px 0
                 .tag
                     font-weight normal
                     margin-right 5px

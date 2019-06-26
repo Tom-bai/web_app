@@ -120,7 +120,7 @@ export default {
         }
 	},
 	mounted() {
-        this.$Bus.$on('addressShowB', (val) => { // 分类
+        this.$Bus.$on('addressShowB', (val) => { // 
             this.addressShow = val
         }) 
         this.$Bus.$on('dialogShow', (val) => { // 分类
