@@ -17,7 +17,13 @@
                 <div class="xiaoLiang">近期销量：{{goodsInfo.goods.max_num}} 笔</div>
             </div>
             <div class="moneyDetaild">
-                <div class="money">
+                <!-- 拼团 -->
+                <div class="money" v-if="goodsInfo.goods.type == 3">
+                    <div><span class="moneyIoc">¥</span>{{goodsInfo.goods.p_price}}</div>
+                    <div class="yuan"><span class="pinD">单独购买</span><span class="moneyIoc">¥</span>{{goodsInfo.goods.price}}</div>
+                </div>
+                <!-- 不拼 -->
+                <div class="money" v-else>
                     <div><span class="moneyIoc">¥</span>{{goodsInfo.goods.price}}</div>
                     <div class="yuan"><span class="moneyIoc">¥</span>{{goodsInfo.goods.member_price}}<i class="vip"></i></div>
                 </div>
@@ -94,12 +100,12 @@
                 <div class="item">
                     <div class="list">
                         <div class="text">
-                            <div class="name">{{goodsInfo.pin.length}}人在拼单,可直接参与</div>
+                            <div class="name">{{ goodsInfo.pin == null?'0':goodsInfo.pin.length}}人在拼单,可直接参与</div>
                         </div>
                         <div class="rightJ">查看更多</div>
                     </div>
                 </div>
-                <div class="pinBox" v-for="(item,index) in goodsInfo.pin">
+                <div class="pinBox" v-for="(item,index) in goodsInfo.pin" :key="index">
                     <div class="head">
                         <div class="img"><img v-lazy="$imgUrl + item.img" alt=""></div>
                         <div class="name">{{item.names}}</div>
@@ -203,7 +209,7 @@
             </div>
         </div>
         <!-- 底部选项卡 -->
-        <van-goods-action class="myBottom">
+        <van-goods-action class="myBottom" v-if="goodsInfo.goods">
             <van-goods-action-mini-btn
                 icon-class="indexIocnImg"
                 class="indexIocn"
@@ -225,14 +231,29 @@
             />
             <van-goods-action-big-btn
                 class="nowCard"
+                text="单独购买"
+                @click="onNowBuy(goodsInfo.goods)"
+                v-if="goodsInfo.goods.type == 3"
+            />
+            <van-goods-action-big-btn
+                class="nowCard"
                 text="加入购物车"
                 @click="onBuyCard"
+                v-else
+            />
+            <van-goods-action-big-btn
+                primary
+                class="nowBuy"
+                text="发起拼团"
+                @click="onNowBuy(goodsInfo.goods,1)"
+                v-if="goodsInfo.goods.type == 3"
             />
             <van-goods-action-big-btn
                 primary
                 class="nowBuy"
                 text="立即购买"
                 @click="onNowBuy(goodsInfo.goods)"
+                v-else
             />
         </van-goods-action>
         <!-- 选择地址 -->
@@ -396,11 +417,13 @@ export default {
                 that.getFuWu(ids)
                 that.getComment()
                 that.getPUser()
-                that.goodsInfo.pin.forEach(o => { // 储存时间
-                    let time = o.end_time * 1000
-                    that.endTimelist.push(time)    
-                })
-                that.countDown()
+                if (that.goodsInfo.pin !== null) {
+                    that.goodsInfo.pin.forEach(o => { // 储存时间
+                        let time = o.end_time * 1000
+                        that.endTimelist.push(time)    
+                    })
+                    that.countDown()
+                }
             }).catch(function (error) {
                 console.log(error)
             })
@@ -665,7 +688,7 @@ export default {
                 console.log(error)
             })
         },
-        onNowBuy (id) { // 详情页单独购买
+        onNowBuy (id,pin,pinId) { // 详情页单独购买
             let that = this
             if (that.gugeValue !== null) {
                 if (that.selectArr.length <= 0) {
@@ -681,24 +704,28 @@ export default {
             let textTip = text.join('-')
             let textGuige = that.selectArr.join(',')
             let postText = textTip + '|' + textGuige
-
+            let fq_pt = ''
             let params = {
                 goods_id: that.$route.query.id,
                 num: that.num,
                 attr_name: postText,
                 addcar: 0, // 是否添加到购物车
                 fx_price: that.fx_price, // 分享减价
-                join_pt: that.join_pt, // 加入拼团的拼团id
-                fq_pt: that.fq_pt, // 发起拼团
+                join_pt: pinId, // 加入拼团的拼团id
+                fq_pt: pin, // 发起拼团
             }
 			post('/index.php/home/cart/ajax_add_order',params).then(res => {
-                that.$router.push({
-                    path: '/AddOrderOne',
-                    query: {
-                        id: res.order_number,
-                        type: 'ProductDetails'
-                    }
-                })
+                if (res.err == 1) {
+                    toast(res.data)
+                } else {
+                    that.$router.push({
+                        path: '/AddOrderOne',
+                        query: {
+                            id: res.order_number,
+                            type: 'ProductDetails'
+                        }
+                    })
+                }
             }).catch(function (error) {
                 console.log(error)
             })
@@ -870,6 +897,10 @@ export default {
             margin-left 5px
             display inline-block
             vertical-align middle
+        .pinD
+            font-size 12px
+            color $color
+            margin-right 3px
     .openVip
         display flex
         align-items center

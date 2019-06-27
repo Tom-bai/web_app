@@ -230,7 +230,7 @@ export default {
         total_price() { // 商品金额
             let price = 0　　　　　　　　　　　　　　　　　　　　　　　　
             for (let i in this.orderData.goods_list) {
-                price += (parseFloat(this.orderData.goods_list[i].price))
+                price += (parseFloat(this.orderData.goods_list[i].price) * parseFloat(this.orderData.goods_list[i].num))
             }
             return price.toFixed(2)
         },
@@ -363,11 +363,7 @@ export default {
         },
         onPayOrder () { // 立即支付下订单
             let that = this
-            if (parseFloat(that.newPay) <= 0) {
-                that.onRouter('/OrderDetails',that.orderData.order.order_number)
-            } else {
-                that.onPayMoney(that.orderData.order.order_number)
-            }
+             that.onPayMoney(that.orderData.order.order_number)
         },
         onPayMoney (orderID) { // 立即支付订单付钱
             let that = this
@@ -380,13 +376,24 @@ export default {
                 address_id: that.orderData.adddata.id,
             }
 			get('/index.php/home/cart/order_pay',params).then(res => {
-                WeixinJSBridge.invoke(
-                    'getBrandWCPayRequest',
-                    res.jsApiParameters,
-                    function(res){
-                        alert(JSON.stringify(res));
-                    }
-                );
+                if (parseFloat(that.newPay) <= 0) {
+                    that.onRouter('/OrderDetails',orderID)
+                } else {
+                    WeixinJSBridge.invoke(
+                        'getBrandWCPayRequest',
+                        res.jsApiParameters,
+                        function(res){
+                            if(res.err_msg == "get_brand_wcpay_request:ok"){  
+                                that.onRouter('/OrderDetails',orderID) 
+                            }else if(res.err_msg == "get_brand_wcpay_request:cancel"){  
+                                toast('取消支付') 
+                            }else{  
+                                toast('支付失败')
+                            } 
+                            // alert(JSON.stringify(res));
+                        }
+                    );
+                }
                 // that.$wxSDK.ready(function () {
                 //     that.$wxSDK.chooseWXPay({
                 //         timestamp: res.jsApiParameters.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
