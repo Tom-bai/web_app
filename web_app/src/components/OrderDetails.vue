@@ -1,10 +1,20 @@
 <template>
 	<div>
         <div class="OrderDetails">
-            <div class="headTip">
-                <div class="img"><img src="../assets/img/status1.png" alt=""></div>
+            <div class="headTip" v-if="orderData.order">
+                <div class="img">
+                    <img src="../assets/img/status1.png" alt="">
+                </div>
                 <div class="text">
-                    <div class="status">待发货</div>
+                    <div class="status" v-if="orderData.order.status == -1">作废</div>
+                    <div class="status" v-if="orderData.order.status == 0">待支付</div>
+                    <div class="status" v-if="orderData.order.status == 1">待发货</div>
+                    <div class="status" v-if="orderData.order.status == 2">已发货，未签收</div>
+                    <div class="status" v-if="orderData.order.status == 3">已签收</div>
+                    <div class="status" v-if="orderData.order.status == 4">交易完成</div>
+                    <div class="status" v-if="orderData.order.status == 5">退货中</div>
+                    <div class="status" v-if="orderData.order.status == 6">退货成</div>
+                    <div class="status" v-if="orderData.order.status == 7">货到付款</div>
                     <div class="test">您的订单商品，将由我们的仓库人员进行包装后发货，请您耐心等待</div>
                 </div>
             </div>
@@ -61,7 +71,7 @@
             </div>
             <div class="kefu">
                 <div class="kefunum">联系客服</div>
-                <div class="tuikuan">申请退款</div>
+                <div class="tuikuan" v-if="orderData.order.status == 1 || orderData.order.status == 2">申请退款</div>
             </div>
         </div>
 	</div>

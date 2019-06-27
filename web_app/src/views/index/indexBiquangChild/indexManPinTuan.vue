@@ -40,7 +40,7 @@
                                     </div>
                                     <div class="danmai">单买价<span>¥{{item.price}}</span></div>
                                 </div>
-                                <div class="btnP" @click="onRouter('/ProductDetailsPinTuan',item.id)"><span>去拼团</span></div>
+                                <div class="btnP" @click="onRouter('/ProductDetails',item.id)"><span>去拼团</span></div>
                             </div>
                         </div>
                     </div>

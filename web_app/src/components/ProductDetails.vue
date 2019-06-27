@@ -89,6 +89,30 @@
                     </div>
                 </div>
             </div>
+            <!-- 拼团 -->
+            <div class="pinTuan" v-if="goodsInfo.goods.type == 3">
+                <div class="item">
+                    <div class="list">
+                        <div class="text">
+                            <div class="name">{{goodsInfo.pin.length}}人在拼单,可直接参与</div>
+                        </div>
+                        <div class="rightJ">查看更多</div>
+                    </div>
+                </div>
+                <div class="pinBox" v-for="(item,index) in goodsInfo.pin">
+                    <div class="head">
+                        <div class="img"><img v-lazy="$imgUrl + item.img" alt=""></div>
+                        <div class="name">{{item.names}}</div>
+                    </div>
+                    <div class="timeBox">
+                        <div class="times">
+                            <div class="cha">还差 {{chaNum(item.num,item.j_id)}} 人拼成</div>
+                            <div>剩余 <span>{{listdata[index].hou}} : </span> <span>{{listdata[index].min}} : </span> <span>{{listdata[index].sec}}</span></div>
+                        </div>
+                        <div class="btnPin">去拼单</div>
+                    </div>
+                </div>
+            </div>
             <!-- 评论 -->
             <div class="pinLun" id="anchor-1">
                 <div class="item">
@@ -339,12 +363,22 @@ export default {
             selectArr: [], //存放被选中的值
             shopItemInfo: {}, //存放要和选中的值进行匹配的数据
             subIndex: [], //是否选中 因为不确定是多规格还是但规格，所以这里定义数组来判断
+            // 倒计时
+            endTimelist: [],
+            listdata: [],
+            timeOut: null //定时器
         }
     },
     created () {
     },
     mounted() {
-        this.getGoodsInfo() 
+        this.getGoodsInfo()
+        if(this.endTimelist) {
+            this.timeOut = setInterval(this.countDown, 1000)
+        }
+    },
+    destroyed () {
+        clearInterval(this.timeOut)
     },
 	methods: {
         getGoodsInfo () { // 获取商品详情
@@ -362,6 +396,11 @@ export default {
                 that.getFuWu(ids)
                 that.getComment()
                 that.getPUser()
+                that.goodsInfo.pin.forEach(o => { // 储存时间
+                    let time = o.end_time * 1000
+                    that.endTimelist.push(time)    
+                })
+                that.countDown()
             }).catch(function (error) {
                 console.log(error)
             })
@@ -468,7 +507,7 @@ export default {
 			})
         },
         onChange(index) {
-        this.current = index;
+            this.current = index;
         },
         onHiddenActionSheet() { // 选择款式
             if (this.isVisible) {
@@ -671,7 +710,51 @@ export default {
             //         type: 'ProductDetails'
 			// 	}
 			// })
-        }
+        },
+        //倒计时函数
+        countDown(it) { 
+            // 获取当前时间，同时得到活动结束时间数组  
+            let that = this
+            let newTime = Date.now(); 
+            let endTimeList = that.endTimelist 
+            let countDownArr = [];
+            // 对结束时间进行处理渲染到页面
+            endTimeList.forEach(o => {
+                let endTime = new Date(o).getTime();
+                let obj = null;
+                // 如果活动未结束，对时间进行处理
+                if (endTime - newTime > 0) {
+                    let time = (endTime - newTime) / 1000;
+                    // 获取天、时、分、秒
+                    let day = parseInt(time / (60 * 60 * 24));
+                    let hou = parseInt(time % (60 * 60 * 24) / 3600);
+                    let min = parseInt(time % (60 * 60 * 24) % 3600 / 60);
+                    let sec = parseInt(time % (60 * 60 * 24) % 3600 % 60);
+                    obj = {
+                        day: that.timeFormat(day),
+                        hou: that.timeFormat(hou),
+                        min: that.timeFormat(min),
+                        sec: that.timeFormat(sec)
+                    }
+                } else { //活动已结束，全部设置为'00'
+                    obj = {
+                        day: '00',
+                        hou: '00',
+                        min: '00',
+                        sec: '00'
+                    }
+                }
+                countDownArr.push(obj)
+                that.listdata = countDownArr
+            })
+        },
+        timeFormat(param) { //小于10的格式化函数
+            return param < 10 ? '0' + param : param;
+        },
+        chaNum(numS,j_id) {
+            let num = numS - (eval(j_id).length) - 1
+            return num
+        },
     },
     watch: {
         '$route' (to, from) {
@@ -945,6 +1028,81 @@ export default {
     >>>.van-picker-column
             font-size 14px
             color #999
+.pinTuan
+    text-align left
+    background-color #fff
+    margin-top 10px
+    .item
+        display flex
+        align-items baseline
+        padding 0 15px
+        .title
+            font-size 13px
+        .list
+            display flex
+            align-items center
+            text-align left 
+            border-bottom solid 1px #f1f1f1
+            flex 1
+            font-size 14px
+            margin-left 5px
+            padding 12px 0
+            .text
+                flex 1
+                .name
+                    color #333
+                    display flex
+                    align-items center
+            .rightJ
+                background-image url('../assets/img/rightT.png')
+                background-position 100%
+                background-size 6px
+                background-repeat no-repeat
+                flex 0 0 120px
+                text-align right
+                padding-right 15px
+                color #999
+                font-size 12px
+    .pinBox
+        display flex
+        align-items center
+        padding 10px 15px
+        flex 1
+        .head
+            display flex
+            align-items center
+            flex 0 0 40%
+            .img
+                width 40px
+                height 40px
+                img
+                    width 100%
+                    display block
+                    border-radius 100%
+            .name
+                margin-left 5px
+                overflow hidden
+                text-overflow ellipsis
+                word-break keep-all
+                white-space nowrap
+                max-width 110px
+        .timeBox
+            display flex
+            align-items center
+            flex 0 0 60%
+            justify-content flex-end
+            .times
+                text-align right
+                font-size 13px
+                margin-right 10px
+                .cha
+                    margin-bottom 5px
+            .btnPin
+                background-color $background-color
+                color #fff
+                line-height 40px
+                padding 0 15px
+                border-radius $border-radius
 .pinLun
     text-align left
     background-color #fff
