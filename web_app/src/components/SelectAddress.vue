@@ -91,7 +91,6 @@ export default {
                 id: that.$route.query.id
             }
 			get('/index.php/home/member/user_address').then(res => {
-                console.log(res);
                 that.addressData = res
             }).catch(function (error) {
                 console.log(error)

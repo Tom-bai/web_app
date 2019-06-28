@@ -1,26 +1,24 @@
 <template>
-	<!-- 我的订单 -->
+	<!-- 我的拼团订单 -->
 	<div>
-		<div class="orderList">
+		<div class="pintuanList">
 			<Nav :dataNav="dataNav" :navActive="$route.query.id" v-if="dataNav" ></Nav>
             <div class="mainBox" v-if="orderList.length > 0">
                 <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
                     <div class="list" v-for="(item,index) in orderList" :key="index">
                         <div class="head">
-                            <div class="tipP">{{times(item.u_time)}}</div>
-                            <div class="guangG">{{item.status_name}}</div>
+                            <div class="tipP">{{times(item.end_time)}}</div>
+                            <div class="guangG">{{item.status}}</div>
                         </div>
                         <div class="mainBox">
-                            <div class="main" v-for="(itemGoods,index) in item.ord_goods" :key="index" @click="onRouter('/OrderDetails',item.order_number)">
+                            <div class="main">
                                 <div class="imgBox">
-                                    <img v-lazy="$imgUrl + itemGoods.image" alt="">
+                                    <img v-lazy="$imgUrl + item.img" alt="">
                                 </div>
                                 <div class="textBox">
-                                    <div class="name">{{itemGoods.goods_name}}</div>
-                                    <div class="tip" v-if="itemGoods.s_type_title">{{itemGoods.s_type_title}}</div>
+                                    <div class="name">{{item.title}}</div>
                                     <div class="money">
-                                        <div class="num">x {{itemGoods.num}}</div>
-                                        <div class="moneyN">¥ {{itemGoods.price}}</div>
+                                        <div class="num">x {{item.num}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +47,7 @@ import Nav from '@/components/Nav'
 import Like from '@/components/Like'
 import Bus from '@/bus.js'
 export default {
-	name: "orderList",
+	name: "pintuanList",
 	components: {
         Nav,
         Like,
@@ -68,27 +66,15 @@ export default {
                 },
                 {
                     id: 1,
-                    title: '待发货'
+                    title: '已经付款'
                 },
                 {
                     id: 2,
-                    title: '待收货'
+                    title: '成功'
                 },
                 {
-                    id: 4,
-                    title: '交易完成'
-                },
-                {
-                    id: 5,
-                    title: '退货中'
-                },
-                {
-                    id: 6,
-                    title: '已退货'
-                },
-                {
-                    id: 7,
-                    title: '货到付款'
+                    id: 3,
+                    title: '失败结束'
                 },
             ],
             orderList: [],
@@ -114,13 +100,13 @@ export default {
         this.$Bus.$off('navBtn');
     },
 	methods: {
-		getOrderList (status) { // 获取订单信息
+		getOrderList (status) { // 获取拼团订单信息
             let that = this
             let params = {
                 limit: that.limit,
                 status: status
             }
-            get('/index.php/home/member/orderList',params).then(res => {
+            get('/index.php/home/pin/userPinGoods',params).then(res => {
                 if (res.length == undefined) {
                     that.isLoading = false
                     that.isHasMore = false
@@ -156,9 +142,10 @@ export default {
         onInfinite () { //加载更多
             let that = this
             if (that.isHasMore) {
-                that.isLoading = true
-                that.limit++
-                that.getOrderList()
+                that.isLoading = false
+                that.isHasMore = false
+                // that.limit++
+                // that.getOrderList()
             }
         },
         times (time) {
@@ -255,15 +242,6 @@ export default {
                         overflow hidden
                         line-height 1.3
                         height 35px
-                    .tip
-                        color #fff
-                        background-color $background-color
-                        display inline-block
-                        margin 0 0 5px 0
-                        padding 2px 5px
-                        border-radius $border-radius
-                        line-height 1
-                        margin-top 5px
                     .guiGe
                         font-size 12px
                         font-weight 500

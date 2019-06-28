@@ -83,8 +83,9 @@ export default {
         if (this.$route.query.type == 'onReviseAdd') {
             this.name = JSON.parse(this.$route.query.data).name
             this.phone = JSON.parse(this.$route.query.data).mobile
-            this.city = JSON.parse(this.$route.query.data).address
-            this.jiedao = JSON.parse(this.$route.query.data).address
+            let cityList = (JSON.parse(this.$route.query.data).address).split("--")
+            this.city = cityList[0]
+            this.jiedao = cityList[1]
             this.default = JSON.parse(this.$route.query.data).default
             if (this.default == 0) {
                 this.active = false

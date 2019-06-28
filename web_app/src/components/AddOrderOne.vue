@@ -82,28 +82,28 @@
                         <span>¥{{total_price}}</span>
                     </div>
                 </div>
+                <div class="list" v-if="balanceShow">
+                    <div class="text">
+                        <div class="name">余额抵扣</div>
+                    </div>
+                    <div class="right">
+                        <span>- ¥{{yuMoney}}</span>
+                    </div>
+                </div>
+                <div class="list" v-if="xBiShow">
+                    <div class="text">
+                        <div class="name">X币抵扣</div>
+                    </div>
+                    <div class="right">
+                        <span>- ¥{{youHuiData.xbi == null?'0.00':youHuiData.xbi}}</span>
+                    </div>
+                </div>
                 <div class="list">
                     <div class="text">
                         <div class="name">运费 </div>
                     </div>
                     <div class="right" v-if="orderData.order">
                         <span>+ ¥{{orderData.order.y_price}}</span>
-                    </div>
-                </div>
-                <div class="list" v-if="xBiShow">
-                    <div class="text">
-                        <div class="name">X币 </div>
-                    </div>
-                    <div class="right">
-                        <span>- ¥{{youHuiData.xbi == null?'0.00':youHuiData.xbi}}</span>
-                    </div>
-                </div>
-                <div class="list" v-if="balanceShow">
-                    <div class="text">
-                        <div class="name">余额 </div>
-                    </div>
-                    <div class="right">
-                        <span>- ¥{{yuMoney}}</span>
                     </div>
                 </div>
                 <div class="list">
@@ -249,7 +249,7 @@ export default {
             }　　　　　　　　　　
         },
         myYuyue () { // 我的余额
-            return parseFloat(this.youHuiData.balance) - this.yuMoney
+            return (parseFloat(this.youHuiData.balance) - parseFloat(this.yuMoney)).toFixed(2)
         },
         youHuiTip () { // 优惠提示
             return  (parseFloat(this.yuMoney) +  parseFloat(this.xBi) + parseFloat(this.yhMoney)).toFixed(2)
@@ -370,29 +370,36 @@ export default {
             let params = {
                 order: orderID,
                 use_xb: `${that.xBiShow?1:0}`,
-                user_ye: `${that.balanceShow?1:0}`,
+                use_ye: `${that.balanceShow?1:0}`,
                 message: that.xieShang,
                 yhq: that.yhq,
                 address_id: that.orderData.adddata.id,
             }
-			get('/index.php/home/cart/order_pay',params).then(res => {
-                if (parseFloat(that.newPay) <= 0) {
-                    that.onRouter('/OrderDetails',orderID)
+			post('/index.php/home/cart/order_pay',params).then(res => {
+                if (res.err == 1) {
+                    toast(res.msg)
+                    setTimeout(() => {
+                        that.onRouter('/OrderDetails',orderID)
+                    }, 1500);
                 } else {
-                    WeixinJSBridge.invoke(
-                        'getBrandWCPayRequest',
-                        res.jsApiParameters,
-                        function(res){
-                            if(res.err_msg == "get_brand_wcpay_request:ok"){  
-                                that.onRouter('/OrderDetails',orderID) 
-                            }else if(res.err_msg == "get_brand_wcpay_request:cancel"){  
-                                toast('取消支付') 
-                            }else{  
-                                toast('支付失败')
-                            } 
-                            // alert(JSON.stringify(res));
-                        }
-                    );
+                    if (parseFloat(that.newPay) <= 0) {
+                        that.onRouter('/OrderDetails',orderID)
+                    } else {
+                        WeixinJSBridge.invoke(
+                            'getBrandWCPayRequest',
+                            res.jsApiParameters,
+                            function(res){
+                                if(res.err_msg == "get_brand_wcpay_request:ok"){  
+                                    that.onRouter('/OrderDetails',orderID) 
+                                }else if(res.err_msg == "get_brand_wcpay_request:cancel"){  
+                                    toast('取消支付') 
+                                }else{  
+                                    toast('支付失败')
+                                } 
+                                // alert(JSON.stringify(res));
+                            }
+                        );
+                    }
                 }
                 // that.$wxSDK.ready(function () {
                 //     that.$wxSDK.chooseWXPay({

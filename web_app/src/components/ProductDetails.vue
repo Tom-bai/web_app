@@ -27,7 +27,7 @@
                     <div><span class="moneyIoc">¥</span>{{goodsInfo.goods.price}}</div>
                     <div class="yuan"><span class="moneyIoc">¥</span>{{goodsInfo.goods.member_price}}<i class="vip"></i></div>
                 </div>
-                <div class="openVip">
+                <div class="openVip" v-if="goodsInfo.goods.type != 3">
                     <div class="cardName">
                         <div class="tip">
                             <div class="vipImg"><img src="../assets/img/detailsVip.png" alt=""></div>
@@ -45,13 +45,24 @@
                     <!-- <div class="tip">{{goodsInfo.goods.des}}</div> -->
                 </div>
             </div>
+            <!-- 商品规格 -->
             <div class="peiSong">
-                <div class="item" @click="onHiddenActionSheet">
+                <div class="item" @click="onHiddenActionSheet" v-if="gugeValue !== null && selectArr.length <= 0">
                     <div class="title">请选择：</div>
                     <div class="list">
                         <div class="text">
                             <div class="name" v-if="textTishi !== ' '">{{textTishi}}</div>
                             <div class="name" v-else>规格</div>
+                        </div>
+                        <div class="rightJ"></div>
+                    </div>
+                </div>
+                <div class="item" v-else>
+                    <div class="title">规格：</div>
+                    <div class="list">
+                        <div class="text">
+                            <div class="name" v-if="textTishi !== ' '">{{textTishi}}</div>
+                            <div class="name" v-else>默认</div>
                         </div>
                         <div class="rightJ"></div>
                     </div>
@@ -779,8 +790,12 @@ export default {
             return param < 10 ? '0' + param : param;
         },
         chaNum(numS,j_id) {
-            let num = numS - (eval(j_id).length) - 1
-            return num
+            if (numS && j_id !== null) {
+                let num = numS - (eval(j_id).length) - 1
+                return num
+            } else {
+                return numS - 1
+            }
         },
     },
     watch: {
@@ -901,6 +916,7 @@ export default {
             font-size 12px
             color $color
             margin-right 3px
+            vertical-align middle
     .openVip
         display flex
         align-items center
@@ -953,18 +969,18 @@ export default {
                     transform translate(0,-50%)
                     background-size 100%
     .textBox
-        h4
-            margin-bottom 10px
         .name
             text-overflow ellipsis
             display -webkit-box
             -webkit-line-clamp 2
             -webkit-box-orient vertical
             overflow hidden
-            line-height 1.3
+            line-height 1.5
             letter-spacing 1px
             color #333
             font-weight 700
+            font-size 16px
+            margin 10px 0
         .tip
             font-size 13px
             color #333

@@ -248,6 +248,15 @@ export default new Router({
             },
             component: () => import('./views/center/child/orderList') // 我的订单
         },
+        { // 我的拼团订单
+            path: '/pintuanList',
+            name: 'pintuanList',
+            meta:{
+                title: '我的拼团订单',
+                keepAlive: false
+            },
+            component: () => import('./views/center/child/pintuanList') // 我的拼团订单
+        },
         {
             path: '/refundGoods',
             name: 'refundGoods',

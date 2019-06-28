@@ -5,7 +5,7 @@
                 <div class="img">
                     <img src="../assets/img/status1.png" alt="">
                 </div>
-                <div class="text">
+                <div class="text" v-if="orderData.order">
                     <div class="status" v-if="orderData.order.status == -1">作废</div>
                     <div class="status" v-if="orderData.order.status == 0">待支付</div>
                     <div class="status" v-if="orderData.order.status == 1">待发货</div>
@@ -69,7 +69,7 @@
                     <div class="name">下单时间：<time>{{times(orderData.order.u_time)}}</time></div>
                 </div>
             </div>
-            <div class="kefu">
+            <div class="kefu" v-if="orderData.order">
                 <div class="kefunum">联系客服</div>
                 <div class="tuikuan" v-if="orderData.order.status == 1 || orderData.order.status == 2">申请退款</div>
             </div>

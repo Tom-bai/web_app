@@ -249,7 +249,7 @@ export default {
             }　　　　　　　　　　
         },
         myYuyue () { // 我的余额
-            return parseFloat(this.youHuiData.balance) - this.yuMoney
+            return (parseFloat(this.youHuiData.balance) - parseFloat(this.yuMoney)).toFixed(2)
         },
         youHuiTip () { // 优惠提示
             return  (parseFloat(this.yuMoney) +  parseFloat(this.xBi) + parseFloat(this.yhMoney)).toFixed(2)
@@ -369,7 +369,7 @@ export default {
             let params = {
                 cartid: that.postData,
                 use_xb: `${that.xBiShow?1:0}`,
-                user_ye: `${that.balanceShow?1:0}`,
+                use_ye: `${that.balanceShow?1:0}`,
                 message: that.xieShang,
                 yhq: that.yhq,
                 address_id: that.orderData.adddata.id,

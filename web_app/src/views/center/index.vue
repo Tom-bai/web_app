@@ -26,9 +26,9 @@
                         <div class="img"><img src="../../assets/img/center/z_mem_myorder.jpg" alt=""></div>
                         <div class="name">待收货</div>
                     </div>
-                    <div class="list" >
+                    <div class="list" @click="onRouter('/pintuanList',0)">
                         <div class="img"><img src="../../assets/img/center/z_mem_myorder.jpg" alt=""></div>
-                        <div class="name">大象说</div>
+                        <div class="name">我的拼团</div>
                     </div>
                     <div class="list">
                         <div class="img"><img src="../../assets/img/center/z_mem_myorder.jpg" alt=""></div>
