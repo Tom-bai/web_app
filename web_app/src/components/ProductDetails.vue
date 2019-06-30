@@ -19,7 +19,7 @@
             <div class="moneyDetaild">
                 <!-- 拼团 -->
                 <div class="money" v-if="goodsInfo.goods.type == 3">
-                    <div><span class="moneyIoc">¥</span>{{goodsInfo.goods.p_price}}</div>
+                    <div><span class="moneyIoc">¥</span>{{pinMoney}}</div>
                     <div class="yuan"><span class="pinD">单独购买</span><span class="moneyIoc">¥</span>{{goodsInfo.goods.price}}</div>
                 </div>
                 <!-- 不拼 -->
@@ -403,6 +403,11 @@ export default {
     },
     created () {
     },
+    computed:{
+       pinMoney () { // 拼团商品价格
+            return (parseFloat(this.goodsInfo.goods.price) -  parseFloat(this.goodsInfo.goods.s_price)).toFixed(2)
+        } 
+    },
     mounted() {
         this.getGoodsInfo()
         if(this.endTimelist) {
@@ -727,7 +732,17 @@ export default {
             }
 			post('/index.php/home/cart/ajax_add_order',params).then(res => {
                 if (res.err == 1) {
-                    toast(res.data)
+                    if (res.pin_history) {
+                        that.$router.push({
+                            path: '/AddOrderOne',
+                            query: {
+                                id: res.pin_history[0].order_number,
+                                type: 'ProductDetails'
+                            }
+                        })
+                    } else {
+                       toast(res.data) 
+                    }
                 } else {
                     that.$router.push({
                         path: '/AddOrderOne',

@@ -122,6 +122,15 @@ export default new Router({
             },
 			component: () => import('./views/index/indexBiquangChild/indexNewUp') // 新会员首减
         },
+        { // 导航中的商品
+			path: '/indexNavgoods',
+            name: 'indexNavgoods',
+            meta:{
+                title: '大象商城',
+                keepAlive: false
+            },
+			component: () => import('./views/index/indexBiquangChild/indexNavgoods') // 导航中的商品
+        },
         { 
 			path: '/indexKanFree',
             name: 'indexKanFree',

@@ -33,9 +33,9 @@
             </div> -->
             <swiper :options="swiperOption" v-if="dataNav.length>0" class="swiperBox">
                 <swiper-slide v-for="(item,index) in dataNav" :key="index" class="swiperB">
-                    <div class="navBtnbox" v-for="(itemL,index) in item">
+                    <div class="navBtnbox" v-for="(itemL,index) in item" :key="index">
                         <div class="navBtn">
-                            <div class="list">
+                            <div class="list" @click="onRouter('/indexNavgoods',itemL.id)">
                                 <div><img v-lazy="$imgUrl + itemL.img" alt=""></div>
                                 <div>{{itemL.name}}</div>
                             </div>

@@ -33,6 +33,7 @@
                     <div class="img"><img :src="$imgUrl + item.image" alt=""></div>
                     <div class="text">
                         <div class="name">{{item.goods_name}}</div>
+                        <div class="tip" v-if="item.s_type_title">{{item.s_type_title}}</div>
                         <div class="num">x {{item.num}}</div>
                         <div class="money">¥ {{item.price}}</div>
                     </div>
@@ -211,6 +212,14 @@ export default {
             font-size 16px
             text-align right 
             color $color
+        .tip
+            background-color $background-color
+            font-size 12px
+            color #ffffff
+            padding 4px 6px
+            border-radius $border-radius
+            display inline-block
+            margin 5px 0
 .tipS
     background-color #fff
     margin-top 10px

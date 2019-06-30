@@ -10,7 +10,7 @@
             <div class="swiper">
                 <swiper :options="swiperOption" v-if="dataHotGoods.length>0">
                     <swiper-slide v-for="(slide, index) in dataHotGoods" :key="index" class="swiperImg">
-                        <div class="list" v-for="(item, index) in slide">
+                        <div class="list" v-for="(item, index) in slide" :key="index" v>
                             <div class="img"><img :src="$imgUrl + item.img"></div>
                             <div class="name">{{item.title}}</div>
                             <div class="money">
@@ -36,7 +36,7 @@
                                 <div class="pM">
                                     <div>
                                         <span class="tag">{{item.pnum}}人团</span>
-                                        <span class="num">¥{{item.s_price}}</span>
+                                        <span class="num">¥{{(parseFloat(item.price) - parseFloat(item.s_price)).toFixed(2)}}</span>
                                     </div>
                                     <div class="danmai">单买价<span>¥{{item.price}}</span></div>
                                 </div>
@@ -97,6 +97,8 @@ export default {
     },
     created(){
     },
+    computed:{
+    },
     beforeDestroy() {
         //组件销毁前需要解绑事件。否则会出现重复触发事件的问题
         this.$Bus.$off('navBtn');
@@ -114,8 +116,6 @@ export default {
 			let that = this
 			get('/index.php/home/pin/pinHotGoods').then(res => {
                 that.dataHotGoods = that.group(res,3)
-                console.log(that.dataHotGoods);
-                
             }).catch(function (error) {
                 console.log(error)
             })
