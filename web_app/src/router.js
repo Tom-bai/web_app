@@ -275,5 +275,14 @@ export default new Router({
             },
             component: () => import('./views/center/child/refundGoods') // 申请退款
         },
+        {
+            path: '/collection',
+            name: 'collection',
+            meta:{
+                title: '我的收藏',
+                keepAlive: false
+            },
+            component: () => import('./views/center/child/collection') // 我的收藏
+        },
 	]
 })

@@ -108,8 +108,10 @@ export default {
             let that = this
             if (that.isHasMore) {
                 that.isLoading = true
-                that.limit++
-                that.getList()
+                that.isLoading = false
+                that.isHasMore = false
+                // that.limit++
+                // that.getList()
                 
             }
         },
@@ -125,13 +127,11 @@ export default {
             }, 100);
         },
         onUpAndDwom (val) { // 价格排序
-            let newVal
-            console.log(val);
-            
+            let newVal  
             if (this.jActive) {
-                newVal = 2
-            } else {
                 newVal = 1
+            } else {
+                newVal = 2
             }
             this.jActive = !this.jActive
             this.pricetype = newVal
@@ -145,8 +145,11 @@ export default {
             let that = this
             let params = {
                 id: that.$route.query.id,
+                isprice: that.isprice,
+                pricetype: that.pricetype,
+                isnew: that.isnew,
             }
-			get('/index.php/home/goods/getChildCate',params).then(res => {
+			get('/index.php/home/goods/getChildGoods',params).then(res => {
                 if (res.length == undefined) {
                     that.isLoading = false
                     that.isHasMore = false

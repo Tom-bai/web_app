@@ -26,9 +26,9 @@
                         <div class="img"><img src="../../assets/img/center/z_mem_myorder.jpg" alt=""></div>
                         <div class="name">待收货</div>
                     </div>
-                    <div class="list" @click="onRouter('/pintuanList',0)">
+                    <div class="list">
                         <div class="img"><img src="../../assets/img/center/z_mem_myorder.jpg" alt=""></div>
-                        <div class="name">我的拼团</div>
+                        <div class="name">享说</div>
                     </div>
                     <div class="list">
                         <div class="img"><img src="../../assets/img/center/z_mem_myorder.jpg" alt=""></div>
@@ -43,7 +43,7 @@
             </div>
             <div class="shouCang">
                 <div class="box">
-                    <div class="list">
+                    <div class="list" @click="onRouter('/collection')">
                         <div class="num">3</div>
                         <div class="text">商品收藏</div>
                     </div>
@@ -59,13 +59,17 @@
                         <div class="img">3</div>
                         <div class="text">客户服务</div>
                     </div>
-                    <div class="list">
+                    <div class="list"  @click="onHiddenAdd">
                         <div class="img">3</div>
                         <div class="text">收货地址</div>
                     </div>    
                 </div>
             </div>
             <Like></Like>
+            <!-- 选择地址 -->
+            <nut-actionsheet :is-visible="isVisibleAdd" @close="onHiddenAdd" :isClickCloseMask="false">
+                <SelectAddress slot="custom"  class="centerAddress"></SelectAddress>
+            </nut-actionsheet>
 		</div>
 	</div>
 </template>
@@ -76,20 +80,31 @@ import Vue from 'vue'
 import Like from '@/components/Like'
 import { get,post,formatTime,toast } from '@/axiosApi'
 import VueClipboard from 'vue-clipboard2'
+import SelectAddress from '@/components/SelectAddress'
+import Bus from '@/bus.js'
 Vue.use(VueClipboard)
 export default {
 	name: "center",
 	components: {
-        Like
+        Like,
+        SelectAddress
 	},
 	props: [],
 	data () {
 		return {
-			userInfo: []
+            userInfo: [],
+            isVisibleAdd: false,
+            scrollTop: null
 		}
 	},
 	mounted() {
         this.getUserInfo() 
+        this.$Bus.$on('addressShowB', (val) => { // 
+            this.isVisibleAdd = val
+        }) 
+    },
+    destroyed () {
+        this.$Bus.$off('addressShowB')
     },
 	methods: {
         onRouter (pathUrl,id) {
@@ -111,7 +126,10 @@ export default {
         },
         onCopy () {
             toast('复制成功')
-        }
+        },
+        onHiddenAdd () {
+            this.isVisibleAdd = !this.isVisibleAdd
+        },
 	},
 	watch: {}
 };

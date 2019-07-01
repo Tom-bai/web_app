@@ -73,6 +73,7 @@
             <div class="kefu" v-if="orderData.order">
                 <div class="kefunum">联系客服</div>
                 <div class="tuikuan" v-if="orderData.order.status == 1 || orderData.order.status == 2">申请退款</div>
+                <div class="tuikuan" v-if="orderData.order.status == 0" @click="onRouter('/AddOrderOne',orderData.order.order_number)">立即付款</div>
             </div>
         </div>
 	</div>
@@ -99,6 +100,14 @@ export default {
         this.getPayRes()
     },
 	methods: {
+        onRouter (pathUrl,id) {
+			this.$router.push({
+				path: pathUrl,
+				query: {
+                    id: id
+				}
+			})
+        },
         getPayRes() { // 获取数据
             let that = this
             let params = {

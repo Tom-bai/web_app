@@ -113,10 +113,10 @@
                         <div class="text">
                             <div class="name">{{ goodsInfo.pin == null?'0':goodsInfo.pin.length}}人在拼单,可直接参与</div>
                         </div>
-                        <div class="rightJ">查看更多</div>
+                        <div class="rightJ" @click="onChildPinShow">查看更多</div>
                     </div>
                 </div>
-                <div class="pinBox" v-for="(item,index) in goodsInfo.pin" :key="index">
+                <div class="pinBox" v-for="(item,index) in pinDataTwo" :key="index">
                     <div class="head">
                         <div class="img"><img v-lazy="$imgUrl + item.img" alt=""></div>
                         <div class="name">{{item.names}}</div>
@@ -126,9 +126,33 @@
                             <div class="cha">还差 {{chaNum(item.num,item.j_id)}} 人拼成</div>
                             <div>剩余 <span>{{listdata[index].hou}} : </span> <span>{{listdata[index].min}} : </span> <span>{{listdata[index].sec}}</span></div>
                         </div>
-                        <div class="btnPin">去拼单</div>
+                        <div class="btnPin"  @click="onNowBuy($route.query.id,0,item.id)">去拼单</div>
                     </div>
                 </div>
+                <van-popup v-model="showList" class="showList">
+                    <div class="showListBox">
+                        <div class="head">
+                            <div class="zan"></div>
+                            <div class="titie">正在拼单</div>
+                            <div class="close" @click="onChildPinShow"></div>
+                        </div>
+                        <div class="list">
+                            <div class="listPinBox" v-for="(item,index) in goodsInfo.pin" :key="index">
+                                <div class="head">
+                                    <div class="img"><img v-lazy="$imgUrl + item.img" alt=""></div>
+                                    <div class="name">
+                                        <div class="nameS">
+                                            <div class="text">{{item.names}}</div>
+                                            <div class="cha">还差 {{chaNum(item.num,item.j_id)}} 人拼成</div>
+                                        </div>
+                                        <div class="time">剩余 <span>{{listdata[index].hou}} : </span> <span>{{listdata[index].min}} : </span> <span>{{listdata[index].sec}}</span></div>
+                                    </div>
+                                </div>
+                                <div class="btnPin">去拼单</div>
+                            </div>
+                        </div>
+                    </div>
+                </van-popup>
             </div>
             <!-- 评论 -->
             <div class="pinLun" id="anchor-1">
@@ -243,7 +267,7 @@
             <van-goods-action-big-btn
                 class="nowCard"
                 text="单独购买"
-                @click="onNowBuy(goodsInfo.goods)"
+                @click="onNowBuy($route.query.id)"
                 v-if="goodsInfo.goods.type == 3"
             />
             <van-goods-action-big-btn
@@ -256,14 +280,14 @@
                 primary
                 class="nowBuy"
                 text="发起拼团"
-                @click="onNowBuy(goodsInfo.goods,1)"
+                @click="onNowBuy($route.query.id,1)"
                 v-if="goodsInfo.goods.type == 3"
             />
             <van-goods-action-big-btn
                 primary
                 class="nowBuy"
                 text="立即购买"
-                @click="onNowBuy(goodsInfo.goods)"
+                @click="onNowBuy($route.query.id)"
                 v-else
             />
         </van-goods-action>
@@ -367,6 +391,7 @@ export default {
             topName: ['商品','评价','推荐','详情'],
             topIndex: 0,
             goodsInfo: [],
+            pinDataTwo: [],
             city: '北京市 北京市 东城区',
             showPinLun: false,
             addressShow:false,
@@ -390,6 +415,7 @@ export default {
             PUser: [],
             kuCun: 1,
             current: 0,
+            showList: false,
             //
             textTishi: ' ',
             selectArr: [], //存放被选中的值
@@ -433,6 +459,13 @@ export default {
                 that.getFuWu(ids)
                 that.getComment()
                 that.getPUser()
+                if (that.goodsInfo.pin !== '' && that.goodsInfo.pin !== null) {
+                    if (that.goodsInfo.pin.length >= 2) {
+                        that.pinDataTwo = that.goodsInfo.pin.slice(0,2)  
+                    } else {
+                        that.pinDataTwo = that.goodsInfo.pin 
+                    }
+                }
                 if (that.goodsInfo.pin !== null) {
                     that.goodsInfo.pin.forEach(o => { // 储存时间
                         let time = o.end_time * 1000
@@ -714,15 +747,20 @@ export default {
             }
             // 奇葩的方式总有办法解决
             let text = []
+            let postText
             for (let j in that.gugeValue) {
                 text.push(that.gugeValue[j].name)
             }
             let textTip = text.join('-')
             let textGuige = that.selectArr.join(',')
-            let postText = textTip + '|' + textGuige
+            if (textGuige !== '') {
+                postText = textTip + '|' + textGuige
+            } else {
+                postText = null
+            }
             let fq_pt = ''
             let params = {
-                goods_id: that.$route.query.id,
+                goods_id: id,
                 num: that.num,
                 attr_name: postText,
                 addcar: 0, // 是否添加到购物车
@@ -805,13 +843,16 @@ export default {
             return param < 10 ? '0' + param : param;
         },
         chaNum(numS,j_id) {
-            if (numS && j_id !== null) {
-                let num = numS - (eval(j_id).length) - 1
+            if (numS && (j_id !== '')) {
+                let num = numS - (eval(j_id)) - 1
                 return num
             } else {
                 return numS - 1
             }
         },
+        onChildPinShow () {
+            this.showList = !this.showList
+        }
     },
     watch: {
         '$route' (to, from) {
@@ -833,7 +874,7 @@ export default {
                 border-radius 3px
         .custom-indicator
             position absolute
-            bottom 10px
+            bottom 30px
             left 50%
             width 40px
             background-color rgba(0, 0, 0, 0.4)
@@ -1133,7 +1174,7 @@ export default {
         .head
             display flex
             align-items center
-            flex 0 0 40%
+            flex 0 0 45%
             .img
                 width 40px
                 height 40px
@@ -1151,7 +1192,7 @@ export default {
         .timeBox
             display flex
             align-items center
-            flex 0 0 60%
+            flex 0 0 55%
             justify-content flex-end
             .times
                 text-align right
@@ -1162,9 +1203,75 @@ export default {
             .btnPin
                 background-color $background-color
                 color #fff
-                line-height 40px
+                line-height 30px
                 padding 0 15px
                 border-radius $border-radius
+    .showList
+        width 90%
+        height 400px
+        .showListBox
+            .head
+                display flex
+                align-items center
+                height 50px
+                .zan
+                    flex 0 0 50px
+                .titie
+                    flex 1
+                    font-size 16px
+                    text-align center
+                .close
+                    flex 0 0 50px
+                    background-image url('../assets/img/x.png')
+                    height 30px
+                    background-repeat no-repeat
+                    background-position 50%
+            .list
+                height 350px
+                overflow auto
+                .listPinBox
+                    display flex
+                    align-items center
+                    padding 10px 15px
+                    flex 1
+                    border-bottom solid 1px #f1f1f1
+                    .head
+                        display flex
+                        align-items center
+                        flex 1
+                        .img
+                            width 40px
+                            height 40px
+                            img
+                                width 100%
+                                display block
+                                border-radius 100%
+                        .name
+                            margin 0 5px
+                            flex 1
+                            .nameS
+                                display flex
+                                align-items center
+                                font-size 14px
+                                .text
+                                    overflow hidden
+                                    text-overflow ellipsis
+                                    word-break keep-all
+                                    white-space nowrap
+                                    max-width 110px
+                                .cha
+                                    margin-left auto
+                                    font-size 12px
+                                    color #666
+                            .time
+                                margin-top 2px
+                    .btnPin
+                        background-color $background-color
+                        color #fff
+                        line-height 30px
+                        padding 0 15px
+                        border-radius $border-radius
+                        margin-left auto
 .pinLun
     text-align left
     background-color #fff
@@ -1343,6 +1450,7 @@ export default {
         display flex
         align-items center
         padding 0 15px
+        border-bottom solid 1px #f1f1f1
         .list
             display flex
             align-items center
@@ -1364,8 +1472,9 @@ export default {
                     align-items center
                     >img 
                         width 100%
+                        height 100%
                         display block
-                        border-radius $border-radius
+                        border-radius 100%
                 .text
                     flex 1
                     overflow hidden

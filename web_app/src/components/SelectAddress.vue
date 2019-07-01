@@ -140,6 +140,8 @@ export default {
             top 8px
             right 15px
     .listBox
+        max-height 400px
+        overflow auto
         .list
             display flex
             align-items center
