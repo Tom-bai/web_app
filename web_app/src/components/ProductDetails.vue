@@ -742,6 +742,7 @@ export default {
             if (that.gugeValue !== null) {
                 if (that.selectArr.length <= 0) {
                     toast('请选择规格') //
+                    that.isVisible = !that.isVisible
                     return false
                 }
             }
@@ -770,14 +771,16 @@ export default {
             }
 			post('/index.php/home/cart/ajax_add_order',params).then(res => {
                 if (res.err == 1) {
+                    toast(res.data) 
                     if (res.pin_history) {
-                        that.$router.push({
-                            path: '/AddOrderOne',
-                            query: {
-                                id: res.pin_history[0].order_number,
-                                type: 'ProductDetails'
-                            }
-                        })
+                        setTimeout(() => {
+                            that.$router.push({
+                                path: '/OrderDetails',
+                                query: {
+                                    id: res.pin_history[0].order_number,
+                                }
+                            })
+                        }, 1500);
                     } else {
                        toast(res.data) 
                     }
