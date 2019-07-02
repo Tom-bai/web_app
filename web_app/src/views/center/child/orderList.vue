@@ -93,10 +93,10 @@ export default {
             ],
             orderList: [],
             limit: 1,
-            status: null,
+            navStatus: null,
             isHasMore: true,
             isLoading: false,
-            hasLike: false
+            hasLike: false,
 		}
 	},
 	mounted() {
@@ -104,6 +104,11 @@ export default {
         this.getOrderList(this.dataNav[this.$route.query.id].id) 
         this.$Bus.$on('navBtn', (val) => { // 分类
             this.orderList = []
+            for (let i in this.dataNav) {
+                if (val == this.dataNav[i].id) {
+                    this.navStatus = i 
+                }
+            }
             setTimeout(() => {
                 this.getOrderList(val)
             }, 100);
@@ -177,10 +182,11 @@ export default {
 			})
         },
         onRefund (data) { // 退款
-            this.$router.push({
+            this.$router.replace({
                 path: '/refundGoods',
                 query: {
-                    id: JSON.stringify(data)
+                    status: this.navStatus,
+                    id: JSON.stringify(data),
                 }
             })
         },

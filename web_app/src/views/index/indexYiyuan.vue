@@ -15,7 +15,7 @@
         <div class="content" v-if="active == 0">
             <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
                 <div class="list" v-for="(item,index) in dataList" :key="index">
-                    <div class="item" @click="onRouter('/ProductDetails',item.ck)">
+                    <div class="item" @click="onRouter('/ProductDetails',item.id)">
                         <div class="img"><img  v-lazy="$imgUrl + item.img" alt=""></div>
                         <div class="text">
                             <div class="name">{{item.title}}</div>
@@ -33,7 +33,7 @@
                             <span>{{item.biaoqian}}</span>
                         </div>
                         <div class="num">
-                            <div class="shu">{{item.ck}}</div>
+                            <div class="shu">{{item.id}}</div>
                             <div class="img">
                                 <img v-for="itemi in item.us" :src="imgUrl + itemi" alt="">
                             </div>
@@ -191,7 +191,7 @@
                                 <div class="btnZ">
                                     <i class="iocn"></i>
                                     <span>{{item.cdf_num}}人支撑</span>
-                                    <span class="zhichi">支撑项目</span>
+                                    <!-- <span class="zhichi">支撑项目</span> -->
                                 </div>
                             </div>
                         </div>
