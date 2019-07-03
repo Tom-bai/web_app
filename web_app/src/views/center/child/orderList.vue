@@ -31,7 +31,7 @@
                         <div class="orederBtn">
                             <div class="quxiao" v-if="item.status == -1">删除订单</div>
                             <div class="quxiao" v-if="item.status == 0" @click="postCancelOrder(item.order_number,index)">取消订单</div>
-                            <div class="quxiao" v-if="item.status == 1" @click="onRefund(item)">申请退款</div>
+                            <div class="quxiao" v-if="item.status == 1" @click="onRefund(item.order_number)">申请退款</div>
                             <div class="pay" v-if="item.status == 0" @click="onRouter('/AddOrderOne',item.order_number)">立即付款</div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@ export default {
                 },
                 {
                     id: 1,
-                    title: '待发货'
+                    title: '已付款'
                 },
                 {
                     id: 2,
@@ -100,13 +100,19 @@ export default {
 		}
 	},
 	mounted() {
-
-        this.getOrderList(this.dataNav[this.$route.query.id].id) 
+        if (this.$route.query.id) {
+            this.getOrderList(this.dataNav[this.$route.query.id].id) 
+        } else {
+            this.getOrderList(this.dataNav[2].id) 
+        }
         this.$Bus.$on('navBtn', (val) => { // 分类
             this.orderList = []
+
+            let path = this.$router.history.current.path;
             for (let i in this.dataNav) {
                 if (val == this.dataNav[i].id) {
                     this.navStatus = i 
+                    this.$router.replace({ path, query: {id: this.navStatus}})
                 }
             }
             setTimeout(() => {
@@ -182,11 +188,11 @@ export default {
 			})
         },
         onRefund (data) { // 退款
-            this.$router.replace({
+            this.$router.push({
                 path: '/refundGoods',
                 query: {
                     status: this.navStatus,
-                    id: JSON.stringify(data),
+                    id: data,
                 }
             })
         },

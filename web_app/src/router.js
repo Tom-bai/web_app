@@ -108,7 +108,7 @@ export default new Router({
 			path: '/indexVipJuan',
             name: 'indexVipJuan',
             meta:{
-                title: '拼团商品',
+                title: '会员领券',
                 keepAlive: false
             },
 			component: () => import('./views/index/indexBiquangChild/indexVipJuan') // 新会员首减
@@ -271,7 +271,7 @@ export default new Router({
             name: 'refundGoods',
             meta:{
                 title: '申请退款',
-                keepAlive: false
+                keepAlive: true
             },
             component: () => import('./views/center/child/refundGoods') // 申请退款
         },

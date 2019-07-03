@@ -67,13 +67,15 @@ export default {
 	data () {
 		return {
             showVipNav: false,
-            navData: new Array(5)
+            navData: new Array(5),
         }
-	},
+    },
+    mounted() {
+    },
 	methods: {
         onShowVipNav () {
             this.showVipNav = !this.showVipNav
-        }
+        },
     },
 	watch: {}
 };

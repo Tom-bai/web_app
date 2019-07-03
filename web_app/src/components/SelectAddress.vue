@@ -101,7 +101,8 @@ export default {
             document.body.classList.remove('scrollFixed')
         },
         onClickAddress (item) { //确定地址
-            Bus.$emit('dialogShow', false)
+            Bus.$emit('addressShowB', false)
+            document.body.classList.remove('scrollFixed')
             this.$dialog({
                 title: "请确认您的收货地址",
                 content: `${item.name},${item.mobile}<br>${item.address}`,

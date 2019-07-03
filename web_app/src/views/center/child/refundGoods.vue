@@ -5,8 +5,8 @@
 			<div class="head">退款申请</div>
             <div class="goodBox">
                 <div class="main">
-                    <div class="top">单号：{{goodsData.order_number}}  共{{goodsData.num}}件商品</div>
-                    <div class="list" v-for="(item,index) in goodsData.ord_goods" :key="index">
+                    <div class="top" v-if="goodsData.order">单号：{{goodsData.order.order_number}}  共{{goodsData.order.num}}件商品</div>
+                    <div class="list" v-for="(item,index) in goodsData.goods" :key="index">
                         <div class="imgBox">
                             <img v-lazy="$imgUrl + item.image" alt="">
                         </div>
@@ -62,8 +62,8 @@
             <div class="yuanyin">
                 <div class="list">
                     <div class="text" @click="onHiddenActionSheet">
-                        <div class="YHname">
-                            <div>退款金额 <span>¥{{goodsData.price}}</span></div>
+                        <div class="YHname" v-if="goodsData.order">
+                            <div>退款金额 <span>¥{{goodsData.order.price}}</span></div>
                         </div>
                     </div>
                 </div>
@@ -142,19 +142,19 @@ export default {
 		}
 	},
 	mounted() {
-        this.goodsData = JSON.parse(this.$route.query.id)    
+        this.goodsData = []
+        this.getOrderList()   
     },
     beforeDestroy() {
     },
 	methods: {
-		getOrderList () { // 获取订单信息
+		getOrderList () { // 获取订单详情信息
             let that = this
             let params = {
-                limit: that.limit,
-                status: that.status
+                order: that.$route.query.id
             }
-            get('/index.php/home/member/orderList',params).then(res => {
-                
+            get('/index.php/home/cart/order_info',params).then(res => {
+                that.goodsData = res
             }).catch(function (error) {
                 console.log(error)
             })
@@ -225,7 +225,7 @@ export default {
                     imgBase.push(substringImg)
                 }
                 let params = {
-                    order: that.goodsData.order_number, // 订单号
+                    order: that.goodsData.order.order_number, // 订单号
                     tk_type: that.is_default, //	退款类型 1.退货退款 ；2.仅退款
                     liyou: that.is_text, //退款原因(理由)
                     refund_price: that.goodsData.price, //退款金额

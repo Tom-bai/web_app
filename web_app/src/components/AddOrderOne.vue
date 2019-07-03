@@ -379,18 +379,33 @@ export default {
                 if (res.err == 1) {
                     toast(res.msg)
                     setTimeout(() => {
-                        that.onRouter('/OrderDetails',orderID)
+                        that.$router.replace({
+                            path: '/OrderDetails',
+                            query: {
+                                id: orderID
+                            }
+                        })
                     }, 1500);
                 } else {
                     if (parseFloat(that.newPay) <= 0) {
-                        that.onRouter('/OrderDetails',orderID)
+                        that.$router.replace({
+                            path: '/OrderDetails',
+                            query: {
+                                id: orderID
+                            }
+                        })
                     } else {
                         WeixinJSBridge.invoke(
                             'getBrandWCPayRequest',
                             res.jsApiParameters,
                             function(res){
                                 if(res.err_msg == "get_brand_wcpay_request:ok"){  
-                                    that.onRouter('/OrderDetails',orderID) 
+                                    that.$router.replace({
+                                        path: '/OrderDetails',
+                                        query: {
+                                            id: orderID
+                                        }
+                                    })
                                 }else if(res.err_msg == "get_brand_wcpay_request:cancel"){  
                                     toast('取消支付') 
                                 }else{  

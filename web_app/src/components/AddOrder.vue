@@ -376,7 +376,12 @@ export default {
             }
 			post('/index.php/home/cart/ajax_cart_order',params).then(res => {
                 if (parseFloat(that.newPay) <= 0) {
-                    that.onRouter('/OrderDetails',res.order)
+                    that.$router.replace({
+                        path: '/OrderDetails',
+                        query: {
+                            id: res.order
+                        }
+                    })
                 } else {
                     that.onPayMoney(res.order)
                 }
@@ -399,7 +404,16 @@ export default {
                     'getBrandWCPayRequest',
                     res.jsApiParameters,
                     function(res){
-                        alert(JSON.stringify(res));
+                        if (res.err_msg == "get_brand_wcpay_request：ok") {
+                            that.$router.replace({
+                                path: '/OrderDetails',
+                                query: {
+                                    id: orderID
+                                }
+                            })
+                        } else {
+                            toast('支付失败！')
+                        }
                     }
                 );
                 // that.$wxSDK.ready(function () {
