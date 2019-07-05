@@ -47,7 +47,7 @@
             </div>
             <!-- 商品规格 -->
             <div class="peiSong">
-                <div class="item" @click="onHiddenActionSheet" v-if="gugeValue !== null && selectArr.length <= 0">
+                <div class="item" @click="onHiddenActionSheet" v-if="gugeValue !== null">
                     <div class="title">请选择：</div>
                     <div class="list">
                         <div class="text">
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="item" v-else>
-                    <div class="title">规格：</div>
+                    <div class="title">规格： </div>
                     <div class="list">
                         <div class="text">
                             <div class="name" v-if="textTishi !== ' '">{{textTishi}}</div>
@@ -451,6 +451,7 @@ export default {
             }
             that.goodsInfo = []
             that.commentData = []
+            that.textTishi = ' '
 			get('/index.php/home/goods/goodsInfo',params).then(res => {
                 that.goodsInfo = res
                 that.gugeValue = res.attr
@@ -553,7 +554,7 @@ export default {
                     that.goodsInfo.goods.img = res.data.attr_img
                     that.goodsInfo.goods.price = res.data.attr_price
                     that.kuCun = res.data.attr_num
-                    that.goodsInfo.goods.member_price = res.data.attr_mem_price
+                    that.goodsInfo.goods.member_price = res.data.attr_mem_price           
                 } else {
                     that.kuCun = 1
                 }

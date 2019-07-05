@@ -1,16 +1,12 @@
 <template>
-	<!-- 导航中的商品 -->
+	<!-- 搜索中的商品 -->
     <div>
-        <div class="indexNavgoods">
+        <div class="indexSearchGoods">
             <div class="head">
-                <img src="../../../assets/img/index/indexNewUp/banner.jpg" alt="">
-                <div class="bg">
-                    <div class="box">
-                        <div class="logo"><img src="../../../assets/img/index/indexNewUp/nav.jpg" alt=""></div>
-                        <div class="text">
-                            <div class="name">欧蔓莎</div>
-                            <div class="tip">舒适快时尚潮流女鞋品牌</div>
-                        </div>
+                <div class="search-box">
+                    <div class="search">
+                        <div class="input"><span>{{$route.query.id}}</span></div>
+                        <div class="back"  @click="onBack">取消</div>
                     </div>
                 </div>
             </div>
@@ -22,11 +18,10 @@
                         <i class="down" :class="!jActive && tabActive == null?'jActiveD':''"></i>
                     </span>
                 </div>
-                <div class="list" :class="tabActive == 1?'tabActive':''" @click="onNewAndJ(1)">上新</div>
                 <div class="list" :class="tabActive == 0?'tabActive':''" @click="onNewAndJ(0)">综合</div>
-                <div class="list" @click="onMore"><i class="more" :class="list?'':'noMore'"></i></div>
+                <div class="list" :class="tabActive == 1?'tabActive':''" @click="onNewAndJ(1)">销量</div>
             </div>
-            <div class="listMain" v-if="list">
+            <div class="listMain">
                 <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
                     <div class="listBox">
                         <div class="list" v-for="(item,index) in dataList" @click="onRouter('/ProductDetails',item.id)">
@@ -38,24 +33,7 @@
                                 <span>¥{{item.price}} </span>
                                 <span class="vip"></span>
                             </div>
-                        </div>
-                    </div>
-                </nut-infiniteloading>
-            </div>
-            <div class="itemMain" v-else>
-                <nut-infiniteloading @loadmore="onInfinite" :is-show-mod="true"  :is-loading="isLoading" :threshold="200" :has-more="isHasMore">
-                    <div class="itembox">
-                        <div class="item" v-for="item in dataList" @click="onRouter('/ProductDetails',item.id)">
-                            <div class="img">
-                                <img v-lazy="$imgUrl + item.img" alt="">
-                            </div>
-                            <div class="textbox">
-                                <div class="money">
-                                    <span class="vip"></span>
-                                    <span> ¥{{item.price}}</span>
-                                </div>
-                                <div class="name">{{item.title}}</div>
-                            </div>
+                            <div class="liulian">浏览量：{{item.click}}</div>
                         </div>
                     </div>
                 </nut-infiniteloading>
@@ -68,7 +46,7 @@
 // @ is an alias to /src
 import { get } from '@/axiosApi'
 export default {
-	name: "indexNavgoods",
+	name: "indexSearchGoods",
 	components: {
 	},
 	props: [],
@@ -103,25 +81,25 @@ export default {
                     id: id
 				}
 			})
-		},
+        },
+        onBack (pathUrl,id) {
+            this.$router.go(-1)
+        },
         onInfinite () { // 上拉更多
             let that = this
             if (that.isHasMore) {
                 that.isLoading = true
                 that.isLoading = false
                 that.isHasMore = false
-                // that.limit++
-                // that.getList()
-                
+                that.limit++
+                that.getList()
             }
-        },
-        onMore () {
-           this.list = !this.list 
         },
         onNewAndJ (val) { // 上新
             this.isnew = val
             this.dataList = []
             this.tabActive = val
+            this.limit = 1
             setTimeout(() => {
                 this.getList()
             }, 100);
@@ -137,6 +115,7 @@ export default {
             this.pricetype = newVal
             this.dataList = []
             this.tabActive = null
+            this.limit = 1
             setTimeout(() => {
                 this.getList()
             }, 100);
@@ -144,13 +123,11 @@ export default {
         getList () { // 商品list
             let that = this
             let params = {
-                id: that.$route.query.id,
-                isprice: that.isprice,
-                pricetype: that.pricetype,
-                isnew: that.isnew,
+                title: that.$route.query.id,
+                limit: that.limit
             }
-			get('/index.php/home/goods/getChildGoods',params).then(res => {
-                if (res.length == undefined) {
+			get('/index.php/home/search/searchGoods',params).then(res => {
+                if (res == null) {
                     that.isLoading = false
                     that.isHasMore = false
                 } else {
@@ -169,61 +146,45 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .head
-    position relative
-    >img 
-        width 100%
-        display block
-    .bg
-        position absolute
-        width 100%
-        height 100%
-        background-color rgba(0, 0, 0, 0.2)
-        top 0
-        left 0
-        .box
+    position sticky
+    top 0
+    left 0
+    z-index 100
+    .search-box
+        .search
             display flex
             align-items center
-            color #fff
-            margin-top 10%
-            text-align left
             padding 0 15px
-            .logo
-                width 50px
-                background-color #fff
-                height 50px
-                display flex
-                align-items center
-                >img 
-                    width 100%
+            height 45px
+            background-color $background-color
+            .head
+                img
+                    width 28px
+                    border-radius 100%
                     display block
-                    border-radius $border-radius
-            .text
-                flex 1
-                overflow hidden
-                text-overflow ellipsis
-                white-space nowrap
-                padding-left 10px
-                .name
-                    font-size 16px
-                    font-weight 600
-                    margin-bottom 10px
-                    overflow hidden
-                    text-overflow ellipsis
-                    white-space nowrap
-                .tip
-                    overflow hidden
-                    text-overflow ellipsis
-                    display -webkit-box
-                    -webkit-box-orient vertical
-                    -webkit-line-clamp 2
-                    white-space initial
+            .input
+                flex: 1
+                background-color #fff
+                border solid 1px #fff
+                border-radius 20px
+                text-align left 
+                line-height 25px
+                padding 0 34px
+                margin 0 10px
+                background-image url('../../../assets/img/index/scH.png')
+                background-size 15px
+                background-position 10px 50%
+                background-repeat no-repeat
+                color #999
+            .back
+                color #fff
 .tab
     display flex
     align-items center
     height 45px
     background-color #fff
     position sticky
-    top 0
+    top 45px
     width 100%
     left 0
     border-bottom solid 1px #f1f1f1
@@ -329,6 +290,10 @@ export default {
                     width 25px
                     height 14px
                     margin-left 5px
+            .liulian
+                text-align right 
+                padding 0px 10px 10px 10px
+                font-size 12px
             .btn
                 background-color $background-color
                 color #fff

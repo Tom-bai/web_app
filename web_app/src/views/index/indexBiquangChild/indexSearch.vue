@@ -8,17 +8,16 @@
                     show-action
                     @input="searcInput"
                 >
-                <div slot="action" @click="onBack" v-if="show">取消</div>
-                <div slot="action" @click="onSearch" v-else>搜索</div>
+                <div slot="action" @click="onBack">取消</div>
                 </van-search>
             </div>
             <div class="data">
-                <div class="list" v-for="(item,index) in searchData">{{item.title}}</div>
+                <div class="list" v-for="(item,index) in searchData" @click="onRouter('/indexSearchGoods',item.title)">{{item.title}}</div>
             </div>
             <div class="hotSearch" v-if="searchData == ''">
                 <div class="head">热门搜索</div>
                 <div class="list">
-                    <div class="item" v-for="(item,index) in hotsData.hots">{{item}}</div>
+                    <div class="item" v-for="(item,index) in hotsData.hots" @click="onRouter('/indexSearchGoods',item)">{{item}}</div>
                 </div>
             </div>
         </div>
@@ -49,6 +48,14 @@ export default {
         this.getHotsr()
     },
     methods: {
+        onRouter (pathUrl,id) {
+			this.$router.replace({
+				path: pathUrl,
+				query: {
+                    id: id
+				}
+			})
+		},
         getHotsr () { // 获取随机热词
             let that = this
 			get('/index.php/home/index/hots').then(res => {

@@ -131,6 +131,15 @@ export default new Router({
             },
 			component: () => import('./views/index/indexBiquangChild/indexNavgoods') // 导航中的商品
         },
+        { // 搜索中的商品
+			path: '/indexSearchGoods',
+            name: 'indexSearchGoods',
+            meta:{
+                title: '大象商城',
+                keepAlive: false
+            },
+			component: () => import('./views/index/indexBiquangChild/indexSearchGoods') // 搜索中的商品
+        },
         { 
 			path: '/indexKanFree',
             name: 'indexKanFree',

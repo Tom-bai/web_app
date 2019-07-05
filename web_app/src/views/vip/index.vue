@@ -16,38 +16,40 @@
                     <div class="text">专属16大特权</div>
                     <div class="iocn" :class="showVipNav?'active':''"></div>
                 </div>
-                <div class="navBox">
-                    <div class="name"><span>划算</span></div>
-                    <div class="listbox">
-                        <div class="list" v-for="item in navData">
-                            <div class="listImg"><img src="../../assets/img/vip/list.png" alt=""></div>
-                            <div class="listText">
-                                <div class="name">9折/96折</div>
-                                <div class="tip">专享折扣</div>
+                <div v-if="showVipNav">
+                    <div class="navBox">
+                        <div class="name"><span>划算</span></div>
+                        <div class="listbox">
+                            <div class="list" v-for="item in navData">
+                                <div class="listImg"><img src="../../assets/img/vip/list.png" alt=""></div>
+                                <div class="listText">
+                                    <div class="name">9折/96折</div>
+                                    <div class="tip">专享折扣</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="navBox">
-                    <div class="name"><span>划算</span></div>
-                    <div class="listbox">
-                        <div class="list" v-for="item in navData">
-                            <div class="listImg"><img src="../../assets/img/vip/list.png" alt=""></div>
-                            <div class="listText">
-                                <div class="name">9折/96折</div>
-                                <div class="tip">专享折扣</div>
+                    <div class="navBox">
+                        <div class="name"><span>划算</span></div>
+                        <div class="listbox">
+                            <div class="list" v-for="item in navData">
+                                <div class="listImg"><img src="../../assets/img/vip/list.png" alt=""></div>
+                                <div class="listText">
+                                    <div class="name">9折/96折</div>
+                                    <div class="tip">专享折扣</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="navBox">
-                    <div class="name"><span>划算</span></div>
-                    <div class="listbox">
-                        <div class="list" v-for="item in navData">
-                            <div class="listImg"><img src="../../assets/img/vip/list.png" alt=""></div>
-                            <div class="listText">
-                                <div class="name">9折/96折</div>
-                                <div class="tip">专享折扣</div>
+                    <div class="navBox">
+                        <div class="name"><span>划算</span></div>
+                        <div class="listbox">
+                            <div class="list" v-for="item in navData">
+                                <div class="listImg"><img src="../../assets/img/vip/list.png" alt=""></div>
+                                <div class="listText">
+                                    <div class="name">9折/96折</div>
+                                    <div class="tip">专享折扣</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -81,6 +83,8 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+.vip
+    background-color #fff
 .vipCard
     margin 15px
     position relative
