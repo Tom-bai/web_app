@@ -697,6 +697,7 @@ export default {
                 width 100%
                 height 360px
                 border-radius 3px
+                display block
         .custom-indicator
             position absolute
             bottom 10px

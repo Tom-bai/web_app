@@ -2,134 +2,22 @@
 	<!-- 商品左滑动卡片 -->
     <div>
         <div class="indexLeftscroll">
-            <div class="mian">
-                <div class="topName">
-                    <div>今日必抢</div>
-                    <div class="tip">高品质爆款抢先不断</div>
-                </div>
-                <div class="imgBg"><img  src="../../assets/img/index/111.jpg" alt=""></div>
-                <div class="container">
-                    <div class="list">
-                        <div class="img"><img v-lazy="img" alt=""></div>
-                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                        <div class="money">
-                            <div>¥399.00</div>
-                            <div class="vip"></div>
-                        </div>
-                    </div>
-                    <div class="list">
-                        <div class="img"><img v-lazy="img" alt=""></div>
-                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                        <div class="money">
-                            <div>¥399.00</div>
-                            <div class="vip"></div>
-                        </div>
-                    </div>
-                    <div class="list">
-                        <div class="img"><img v-lazy="img" alt=""></div>
-                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                        <div class="money">
-                            <div>¥399.00</div>
-                            <div class="vip"></div>
-                        </div>
-                    </div>
-                    <div class="list">
-                        <div class="img"><img v-lazy="img" alt=""></div>
-                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                        <div class="money">
-                            <div>¥399.00</div>
-                            <div class="vip"></div>
-                        </div>
-                    </div>
-                    <div class="list">
-                        <div class="img"><img v-lazy="img" alt=""></div>
-                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                        <div class="money">
-                            <div>¥399.00</div>
-                            <div class="vip"></div>
-                        </div>
-                    </div>
-                    <div class="list">
-                        <div class="img"><img v-lazy="img" alt=""></div>
-                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                        <div class="money">
-                            <div>¥399.00</div>
-                            <div class="vip"></div>
-                        </div>
-                    </div>
-                    <div class="list">
-                        <div class="img"><img v-lazy="img" alt=""></div>
-                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                        <div class="money">
-                            <div>¥399.00</div>
-                            <div class="vip"></div>
-                        </div>
-                    </div>
-                    <div class="list">
-                        <img src="../../assets/img/index/all2.png" alt="">
-                    </div>
-                </div>
+            <div class="topName">
+                <div>今日必抢</div>
+                <div class="tip">高品质爆款抢先不断</div>
             </div>
-            <div class="mian">
-                <div class="imgBg"><img src="../../assets/img/index/111.jpg" alt=""></div>
+            <div class="mian" v-for="(item,index) in dataList" :key="index">
+                <div class="imgBg"><img  v-lazy="$imgUrl + item.img" alt=""></div>
                 <div class="container">
-                    <div class="list">
-                        <div class="img"><img src="../../assets/img/index/2222.jpg" alt=""></div>
-                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
+                    <div class="list" v-for="(list,index) in item.goods_list" :key="index" @click="onRouter('/ProductDetails',list.id)">
+                        <div class="img"><img v-lazy="$imgUrl + list.img" alt=""></div>
+                        <div class="name">{{list.title}}</div>
                         <div class="money">
-                            <div>¥399.00</div>
+                            <div>¥{{list.member_price}}</div>
                             <div class="vip"></div>
                         </div>
                     </div>
-                    <div class="list">
-                        <div class="img"><img src="../../assets/img/index/2222.jpg" alt=""></div>
-                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                        <div class="money">
-                            <div>¥399.00</div>
-                            <div class="vip"></div>
-                        </div>
-                    </div>
-                    <div class="list">
-                        <div class="img"><img src="../../assets/img/index/2222.jpg" alt=""></div>
-                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                        <div class="money">
-                            <div>¥399.00</div>
-                            <div class="vip"></div>
-                        </div>
-                    </div>
-                    <div class="list">
-                        <div class="img"><img src="../../assets/img/index/2222.jpg" alt=""></div>
-                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                        <div class="money">
-                            <div>¥399.00</div>
-                            <div class="vip"></div>
-                        </div>
-                    </div>
-                    <div class="list">
-                        <div class="img"><img src="../../assets/img/index/2222.jpg" alt=""></div>
-                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                        <div class="money">
-                            <div>¥399.00</div>
-                            <div class="vip"></div>
-                        </div>
-                    </div>
-                    <div class="list">
-                        <div class="img"><img src="../../assets/img/index/2222.jpg" alt=""></div>
-                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                        <div class="money">
-                            <div>¥399.00</div>
-                            <div class="vip"></div>
-                        </div>
-                    </div>
-                    <div class="list">
-                        <div class="img"><img src="../../assets/img/index/2222.jpg" alt=""></div>
-                        <div class="name">Under Armour/安德玛 男士高尔夫短袖 4色 g1</div>
-                        <div class="money">
-                            <div>¥399.00</div>
-                            <div class="vip"></div>
-                        </div>
-                    </div>
-                    <div class="list">
+                    <div class="list" @click="onRouter('/indexLeftGoosd',item.id)">
                         <img src="../../assets/img/index/all2.png" alt="">
                     </div>
                 </div>
@@ -148,39 +36,56 @@ export default {
 	props: [],
 	data () {
 		return {
-            img: 'http://shop.xfengle.com//Uploads/./2018/08/23/5b7ea9sb001d24.jpg',
-            // img: require('../../assets/img/loging.gif')
+            dataList: []
 		}
 	},
 	mounted() {
+        this.getData()
     },
 	methods: {
-
+        onRouter (pathUrl,id) {
+            this.$router.push({
+				path: pathUrl,
+				query: {
+                    id: id
+				}
+			})
+        },
+        getData () { // 获取数据
+            let that = this
+			get('/index.php/home/index/plate_goods').then(res => {
+                that.dataList = res   
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
 	},
 	watch: {}
 };
 </script>
 <style lang="stylus" scoped>
 .indexLeftscroll
+    .topName
+        display flex
+        align-items center
+        font-size 16px
+        font-weight bold
+        height 50px
+        padding 0 15px
+        .tip
+            margin-left 15px
+            color #999
+            font-size 12px
+            font-weight normal
     .mian
         margin-bottom 10px
-        .topName
-            display flex
-            align-items center
-            font-size 16px
-            font-weight bold
-            height 50px
-            padding 0 15px
-            .tip
-                margin-left 15px
-                color #999
-                font-size 12px
-                font-weight normal
         .imgBg
             min-height 30px
+            background-color #fff
             img
                 width 100%
                 display block
+                height 240px
         .container
             display flex
             align-items: center

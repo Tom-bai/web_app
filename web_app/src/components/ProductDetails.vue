@@ -876,9 +876,10 @@ export default {
                 width 100%
                 height 360px
                 border-radius 3px
+                display block
         .custom-indicator
             position absolute
-            bottom 30px
+            bottom 40px
             left 50%
             width 40px
             background-color rgba(0, 0, 0, 0.4)

@@ -5,8 +5,8 @@
             <div class="swiper">
                 <div class="swiperBg"></div>
                 <van-swipe :autoplay="3000" @change="onChange">
-                    <van-swipe-item v-for="(image, index) in bannerData" :key="index" class="swiperImg">
-                        <img v-lazy="$imgUrl + image.img" />
+                    <van-swipe-item v-for="(item, index) in bannerData" :key="index" class="swiperImg" @click="onRouter('/indexBannerGoods',item.id)">
+                        <img v-lazy="$imgUrl + item.img" />
                     </van-swipe-item>
                     <div class="custom-indicator" slot="indicator">
                         {{ current + 1 }} / {{bannerData.length}}

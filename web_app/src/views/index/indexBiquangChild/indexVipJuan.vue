@@ -66,13 +66,12 @@ export default {
     beforeDestroy() {
     },
 	methods: {
-         getList () { // nav导航分类
+         getList () { // 获取商品
             let that = this
             let params = {
                 type: that.$route.query.id
             }
 			get('/index.php/home/index/manjian_cate',params).then(res => {
-                console.log(res);
                 that.dataList = res
             }).catch(function (error) {
                 console.log(error)

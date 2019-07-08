@@ -41,7 +41,8 @@ export default new Router({
                 keepAlive: false
             },
 			component: () => import('./views/index/indexBiquangChild/indexSearch') // 搜索商品
-		},
+        },
+        
 		{
 			path: '/myMsg',
             name: 'myMsg',
@@ -77,6 +78,24 @@ export default new Router({
             },
 			component: () => import('./views/index/indexMsg/indexTongzhi') //我的通知
         },
+        {
+			path: '/indexBannerGoods',
+            name: 'indexBannerGoods',
+            meta:{
+                title: '大象商城',
+                keepAlive: false
+            },
+			component: () => import('./views/index/indexBiquangChild/indexBannerGoods') // banner商品
+        },
+        {
+			path: '/indexLeftGoosd',
+            name: 'indexLeftGoosd',
+            meta:{
+                title: '大象商城',
+                keepAlive: false
+            },
+			component: () => import('./views/index/indexBiquangChild/indexLeftGoosd') // banner子商品
+		},
         { 
 			path: '/indexMan',
             name: 'indexMan',
