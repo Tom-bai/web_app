@@ -46,7 +46,7 @@
             <div class="banner"><img src="../../assets/img/index/111.jpg" alt=""></div>
             <nut-infiniteloading @loadmore="onInfiniteY" :is-show-mod="true"  :is-loading="isLoadingY" :threshold="200" :has-more="isHasMoreY">
                 <div class="list" v-for="(item,index) in dataYiList" :key="index">
-                    <div class="item">
+                    <div class="item" @click="onRouter('/ProductDetails',item.id)">
                         <div class="img"><img v-lazy="$imgUrl + item.img" alt=""></div>
                         <div class="text">
                             <div class="name">{{item.title}}</div>
@@ -92,7 +92,7 @@
                                 <div class="btnZ">
                                     <i class="iocn"></i>
                                     <span>{{item.cdf_join_num}}人支撑</span>
-                                    <span class="zhichi">支撑项目</span>
+                                    <span class="zhichi" @click="onRouter('/ProductDetails',item.g_id)">支撑项目</span>
                                 </div>
                             </div>
                         </div>
@@ -479,7 +479,7 @@ export default {
                     text-align left 
                     padding 0 10px
                     .name
-                        font-size 16px
+                        font-size 14px
                         color #3f3f3f
                         font-weight bold
                         white-space nowrap

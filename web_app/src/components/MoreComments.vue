@@ -93,7 +93,6 @@ export default {
                 id: id
             }
 			get('/index.php/home/goods/ajax_comment',params).then(res => {
-               console.log(res);
                if (res.status == 1) {
                    that.commentData[index].islike = 1
                    that.commentData[index].like_num += 1
@@ -115,7 +114,7 @@ export default {
     height 100%
     top 0
     left 0
-    z-index 9999
+    z-index 100
     overflow-y auto
     .haoPing
         display flex
@@ -144,6 +143,7 @@ export default {
                 font-size 14px
                 font-weight 700
                 color $color
+                vertical-align middle
     .tags
         display flex
         align-items center

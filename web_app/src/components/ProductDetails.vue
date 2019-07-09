@@ -47,17 +47,20 @@
             </div>
             <!-- 商品规格 -->
             <div class="peiSong">
-                <div class="item" @click="onHiddenActionSheet" v-if="gugeValue !== null">
+                <div class="item" @click="onHiddenActionSheet">
                     <div class="title">请选择：</div>
                     <div class="list">
                         <div class="text">
                             <div class="name" v-if="textTishi !== ' '">{{textTishi}}</div>
-                            <div class="name" v-else>规格</div>
+                            <div class="name" v-else> 
+                                <span v-for="list in gugeValue" class="listName" v-if="gugeValue">{{list.name}}</span> 
+                                <span class="listName" v-if="!gugeValue">单独购买</span>
+                            </div>
                         </div>
                         <div class="rightJ"></div>
                     </div>
                 </div>
-                <div class="item" v-else>
+                <!-- <div class="item" v-else>
                     <div class="title">规格： </div>
                     <div class="list">
                         <div class="text">
@@ -66,7 +69,7 @@
                         </div>
                         <div class="rightJ"></div>
                     </div>
-                </div>
+                </div> -->
                 <div class="item" v-if="goodsInfo.isPro">
                     <div class="title">促&nbsp;&nbsp;&nbsp;销：</div>
                     <div class="list">
@@ -307,14 +310,17 @@
                                 <div class="yuan"><span class="moneyIoc">¥</span>{{goodsInfo.goods.member_price}}<i class="vip"></i></div>
                             </div>
                             <div class="tip" v-if="textTishi !== ' '">{{textTishi}}</div>
-                            <div class="tip" v-else>请选择 规格</div>
+                            <div class="tip" v-else>
+                                <span v-if="gugeValue">请选择</span> <span v-for="list in gugeValue" class="listName" v-if="gugeValue"> {{list.name}}</span> 
+                                <span class="listName" v-if="!gugeValue">单独购买</span>
+                            </div>
                             <div class="tip">库存 {{kuCun}}</div>
                             <div class="close" @click="onHiddenActionSheet"></div>
                         </div>
                     </div>
                     <!-- 规格 -->
-                    <div class="main" v-if="goodsInfo.attr">
-                        <div class="xuanBox" v-for="(item,n) in gugeValue" :key="n">
+                    <div class="main">
+                        <div class="xuanBox" v-for="(item,n) in gugeValue" :key="n" v-if="goodsInfo.attr">
                             <div class="name">{{item.name}}</div>
                             <div class="listBox">
                                 <div class="item" 
@@ -413,7 +419,7 @@ export default {
             shareData: [],
             commentData: [],
             PUser: [],
-            kuCun: 1,
+            kuCun: 999,
             current: 0,
             showList: false,
             //
@@ -1037,7 +1043,6 @@ export default {
             -webkit-box-orient vertical
             overflow hidden
             line-height 1.5
-            letter-spacing 1px
             color #333
             font-weight 700
             font-size 16px
@@ -1072,7 +1077,7 @@ export default {
     margin-top 10px
     .item
         display flex
-        align-items baseline
+        align-items center
         .title
             font-size 13px
         .list
@@ -1096,6 +1101,8 @@ export default {
                     color #333
                     display flex
                     align-items center
+                    .listName
+                        margin-right 5px
                 .tip
                     margin-top 4px
                     color #666
@@ -1346,6 +1353,12 @@ export default {
                     .name
                         flex 1
                         color #666
+                        margin 0 10px
+                        overflow hidden
+                        text-overflow ellipsis
+                        display -webkit-box
+                        -webkit-line-clamp 1
+                        -webkit-box-orient vertical
                 .text
                     margin-top 10px
                     overflow hidden

@@ -19,7 +19,6 @@
 
 <script>
 // @ is an alias to /src
-import 'swiper/dist/css/swiper.css'
 import { Swipe, SwipeItem } from 'vant'
 import { get,post } from '@/axiosApi'
 export default {
