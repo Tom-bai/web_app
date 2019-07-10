@@ -43,7 +43,7 @@
             </nut-infiniteloading>
         </div>
         <div class="content" v-if="active == 1">
-            <div class="banner"><img src="../../assets/img/index/111.jpg" alt=""></div>
+            <div class="banner"><img v-lazy="$imgUrl + indexImg.one_img" alt=""></div>
             <nut-infiniteloading @loadmore="onInfiniteY" :is-show-mod="true"  :is-loading="isLoadingY" :threshold="200" :has-more="isHasMoreY">
                 <div class="list" v-for="(item,index) in dataYiList" :key="index">
                     <div class="item" @click="onRouter('/ProductDetails',item.id)">
@@ -67,10 +67,10 @@
             </nut-infiniteloading>
         </div>
         <div class="content" v-if="active == 2">
-            <div class="banner"><img src="../../assets/img/index/111.jpg" alt=""></div>
+            <div class="banner"><img v-lazy="$imgUrl + indexImg.zc_tp" alt=""></div>
             <div class="bannertwo">
-                <div><img src="../../assets/img/index/111.jpg" alt=""></div>
-                <div><img src="../../assets/img/index/111.jpg" alt=""></div>
+                <div><img v-lazy="$imgUrl + indexImg.zc_bl" alt=""></div>
+                <div><img v-lazy="$imgUrl + indexImg.zc_br" alt=""></div>
             </div>
                 <div>
                     <div class="topNav">
@@ -87,7 +87,7 @@
                                     <span><small>¥</small>{{item.cdf_price}}</span><small>起</small>
                                 </div>
                                 <div class="progress">
-                                    <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
+                                    <nut-progress :percentage="chkJin(item.cdf_price, item.cdf_join_num,item.cdf_num)" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
                                 </div>
                                 <div class="btnZ">
                                     <i class="iocn"></i>
@@ -109,12 +109,12 @@
                                     <span><small>¥</small>{{item.g_price}}</span><small>起</small>
                                 </div>
                                 <div class="progress">
-                                    <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
+                                    <nut-progress :percentage="chkJin(item.cdf_price, item.cdf_join_num,item.cdf_num)" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
                                 </div>
                                 <div class="btnZ">
                                     <i class="iocn"></i>
                                     <span>{{item.cdf_num}}人支撑</span>
-                                    <span class="zhichi">支撑项目</span>
+                                    <span class="zhichi" @click="onRouter('/ProductDetails',item.g_id)">支撑项目</span>
                                 </div>
                             </div>
                         </div>
@@ -137,7 +137,7 @@
                                     <span><small>¥</small>{{item.g_price}}</span><small>起</small>
                                 </div>
                                 <div class="progress">
-                                    <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
+                                    <nut-progress :percentage="chkJin(item.cdf_price, item.cdf_join_num,item.cdf_num)" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
                                 </div>
                                 <div class="btnZ">
                                     <i class="iocn"></i>
@@ -159,7 +159,7 @@
                                     <span><small>¥</small>{{item.g_price}}</span><small>起</small>
                                 </div>
                                 <div class="progress">
-                                    <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
+                                    <nut-progress :percentage="chkJin(item.cdf_price, item.cdf_join_num,item.cdf_num)" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
                                 </div>
                                 <div class="btnZ">
                                     <i class="iocn"></i>
@@ -186,7 +186,7 @@
                                     <span><small>¥</small>{{item.g_price}}</span><small>起</small>
                                 </div>
                                 <div class="progress">
-                                    <nut-progress :percentage="item.cdf_max_num" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
+                                    <nut-progress :percentage="chkJin(item.cdf_price, item.cdf_join_num,item.cdf_num)" strokeColor="#f1002d" strokeWidth="6" status="active"></nut-progress>
                                 </div>
                                 <div class="btnZ">
                                     <i class="iocn"></i>
@@ -209,7 +209,7 @@ export default {
 	name: "indexYiyuan",
 	components: {
 	},
-	props: [],
+	props: ['indexImg'],
 	data () {
 		return {
             active: 0,
@@ -251,7 +251,9 @@ export default {
             isHasMoreY: true,
             isLoadingY: false,
 		}
-	},
+    },
+    computed:{
+    },
 	mounted() {
         this.getDataOne()
     },
@@ -344,7 +346,10 @@ export default {
             }).catch(function (error) {
                 console.log(error)
             })
-		},
+        },
+        chkJin (cdf_price,cdf_join_num,cdf_num) { // 进度条
+            return (parseFloat(cdf_price) * parseFloat(cdf_join_num) / parseFloat(cdf_num) * 100).toFixed(2)
+        } 
 	},
 	watch: {}
 };

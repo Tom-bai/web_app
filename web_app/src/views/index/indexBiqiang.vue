@@ -2,28 +2,28 @@
 	<!-- 今日必抢 -->
     <div>
         <div class="indexBiqiang">
-            <div class="newFuli" @click="onRouter('/indexVipJuan',3)"><img v-lazy="$imgUrl  + dataList.home_img_1" alt=""></div>
+            <div class="newFuli" @click="onRouter('/indexVipJuan',3)"><img v-lazy="$imgUrl  + indexImg.home_img_1" alt=""></div>
             <div class="topName">
-                <div>{{dataList.cn_bt}}</div>
-                <div class="tip">{{dataList.cn_fbt}}</div>
+                <div>{{indexImg.cn_bt}}</div>
+                <div class="tip">{{indexImg.cn_fbt}}</div>
             </div>
             <div class="box boderRT">
                 <div class="listTwo">
                     <!-- 新品上市 -->
                     <div class="item" @click="onRouter('/indexNewUp',2)">
                         <div class="head">
-                            <p>{{dataList.jr_tl_bt}}</p>
+                            <p>{{indexImg.jr_tl_bt}}</p>
                         </div>
-                        <div class="img"><img v-lazy="$imgUrl  + dataList.jr_tl_img" alt=""></div>
+                        <div class="img"><img v-lazy="$imgUrl  + indexImg.jr_tl_img" alt=""></div>
                     </div>
                 </div>
                 <div class="listTwo">
                     <!-- 满减 传值 id = 2-->
                     <div class="item" @click="onRouter('/indexMan',2)">
                         <div class="head">
-                            <p>{{dataList.jr_tr_bt}}</p>
+                            <p>{{indexImg.jr_tr_bt}}</p>
                         </div>
-                        <div class="img"><img v-lazy="$imgUrl  + dataList.jr_tr_img" alt=""></div>
+                        <div class="img"><img v-lazy="$imgUrl  + indexImg.jr_tr_img" alt=""></div>
                     </div>
                 </div>
             </div>
@@ -32,30 +32,30 @@
                     <!-- 砍价 -->
                     <div class="item boderRL" @click="onRouter('/indexKanFree',2)">
                         <div class="head">
-                            <p>{{dataList.jr_bl_bt}}</p>
-                            <p class="tip">{{dataList.jr_bl_fbt}}</p>
+                            <p>{{indexImg.jr_bl_bt}}</p>
+                            <p class="tip">{{indexImg.jr_bl_fbt}}</p>
                         </div>
-                        <div class="img"><img v-lazy="$imgUrl  + dataList.jr_bl_img" alt=""></div>
+                        <div class="img"><img v-lazy="$imgUrl  + indexImg.jr_bl_img" alt=""></div>
                     </div>
                 </div>
                 <div class="listThree">
                     <!-- 拼团 -->
                     <div class="item" @click="onRouter('/indexManPinTuan')">
                         <div class="head">
-                            <p>{{dataList.jr_bm_bt}}</p>
-                            <p class="tip">{{dataList.jr_bm_fbt}}</p>
+                            <p>{{indexImg.jr_bm_bt}}</p>
+                            <p class="tip">{{indexImg.jr_bm_fbt}}</p>
                         </div>
-                        <div class="img"><img v-lazy="$imgUrl  + dataList.jr_bm_img" alt=""></div>
+                        <div class="img"><img v-lazy="$imgUrl  + indexImg.jr_bm_img" alt=""></div>
                     </div>
                 </div>
                 <div class="listThree">
                     <!-- 满件减 传值 id = 1 -->
                     <div class="item boderRB" @click="onRouter('/indexManJJ',1)">
                         <div class="head">
-                            <p>{{dataList.jr_br_bt}}</p>
-                            <p class="tip">{{dataList.jr_br_fbt}}</p>
+                            <p>{{indexImg.jr_br_bt}}</p>
+                            <p class="tip">{{indexImg.jr_br_fbt}}</p>
                         </div>
-                        <div class="img"><img v-lazy="$imgUrl  + dataList.jr_br_img" alt=""></div>
+                        <div class="img"><img v-lazy="$imgUrl  + indexImg.jr_br_img" alt=""></div>
                     </div>
                 </div>
             </div>
@@ -70,14 +70,12 @@ export default {
 	name: "indexBiqiang",
 	components: {
 	},
-	props: [],
+	props: ['indexImg'],
 	data () {
 		return {
-            dataList: [],
 		}
 	},
-	mounted() {
-        this.getDataJin()
+	mounted() {      
     },
 	methods: {
         onRouter (pathUrl,id) {
@@ -87,14 +85,6 @@ export default {
                     id: id
 				}
 			})
-        },
-        getDataJin () { // 首页新品，满减，砍价，拼团的设置
-            let that = this
-			get('/index.php/home/index/indexset').then(res => {
-                that.dataList = res   
-            }).catch(function (error) {
-                console.log(error)
-            })
         },
 	},
 	watch: {}

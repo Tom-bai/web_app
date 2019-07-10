@@ -10,14 +10,14 @@
             <div class="swiper">
                 <swiper :options="swiperOption" v-if="dataHotGoods.length>0">
                     <swiper-slide v-for="(slide, index) in dataHotGoods" :key="index" class="swiperImg">
-                        <div class="list" v-for="(item, index) in slide" :key="index" v>
+                        <div class="list" v-for="(item, index) in slide" :key="index" @click="onRouter('/ProductDetails',item.id)">
                             <div class="img"><img :src="$imgUrl + item.img"></div>
                             <div class="name">{{item.title}}</div>
                             <div class="money">
                                 <span class="tag">{{item.pnum}}人团</span>
-                                <span class="num"> ¥{{item.s_price}}</span>
+                                <span class="num">¥{{(parseFloat(item.price) - parseFloat(item.s_price)).toFixed(2)}}</span>
                             </div>
-                            <div class="yuanjia">¥ {{item.price}}</div>
+                            <div class="yuanjia">¥{{item.price}}</div>
                         </div>
                     </swiper-slide>
                     <!-- <div class="swiper-pagination" slot="pagination"></div> -->

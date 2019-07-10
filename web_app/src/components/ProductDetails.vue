@@ -16,7 +16,7 @@
                 </van-swipe>
                 <div class="xiaoLiang">近期销量：{{goodsInfo.goods.max_num}} 笔</div>
             </div>
-            <div class="moneyDetaild">
+            <div class="moneyDetaild" v-if="!goodsInfo.crow">
                 <!-- 拼团 -->
                 <div class="money" v-if="goodsInfo.goods.type == 3">
                     <div><span class="moneyIoc">¥</span>{{pinMoney}}</div>
@@ -43,6 +43,34 @@
                 <div class="textBox">
                     <h4 class="name">{{goodsInfo.goods.title}}</h4>
                     <!-- <div class="tip">{{goodsInfo.goods.des}}</div> -->
+                </div>
+            </div>
+            <div class="moneyDetaildTwo" v-else>
+                <!-- {{goodsInfo.crow}} -->
+                <div class="textBox">
+                    <h4 class="name">{{goodsInfo.goods.title}}</h4>
+                </div>
+                <div class="money">
+                    <div class="yuan"><span class="moneyIoc">¥</span>{{goodsInfo.crow.cdf_price}}<span class="tip">众筹</span></div>
+                    <div class="mubiao">
+                        <span class="name">众筹金额：</span>
+                        <span>{{goodsInfo.crow.cdf_join_num * goodsInfo.crow.cdf_price}}元</span>
+                    </div>
+                </div>
+                <nut-progress :percentage="chkJin(goodsInfo.crow.cdf_price, goodsInfo.crow.cdf_join_num,goodsInfo.crow.cdf_num)" strokeColor="#f1002d" strokeWidth="8" status="active" class="progress"></nut-progress>
+                <div class="time">
+                    <div class="tip">剩余时间</div>
+                    <div class="name"><span>{{listdata[0].day}}天</span><span>{{listdata[0].hou}} : </span> <span>{{listdata[0].min}} : </span> <span>{{listdata[0].sec}}</span></div>
+                </div>
+                <div class="mubiaoList">
+                    <div class="list">
+                        <div class="name">{{goodsInfo.crow.cdf_num}}</div>
+                        <div class="tip">目标金额</div>
+                    </div>
+                    <div class="list">
+                        <div class="name">{{goodsInfo.crow.cdf_join_num}}</div>
+                        <div class="tip">支持人数</div>
+                    </div>
                 </div>
             </div>
             <!-- 商品规格 -->
@@ -247,7 +275,26 @@
             </div>
         </div>
         <!-- 底部选项卡 -->
-        <van-goods-action class="myBottom" v-if="goodsInfo.goods">
+        <van-goods-action class="myBottom" v-if="goodsInfo.crow !== '' && goodsInfo.goods">
+            <van-goods-action-mini-btn
+                icon-class="indexIocnImg"
+                class="indexIocn"
+                text="主页"
+                @click="onRouter('/')"
+            />
+            <van-goods-action-mini-btn
+                :icon-class="goodsInfo.collect == null?'likeIocnImg':'likeIocnImgs'"
+                class="likeIocn"
+                :text="goodsInfo.collect == null?'收藏':'已收藏'"
+                @click="getCollect($route.query.id)"
+            />
+            <van-goods-action-big-btn
+                class="nowBuy"
+                text="我要支持"
+                @click="onNowBuy($route.query.id)"
+            />
+        </van-goods-action>
+        <van-goods-action class="myBottom" v-if="goodsInfo.crow == '' && goodsInfo.goods">
             <van-goods-action-mini-btn
                 icon-class="indexIocnImg"
                 class="indexIocn"
@@ -261,11 +308,18 @@
                 @click="getCollect($route.query.id)"
             />
             <van-goods-action-mini-btn
+                v-if="!goodsInfo.crow"
                 icon-class="cartIocnImg"
                 class="cartIocn"
                 :info="cardNum"
                 text="购物车"
                 @click="onRouter('/cart')"
+            />
+            <van-goods-action-big-btn
+                v-else
+                class="nowBuy"
+                text="我要支持"
+                @click="onNowBuy($route.query.id)"
             />
             <van-goods-action-big-btn
                 class="nowCard"
@@ -338,7 +392,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="btn" @click="onHiddenActionSheetTwo">确定</div>
+                <div class="btn" @click="onHiddenActionSheet">确定</div>
             </div>
         </nut-actionsheet>
         <!-- 服务详情 -->
@@ -478,6 +532,10 @@ export default {
                         let time = o.end_time * 1000
                         that.endTimelist.push(time)    
                     })
+                    that.countDown()
+                }
+                if (that.goodsInfo.crow !== null) {
+                    that.endTimelist.push(that.goodsInfo.crowcate.e_time* 1000)           
                     that.countDown()
                 }
             }).catch(function (error) {
@@ -862,7 +920,10 @@ export default {
         },
         onChildPinShow () {
             this.showList = !this.showList
-        }
+        },
+        chkJin (cdf_price,cdf_join_num,cdf_num) { // 进度条
+            return (parseFloat(cdf_price) * parseFloat(cdf_join_num) / parseFloat(cdf_num) * 100).toFixed(2)
+        } 
     },
     watch: {
         '$route' (to, from) {
@@ -957,7 +1018,7 @@ export default {
     background-color #fff
     .money
         color $color
-        font-size 27px
+        font-size 26px
         font-weight 700
         display flex
         align-items flex-end
@@ -1070,6 +1131,85 @@ export default {
                     display block
                     border-radius 100%
                     margin-right 6px
+.moneyDetaildTwo
+    padding 20px 15px 15px 15px
+    text-align left
+    background-color #fff
+    .textBox
+        .name
+            text-overflow ellipsis
+            display -webkit-box
+            -webkit-line-clamp 2
+            -webkit-box-orient vertical
+            overflow hidden
+            line-height 1.5
+            color #333
+            font-weight 700
+            font-size 16px
+            margin 10px 0
+    .money
+        display flex
+        align-items center
+        .moneyIoc
+            font-size 14px
+            font-weight normal
+            margin-right 2px
+            color $color
+        .yuan
+            display flex
+            align-items center
+            line-height 1
+            color $color
+            font-size 26px
+            font-weight 700 
+            .tip
+                color #fff
+                background-color $background-color
+                font-size 12px
+                padding 2px 6px
+                border-radius $border-radius
+                margin-left 10px
+        .mubiao
+            font-size 14px
+            margin-left auto
+            color $color
+            .name
+                color #333
+                font-weight 500
+    .progress
+        margin 10px 0
+        .nut-progress-text
+            font-size 14px
+    .mubiaoList
+        display flex
+        align-items center
+        padding 10px 0
+        .list
+            border-right solid 1px #f1f1f1
+            flex 1
+            text-align center
+            &:last-child
+                border-right none
+            .name
+                color #333
+                font-weight 700
+                font-size 18px
+                margin-bottom 5px
+            .tip
+                color #666
+                font-size 12px
+    .time
+        display flex
+        align-items center 
+        justify-content flex-end
+        .name
+            color #333
+            font-weight 700
+            font-size 18px
+            margin-left 5px
+        .tip
+            color #666
+            font-size 12px
 .peiSong
     padding 0 15px
     text-align left

@@ -14,9 +14,9 @@
             </div>
 			<indexSwiper></indexSwiper>
 			<indexNav></indexNav>
-			<indexBiqiang></indexBiqiang>
+			<indexBiqiang :indexImg="indexImg"></indexBiqiang>
 			<indexMiaosha></indexMiaosha>
-			<indexYiyuan></indexYiyuan>
+			<indexYiyuan :indexImg="indexImg"></indexYiyuan>
 			<indexLeftscroll v-if="$store.state.INDEX_STATE == 0"></indexLeftscroll>
 			<Like v-if="$store.state.INDEX_STATE == 0"></Like>
 		</div>
@@ -53,11 +53,13 @@ export default {
 		return {
             unreadData: [],
             topSearch: false,
-            userData: JSON.parse(this.$store.state.USER_DATA)
+            userData: JSON.parse(this.$store.state.USER_DATA),
+            indexImg: [],
 		}
 	},
 	mounted() {
         this.getUnread()
+        this.getDataJin()
         this.getUser()
         this.getVIP()
         window.addEventListener('scroll', this.handleScroll)
@@ -97,6 +99,14 @@ export default {
                 that.$store.commit('set_VIP', JSON.stringify(res))
                 console.log(res);
                 
+            }).catch(function (error) {
+                console.log(error)
+            })
+        },
+        getDataJin () { // 首页新品，满减，砍价，拼团的设置
+            let that = this
+			get('/index.php/home/index/indexset').then(res => {
+                that.indexImg = res   
             }).catch(function (error) {
                 console.log(error)
             })
