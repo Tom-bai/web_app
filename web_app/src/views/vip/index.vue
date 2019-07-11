@@ -135,6 +135,15 @@
                     </div>
                 </div>
             </div>
+            <div class="listYouhui">
+                <div class="jingxuan">
+                    <div class="header">
+                        <div>会员专享价 预计省￥1322/年</div>
+                        <div class="more">更多></div>
+                    </div>
+                    <div class="mainimg"><img src="../../assets/img/index/all2.png" alt=""></div>
+                </div>
+            </div>
             <Like></Like>
         </div>
     </div>
@@ -469,15 +478,14 @@ export default {
                 &:first-child
                     margin-left 15px
                     border-radius $border-radius 0 0 $border-radius
-                    padding-left 10px
                 &:last-child
-                    padding 10px 10px 10px 0
+                    padding 10px 0px 10px 0
                     border-radius 0 $border-radius $border-radius 0
                     img
                         width 100%
                         background-color #fff
                         height 100%
-                        margin-right 25px
+                        margin-right 15px
                         border-radius $border-radius
                 .img
                     width 100px
@@ -523,4 +531,6 @@ export default {
                     text-align center
                     display inline-block
                     margin-top 5px
+.listYouhui
+    background-color #fff
 </style>
