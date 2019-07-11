@@ -771,6 +771,7 @@ export default {
             if (that.gugeValue !== null) {
                 if (that.selectArr.length <= 0) {
                     toast('请选择规格')
+                    that.isVisible = !that.isVisible
                     return false
                 }
             }

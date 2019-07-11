@@ -348,8 +348,8 @@ export default {
         },
         toggle (index) { //  勾选优惠券
             let that = this
-            if (that.newPay < that.youHuiData.yhqCanUse[index].min_price) {
-                toast(`未满 ¥ ${that.youHuiData.yhqCanUse[index].min_price} 不可使用`)
+            if (parseFloat(that.total_price).toFixed(2) < parseFloat(that.youHuiData.yhqCanUse[index].min_price).toFixed(2)) {
+                toast(`未满 ¥${that.youHuiData.yhqCanUse[index].min_price} 不可使用`)
                 return false
             } else {
                 that.yhStatus = index

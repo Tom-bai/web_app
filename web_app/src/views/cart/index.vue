@@ -300,6 +300,7 @@ export default {
             .textBox
                 padding-left 15px
                 text-align left 
+                flex 1
                 .name
                     font-size 14px
                     font-weight 700
