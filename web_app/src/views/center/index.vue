@@ -15,23 +15,23 @@
             <div class="orederNav">
                 <div class="box">
                     <div class="list border" @click="onRouter('/orderList',0)">
-                        <div class="img"><img src="../../assets/img/center/z_mem_myorder.jpg" alt=""></div>
+                        <div class="img"><img src="../../assets/img/center/order.png" alt=""></div>
                         <div class="name">我的订单</div>
                     </div>
                     <div class="list" @click="onRouter('/orderList',1)">
-                        <div class="img"><img src="../../assets/img/center/z_mem_myorder.jpg" alt=""></div>
+                        <div class="img"><img src="../../assets/img/center/d_pay.png" alt=""></div>
                         <div class="name">待付款</div>
                     </div>
                     <div class="list" @click="onRouter('/orderList',2)">
-                        <div class="img"><img src="../../assets/img/center/z_mem_myorder.jpg" alt=""></div>
+                        <div class="img"><img src="../../assets/img/center/d_shou.png" alt=""></div>
                         <div class="name">待收货</div>
                     </div>
                     <div class="list">
-                        <div class="img"><img src="../../assets/img/center/z_mem_myorder.jpg" alt=""></div>
+                        <div class="img"><img src="../../assets/img/center/pin.png" alt=""></div>
                         <div class="name">享说</div>
                     </div>
                     <div class="list">
-                        <div class="img"><img src="../../assets/img/center/z_mem_myorder.jpg" alt=""></div>
+                        <div class="img"><img src="../../assets/img/center/s_hou.png" alt=""></div>
                         <div class="name">售后</div>
                     </div>
                 </div>
@@ -56,11 +56,11 @@
             <div class="shouCang">
                 <div class="box">
                     <div class="list">
-                        <div class="img">3</div>
+                        <div class="img"><img src="../../assets/img/center/kefu.png" alt=""></div>
                         <div class="text">客户服务</div>
                     </div>
                     <div class="list"  @click="onHiddenAdd">
-                        <div class="img">3</div>
+                        <div class="img"><img src="../../assets/img/center/dizhi.png" alt=""></div>
                         <div class="text">收货地址</div>
                     </div>    
                 </div>
@@ -202,6 +202,7 @@ export default {
                 width 28px
                 height 28px
                 margin auto
+                display flex
                 img 
                     width 100%
                     display block
@@ -209,7 +210,7 @@ export default {
             .name
                 font-size 13px
                 font-weight 500
-                margin-top 10px
+                margin-top 5px
         .border
             border-right solid 1px #f1f1f1
             flex 0 0 26%
@@ -249,6 +250,11 @@ export default {
             .img
                 font-size 20px
                 font-weight 700
+                img 
+                    width 45px
+                    height 40px
+                    display block
+                    margin auto
             .text
                 margin-top 10px
 </style>

@@ -257,6 +257,15 @@ export default new Router({
                 keepAlive: false
             },
 			component: () => import('./views/vip/index')
+        },
+        {
+			path: '/vipZhaoMu',
+            name: 'vipZhaoMu',
+            meta:{
+                title: '会员招募',
+                keepAlive: false
+            },
+			component: () => import('./views/vip/child/vipZhaoMu.vue') // 会员招募
 		},
 		{// Tab购物车
 			path: '/cart',

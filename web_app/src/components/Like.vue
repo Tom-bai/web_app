@@ -88,7 +88,7 @@ export default {
                 border-radius 3px
                 padding 0px
                 text-align left 
-                max-height 270px
+                max-height 265px
                 overflow hidden
                 >img
                     width:100%

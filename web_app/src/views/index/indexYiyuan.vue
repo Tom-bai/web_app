@@ -69,7 +69,7 @@
         <div class="content" v-if="active == 2">
             <div class="banner"><img v-lazy="$imgUrl + indexImg.zc_tp" alt=""></div>
             <div class="bannertwo">
-                <div><img v-lazy="$imgUrl + indexImg.zc_bl" alt=""></div>
+                <div @click="onRouter('/vipZhaoMu')"><img v-lazy="$imgUrl + indexImg.zc_bl" alt=""></div>
                 <div><img v-lazy="$imgUrl + indexImg.zc_br" alt=""></div>
             </div>
                 <div>

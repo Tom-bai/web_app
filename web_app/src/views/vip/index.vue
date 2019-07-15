@@ -1,7 +1,7 @@
 <template>
 	<!-- 会员中心 -->
 	<div>
-        <div class="vip">
+        <div class="vipMain">
             <div class="vipCard">
                 <div class="vpiBg"><img src="../../assets/img/vip/vipbg.png" alt=""></div>
                 <div class="kaiBtn">立即开通</div>
@@ -136,12 +136,38 @@
                 </div>
             </div>
             <div class="listYouhui">
-                <div class="jingxuan">
+                <div class="jingxuan" v-for="item in navData">
                     <div class="header">
-                        <div>会员专享价 预计省￥1322/年</div>
+                        <div>会员专享价 预计省¥1322/年</div>
                         <div class="more">更多></div>
                     </div>
-                    <div class="mainimg"><img src="../../assets/img/index/all2.png" alt=""></div>
+                    <div class="mainimg"><img src="../../assets/img/vip/1cm292oda40_960_240.jpg" alt=""></div>
+                </div>
+            </div>
+            <div class="heiKa">
+                <div class="header">
+                    <div>黑卡大促优先抢</div>
+                    <div class="more">更多></div>
+                </div>
+                <div class="list">
+                    <div class="goods" v-for="item in navData">
+                        <div class="img"><img src="../../assets/img/vip/cwww.jpg" alt=""></div>
+                        <div class="textBox">
+                            <div class="name">Swisse 奶蓟草120片 2瓶</div>
+                            <div class="hot"><i></i> 热度90.4℃</div>
+                            <div class="money">¥999</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="meiHao">
+                <div class="head">
+                    <div class="name">美好生活研究所</div>
+                    <div class="tip">有料有格调的世界</div>
+                </div>
+                <div class="main">
+                    <div class="list"><img src="../../assets/img/vip/1clbbahi784_600_400.png" alt=""></div> 
+                    <div class="list"><img src="../../assets/img/vip/1clbbahi784_600_400.png" alt=""></div>
                 </div>
             </div>
             <Like></Like>
@@ -183,6 +209,14 @@ export default {
     mounted() {
     },
 	methods: {
+        onRouter (pathUrl,id) {
+            this.$router.push({
+				path: pathUrl,
+				query: {
+                    id: id
+				}
+			})
+        },
         onShowVipNav () {
             this.showVipNav = !this.showVipNav
         },
@@ -191,7 +225,7 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.vip
+.vipMain
     background-color #fff
     margin-bottom 70px
 .vipCard
@@ -312,7 +346,7 @@ export default {
                 -webkit-line-clamp 1
                 -webkit-box-orient vertical
                 overflow hidden
-                line-height 35px
+                line-height 38px
 .banner
     img 
         width 100%
@@ -322,6 +356,7 @@ export default {
         width 100%
         display block
 .swiper-container
+    margin-bottom 10px
     .swiperBox
         .swiperB
             .topbox
@@ -533,4 +568,107 @@ export default {
                     margin-top 5px
 .listYouhui
     background-color #fff
+    .jingxuan
+        padding 0 15px
+        .header
+            text-align left 
+            display flex
+            align-items center
+            font-weight 700
+            font-size 15px
+            padding 15px 0
+            .more
+                margin-left auto
+                font-size 12px
+                font-weight normal
+        &:first-child
+            .header
+                padding-top 0
+        .mainimg
+            img
+                display block
+                width 100%
+.heiKa
+    .header
+        text-align left 
+        display flex
+        align-items center
+        font-weight 700
+        font-size 15px
+        padding 15px
+        .more
+            margin-left auto
+            font-size 12px
+            font-weight normal
+    .list
+        padding 0 15px
+        .goods
+            display flex
+            align-items center
+            padding 10px
+            border solid 1px #f1f1f1
+            border-radius $border-radius
+            margin-bottom 10px
+            .img
+                flex 0 0 100px
+                height 100px
+                img
+                    display block
+                    width 100%
+                    height 100%
+                    border-radius $border-radius
+            .textBox
+                text-align left
+                padding-left 10px
+                .name
+                    font-size 14px
+                    font-weight 500
+                    overflow hidden
+                    text-overflow ellipsis
+                    display -webkit-box
+                    -webkit-line-clamp 2
+                    -webkit-box-orient vertical
+                    height 35px
+                    line-height 1.3
+                .hot
+                    color #fff
+                    font-size 12px
+                    background: #d3b369;
+                    border-radius 0 8px 8px 0
+                    display inline-block
+                    vertical-align middle
+                    padding-right 10px
+                    margin 15px 0 15px 10px
+                    >i
+                        background-image url('../../assets/img/vip/hotioc.png')
+                        display inline-block
+                        width 23px
+                        height 24px
+                        background-repeat no-repeat
+                        background-size 100%
+                        margin-top -10px
+                        margin-left -10px
+                        vertical-align middle
+                .money
+                    font-size 13px
+                    font-weight 700
+.meiHao
+    .head
+        text-align center
+        padding 10px 0
+        .name
+            color #333
+            font-weight 700
+            font-size 16px
+        .tip
+            font-size 12px
+            color #999
+    .main
+        display flex
+        padding 0 15px 10px 15px
+        .list
+            img
+                display block
+                width 97%
+                margin auto
 </style>
