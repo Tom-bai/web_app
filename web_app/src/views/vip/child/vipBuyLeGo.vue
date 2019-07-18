@@ -1,11 +1,12 @@
 <template>
-	<!-- 会员招募 -->
+	<!-- 会员招募乐购商品 -->
     <div>
-        <div class="vipZhaoMu">
-            <div class="banner"><img src="../../../assets/img/vip/zhaobanner.png" alt=""></div>
+        <div class="vipBuyLeGo">
+            <div class="banner"><img src="../../../assets/img/vip/1562658489317.webp" alt=""></div>
+            <Nav :dataNav="dataNav"></Nav>
             <div class="listMain">
                 <div class="listBox">
-                    <div class="list" v-for="(item,index) in dataList" @click="onRouter('/vipBuyLeGo',index)">
+                    <div class="list" v-for="(item,index) in dataList" @click="onRouter('/ProductDetailsVIP',index)">
                         <div class="img">
                             <img v-lazy="$imgUrl" alt="">
                         </div>
@@ -16,14 +17,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="gengDuo"><img src="../../../assets/img/vip/g.png" alt=""></div>
-                <div class="x"></div>
-            </div>
-            <div class="nav">
-                <img src="../../../assets/img/vip/2e5843c84540a.webp" alt="">
-            </div>
-            <div class="man">
-                <img src="../../../assets/img/vip/723c4f04ee4f3e4d855a2947d485c5d7.webp" alt="">
             </div>
         </div>
     </div>
@@ -32,16 +25,48 @@
 <script>
 // @ is an alias to /src
 import { get } from '@/axiosApi'
+import Nav from '@/components/Nav'
 export default {
-	name: "vipZhaoMu",
+	name: "vipBuyLeGo",
 	components: {
+        Nav
 	},
 	props: [],
 	data () {
 		return {
             isLoading: false,
             isHasMore: false,
-            dataList: new Array(6)
+            dataList: new Array(6),
+            dataNav: [
+                {
+                    "id": "4",
+                    "title": "会员爆品",
+                    "type": "310",
+                    "condition": "199.00",
+                    "result": "4",
+                    "b_time": "1539705600",
+                    "e_time": "1541865599",
+                    "sort": "60",
+                    "c_time": "1539781077",
+                    "c_uid": "11",
+                    "u_time": "1539867618",
+                    "u_uid": "11"
+                },
+                {
+                    "id": "4",
+                    "title": "会员爆品",
+                    "type": "310",
+                    "condition": "199.00",
+                    "result": "4",
+                    "b_time": "1539705600",
+                    "e_time": "1541865599",
+                    "sort": "60",
+                    "c_time": "1539781077",
+                    "c_uid": "11",
+                    "u_time": "1539867618",
+                    "u_uid": "11"
+                }
+            ]
 		}
 	},
 	mounted() {
@@ -69,7 +94,7 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.vipZhaoMu
+.vipBuyLeGo
     .banner
         img 
             width 100%

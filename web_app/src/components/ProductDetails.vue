@@ -316,12 +316,6 @@
                 @click="onRouter('/cart')"
             />
             <van-goods-action-big-btn
-                v-else
-                class="nowBuy"
-                text="我要支持"
-                @click="onNowBuy($route.query.id)"
-            />
-            <van-goods-action-big-btn
                 class="nowCard"
                 text="单独购买"
                 @click="onNowBuy($route.query.id)"
@@ -770,8 +764,7 @@ export default {
             let that = this
             if (that.gugeValue !== null) {
                 if (that.selectArr.length <= 0) {
-                    toast('请选择规格')
-                    that.isVisible = !that.isVisible
+                    that.onHiddenActionSheet()
                     return false
                 }
             }
@@ -807,8 +800,7 @@ export default {
             let that = this
             if (that.gugeValue !== null) {
                 if (that.selectArr.length <= 0) {
-                    toast('请选择规格') //
-                    that.isVisible = !that.isVisible
+                    that.onHiddenActionSheet()
                     return false
                 }
             }

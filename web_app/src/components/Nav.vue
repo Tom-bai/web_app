@@ -89,6 +89,7 @@ export default {
             overflow-x auto
             overflow-y hidden
             -webkit-overflow-scrolling touch
+            width 100%
             .box 
                 white-space nowrap
                 font-size 14px

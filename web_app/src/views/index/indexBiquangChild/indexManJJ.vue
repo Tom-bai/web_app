@@ -152,6 +152,8 @@ export default {
             white-space initial
             font-weight 400
             padding 5px 5px 0 5px
+            line-height 1.4
+            height 35px
         .money
             font-size 16px
             color $color

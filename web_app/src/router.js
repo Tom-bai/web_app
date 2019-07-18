@@ -262,10 +262,28 @@ export default new Router({
 			path: '/vipZhaoMu',
             name: 'vipZhaoMu',
             meta:{
-                title: '会员招募',
+                title: '大象会员招募',
                 keepAlive: false
             },
 			component: () => import('./views/vip/child/vipZhaoMu.vue') // 会员招募
+        },
+        {
+			path: '/vipBuyLeGo',
+            name: 'vipBuyLeGo',
+            meta:{
+                title: '大象会员招募',
+                keepAlive: false
+            },
+			component: () => import('./views/vip/child/vipBuyLeGo.vue') // 会员招募乐购
+        },
+        {
+			path: '/ProductDetailsVIP',
+            name: 'ProductDetailsVIP',
+            meta:{
+                title: '大象会员招募',
+                keepAlive: false
+            },
+			component: () => import('./components/ProductDetailsVIP.vue') // 大象会员招募详情
 		},
 		{// Tab购物车
 			path: '/cart',
