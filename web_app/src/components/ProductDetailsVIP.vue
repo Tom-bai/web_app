@@ -1,7 +1,7 @@
 <template>
     <!-- 招募VIP商品详情 -->
     <div class="ProductDetailsVIP">
-        <div class="swiper" id="anchor-0">
+        <div class="swiper">
             <van-swipe :autoplay="4000" @change="onChange">
                 <van-swipe-item v-for="(image, index) in img" :key="index" class="swiperImg">
                     <img v-lazy="$imgUrl" />
@@ -50,5 +50,28 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
-
+.swiper
+    position relative
+    .van-swipe
+        padding-bottom 20px
+        background-color #fff
+        .swiperImg
+            >img 
+                width 100%
+                height 360px
+                border-radius 3px
+                display block
+        .custom-indicator
+            position absolute
+            bottom 40px
+            left 50%
+            width 40px
+            background-color rgba(0, 0, 0, 0.4)
+            text-align center
+            padding 5px 5px
+            border-radius 3px
+            line-height 1
+            color #fff
+            transform translate(-50%)
+            font-size 14px
 </style>
