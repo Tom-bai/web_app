@@ -829,7 +829,6 @@ export default {
             }
 			post('/index.php/home/cart/ajax_add_order',params).then(res => {
                 if (res.err == 1) {
-                    toast(res.data) 
                     if (res.pin_history) {
                         setTimeout(() => {
                             that.$router.push({
@@ -1543,7 +1542,6 @@ export default {
     border none
 .myBottom
     border-top solid 1px #f1f1f1
-
     .indexIocn
         font-size 12px
         font-family PingFangSC-Medium

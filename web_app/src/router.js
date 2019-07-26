@@ -141,6 +141,15 @@ export default new Router({
             },
 			component: () => import('./views/index/indexBiquangChild/indexNewUp') // 新会员首减
         },
+        { // 二级导航商品
+			path: '/indexNavgoodsOne',
+            name: 'indexNavgoodsOne',
+            meta:{
+                title: '大象商城',
+                keepAlive: false
+            },
+			component: () => import('./views/index/indexBiquangChild/indexNavgoodsOne') // 二级导航商品
+        },
         { // 导航中的商品
 			path: '/indexNavgoods',
             name: 'indexNavgoods',
@@ -248,6 +257,15 @@ export default new Router({
                 keepAlive: false
             },
 			component: () => import('./views/buy/index')
+        },
+        {// Tab买手
+			path: '/Article',
+            name: 'Article',
+            meta:{
+                title: '详情',
+                keepAlive: false
+            },
+			component: () => import('./views/buy/child/article.vue')
 		},
 		{//	Tabvip
 			path: '/vip',
