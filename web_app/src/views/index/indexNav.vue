@@ -42,6 +42,16 @@
                         </div>
                     </div>
                 </swiper-slide>
+                <swiper-slide class="swiperB">
+                    <div class="navBtnbox">
+                        <div class="navBtn">
+                            <div class="list" @click="onRouter('/indexAllNav')">
+                                <div><img v-lazy="$imgUrl" alt=""></div>
+                                <div>全部分类</div>
+                            </div>
+                        </div>
+                    </div>
+                </swiper-slide>
                 <div class="swiper-scrollbar" slot="pagination"></div>
             </swiper>
         </div>

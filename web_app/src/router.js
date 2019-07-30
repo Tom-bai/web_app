@@ -95,6 +95,15 @@ export default new Router({
                 keepAlive: false
             },
 			component: () => import('./views/index/indexBiquangChild/indexLeftGoosd') // banner子商品
+        },
+        {
+			path: '/indexAllNav',
+            name: 'indexAllNav',
+            meta:{
+                title: '全部分类',
+                keepAlive: false
+            },
+			component: () => import('./views/index/indexAllNav') // 全部分类
 		},
         { 
 			path: '/indexMan',
