@@ -2,7 +2,7 @@
     <div>
         <div class="componentsWater">
             <div class="topName">
-                <div>猜你喜欢</div>
+                <div>大象宝贝</div>
             </div>
             <div class="watefall" id='watefall' v-masonry transition-duration="0.1s" item-selector=".pin">
                 <div v-masonry-tile class="pin" v-for="(item,index) in dataList" :key="index">
@@ -48,7 +48,7 @@ export default {
 				}
 			})
 		},
-        getDataLike () { // 猜你喜欢
+        getDataLike () { // 大象宝贝
             let that = this
 			get('/index.php/home/index/like_goods').then(res => {
                 that.dataList = res

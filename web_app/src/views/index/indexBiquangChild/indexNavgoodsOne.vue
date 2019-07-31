@@ -101,7 +101,7 @@ export default {
                 console.log(error)
             })
         },
-        getLike() { // 猜你喜欢
+        getLike() { // 大象宝贝
             let that = this
             let params = {
                 id: that.$route.query.id

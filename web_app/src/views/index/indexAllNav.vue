@@ -4,16 +4,16 @@
         <div class="indexAllNav">
            <div class="menu-wrapper">
                 <ul>
-                    <li class="menu-item" v-for="(item,index) in datacc" :key="index" :class="{current: index === currentIndex}" @click="clickList(index)"ref="menuList">
-                        <span>我是</span>
+                    <li class="menu-item" v-for="(item,index) in dataNav" :key="index" :class="{current: index === currentIndex}" @click="clickList(item,index)"ref="menuList">
+                        <span>{{item.name}}</span>
                     </li>
                 </ul>
             </div>
             <div class="shop-wrapper">
-                <ul ref="itemList" class="cc">
+                <ul ref="itemList">
                     <li class="shops-li">
                         <ul class="shops-items">
-                            <li v-for="(item, index) in twoNavData" :key="index">
+                            <li v-for="(item, index) in twoNavData" :key="index" @click="onRouter('/indexNavgoods',item.id)">
                                 <img :src="$imgUrl + item.img" alt="">
                                 <span>{{item.name}}</span>
                             </li>
@@ -90,8 +90,17 @@ export default {
                 console.log(error)
             })
         },
-        clickList(index){
+        clickList(id,index){
             this.currentIndex = index
+            let that = this
+            let params = {
+                id: id.id
+            }
+			get('/index.php/home/goods/getChildCate',params).then(res => {
+                that.twoNavData = res
+            }).catch(function (error) {
+                console.log(error)
+            })
         },
         _initBScroll() {
             //左边滚动
@@ -181,7 +190,6 @@ export default {
             display flex
             flex-direction row
             padding 0 10px
-            height 40px
             align-items center
             justify-content space-between
             color #9999

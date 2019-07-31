@@ -101,7 +101,7 @@ export default new Router({
             name: 'indexAllNav',
             meta:{
                 title: '全部分类',
-                keepAlive: false
+                keepAlive: true
             },
 			component: () => import('./views/index/indexAllNav') // 全部分类
 		},

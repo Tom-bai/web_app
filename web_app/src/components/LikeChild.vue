@@ -2,7 +2,7 @@
     <div>
         <div class="componentsWater">
             <div class="topName">
-                <div>猜你喜欢</div>
+                <div>大象宝贝</div>
             </div>
             <div class="watefall" id='watefall' v-masonry transition-duration="0.1s" item-selector=".pin">
                 <div v-masonry-tile class="pin" v-for="(item,index) in likeData" :key="index">
