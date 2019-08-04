@@ -9,7 +9,7 @@
             </van-swipe>
             <div class="navBtnbox">
                 <div class="navBtn">
-                    <div class="list" v-for="(item,index) in navData" :key="index" @click="onRouter('/indexNavgoods',item.id)">
+                    <div class="list" v-for="(item,index) in navData" :key="index" @click="onRouter('/indexNavgoodsThree',item.id)">
                         <div><img v-lazy="$imgUrl + item.img" alt=""></div>
                         <div>{{item.name}}</div>
                     </div>

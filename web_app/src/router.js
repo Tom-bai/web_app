@@ -159,6 +159,15 @@ export default new Router({
             },
 			component: () => import('./views/index/indexBiquangChild/indexNavgoodsOne') // 二级导航商品
         },
+        { // 三级级导航商品
+			path: '/indexNavgoodsThree',
+            name: 'indexNavgoodsThree',
+            meta:{
+                title: '大象商城',
+                keepAlive: false
+            },
+			component: () => import('./views/index/indexBiquangChild/indexNavgoodsThree') // 三级导航商品
+        },
         { // 导航中的商品
 			path: '/indexNavgoods',
             name: 'indexNavgoods',

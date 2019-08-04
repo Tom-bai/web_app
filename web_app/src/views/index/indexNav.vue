@@ -33,21 +33,19 @@
             </div> -->
             <swiper :options="swiperOption" v-if="dataNav.length>0" class="swiperBox">
                 <swiper-slide v-for="(item,index) in dataNav" :key="index" class="swiperB">
-                    <div class="navBtnbox" v-for="(itemL,index) in item" :key="index">
+                    <div class="navBtnbox" v-for="(itemL,indexs) in item" :key="indexs" v-if="index == 4 && indexs == 1">
                         <div class="navBtn">
-                            <div class="list" @click="onRouter('/indexNavgoodsOne',itemL.id)">
+                            <div class="list" @click="onRouter('/indexAllNav')">
                                 <div><img v-lazy="$imgUrl + itemL.img" alt=""></div>
                                 <div>{{itemL.name}}</div>
                             </div>
                         </div>
                     </div>
-                </swiper-slide>
-                <swiper-slide class="swiperB">
-                    <div class="navBtnbox">
+                    <div class="navBtnbox" v-else>
                         <div class="navBtn">
-                            <div class="list" @click="onRouter('/indexAllNav')">
-                                <div><img v-lazy="$imgUrl" alt=""></div>
-                                <div>全部分类</div>
+                            <div class="list" @click="onRouter('/indexNavgoodsOne',itemL.id)">
+                                <div><img v-lazy="$imgUrl + itemL.img" alt=""></div>
+                                <div>{{itemL.name}}</div>
                             </div>
                         </div>
                     </div>
@@ -109,6 +107,11 @@ export default {
                 limit: that.limitY
             }
 			get('/index.php/home/index/cate',params).then(res => {
+                let all = {
+                    name: '全部分类',
+                    img: ''
+                }
+                res.splice(9,0,all)
                 that.dataNav = that.group(res,2)
             }).catch(function (error) {
                 console.log(error)

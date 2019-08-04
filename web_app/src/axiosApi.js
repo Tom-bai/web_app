@@ -7,7 +7,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.defaults.baseURL = 'http://shop.xfengle.com' // 接口域名
 axios.defaults.withCredentials = true
 // POST传参序列化(添加请求拦截器)
-// axios.defaults.baseURL = '/api' //跨域
+axios.defaults.baseURL = '/api' //跨域
 axios.interceptors.request.use(
     config => {
         if (config.method === 'post') {
