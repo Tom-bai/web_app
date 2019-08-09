@@ -9,7 +9,7 @@
             </van-swipe>
             <div class="navBtnbox">
                 <div class="navBtn">
-                    <div class="list" v-for="(item,index) in navData" :key="index" @click="onRouter('/indexNavgoodsThree',item.id)">
+                    <div class="list" v-for="(item,index) in navData" :key="index" @click="onRouter('/indexNavgoodsThree',item.id,$route.query.id,index)">
                         <div><img v-lazy="$imgUrl + item.img" alt=""></div>
                         <div>{{item.name}}</div>
                     </div>
@@ -22,7 +22,7 @@
                 <div class="tip">更多精彩内容，点击查看</div>
             </div>
             <div class="container">
-                <div class="list" v-for="(list,index) in dataLeft" :key="index" >
+                <div class="list" v-for="(list,index) in dataLeft" :key="index" @click="onRouter('/indexNavgoodsThreeList',146)">
                     <div class="img"><img v-lazy="$imgUrl" alt=""></div>
                     <div class="name">衣服等商品衣服等商品衣服等商品衣服等商品衣服等商品</div>
                     <div class="money">
@@ -74,11 +74,13 @@ export default {
     beforeDestroy() {
     },
 	methods: {
-        onRouter (pathUrl,id) {
+        onRouter (pathUrl,id,navId,index) {
 			this.$router.push({
 				path: pathUrl,
 				query: {
-                    id: id
+                    id: id,
+                    navId: navId,
+                    index: index
 				}
 			})
 		},

@@ -36,7 +36,7 @@
             <div class="header">
                 <div class="num">6 商品</div>
                 <div class="namebox">
-                    <div class="cont">
+                    <div class="cont" @click="onRouter('/school')">
                         <div class="nameImg"><img src="../../assets/img/buy/cwww.jpg" alt=""></div>
                         <div>来自火星的鞋酱</div>
                     </div>

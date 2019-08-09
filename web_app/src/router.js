@@ -168,6 +168,15 @@ export default new Router({
             },
 			component: () => import('./views/index/indexBiquangChild/indexNavgoodsThree') // 三级导航商品
         },
+        { // 二级左右导航商品
+			path: '/indexNavgoodsThreeList',
+            name: 'indexNavgoodsThreeList',
+            meta:{
+                title: '大象商城',
+                keepAlive: false
+            },
+			component: () => import('./views/index/indexBiquangChild/indexNavgoodsThreeList') // 二级左右导航商品
+        },
         { // 导航中的商品
 			path: '/indexNavgoods',
             name: 'indexNavgoods',
@@ -374,6 +383,15 @@ export default new Router({
                 keepAlive: false
             },
             component: () => import('./views/center/child/collection') // 我的收藏
+        },
+        {// 培训学堂
+			path: '/school',
+            name: 'school',
+            meta:{
+                title: '培训学堂',
+                keepAlive: false
+            },
+			component: () => import('./views/school/index')
         },
 	]
 })

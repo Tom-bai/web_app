@@ -5,7 +5,6 @@
             <div class="head">
                 <img src="../../../assets/img/index/111.jpg" alt="">
             </div>
-            <NavThree :dataNav="navData" :navActive="$route.query.index"></NavThree>
             <!-- <div class="tab">
                 <div class="list" :class="tabActive == null?'tabActive':''" @click="onUpAndDwom">
                     <span>价格</span>
@@ -84,15 +83,8 @@ export default {
 	},
 	mounted() {
         this.getList()
-        this.getNav()
-        this.$Bus.$on('navBtn', (val) => { // 导航分类
-            this.dataList = []
-            this.lisdId = val
-            this.getList()
-        }) 
     },
     destroyed () {
-        this.$Bus.$off('navBtn')
     },
     created(){
     },
@@ -106,17 +98,6 @@ export default {
                     id: id
 				}
 			})
-        },
-        getNav() { // 获取二级分类nav
-            let that = this
-            let params = {
-                id: that.$route.query.navId
-            }
-			get('/index.php/home/goods/getChildCate',params).then(res => {
-                that.navData = res
-            }).catch(function (error) {
-                console.log(error)
-            })
         },
         onInfinite () { // 上拉更多
             let that = this

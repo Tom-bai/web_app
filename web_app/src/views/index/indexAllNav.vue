@@ -13,7 +13,7 @@
                 <ul ref="itemList">
                     <li class="shops-li">
                         <ul class="shops-items">
-                            <li v-for="(item, index) in twoNavData" :key="index" @click="onRouter('/indexNavgoods',item.id)">
+                            <li v-for="(item, index) in twoNavData" :key="index" @click="onRouter('/indexNavgoodsThree',item.id,navId,index)">
                                 <img :src="$imgUrl + item.img" alt="">
                                 <span>{{item.name}}</span>
                             </li>
@@ -37,6 +37,7 @@ export default {
 	data () {
 		return {
             dataNav: [],
+            navId: null,
             datacc: new Array(20),
             twoNavData: [],
             currentIndex: 0,
@@ -58,11 +59,13 @@ export default {
         this.getData()
     },
 	methods: {
-        onRouter (pathUrl,id) {
+        onRouter (pathUrl,id,navId,index) {
             this.$router.push({
 				path: pathUrl,
 				query: {
-                    id: id
+                    id: id,
+                    navId: navId,
+                    index: index
 				}
 			})
         },
@@ -73,6 +76,7 @@ export default {
             }
 			get('/index.php/home/index/cate',params).then(res => {
                 that.dataNav = res
+                this.navId = this.dataNav[0].id
                 that.getNav(that.dataNav[0].id)
             }).catch(function (error) {
                 console.log(error)
@@ -84,7 +88,6 @@ export default {
                 id: id
             }
 			get('/index.php/home/goods/getChildCate',params).then(res => {
-                console.log(res);
                 that.twoNavData = res
             }).catch(function (error) {
                 console.log(error)
@@ -92,6 +95,7 @@ export default {
         },
         clickList(id,index){
             this.currentIndex = index
+            this.navId = id.id
             let that = this
             let params = {
                 id: id.id
