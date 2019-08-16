@@ -393,5 +393,23 @@ export default new Router({
             },
 			component: () => import('./views/school/index')
         },
+        {// 培训学堂
+			path: '/school/child',
+            name: 'child',
+            meta:{
+                title: '培训学堂',
+                keepAlive: false
+            },
+			component: () => import('./views/school/child')
+        },
+        {// 培训学堂
+			path: '/school/article',
+            name: 'article',
+            meta:{
+                title: '培训学堂',
+                keepAlive: false
+            },
+			component: () => import('./views/school/article')
+        },
 	]
 })

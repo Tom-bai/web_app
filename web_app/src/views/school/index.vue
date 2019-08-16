@@ -10,16 +10,16 @@
                 </van-swipe>
             </div>
             <div class="navigation">
-                <a class="list" href="child.html">新人手册</a>
-                <a class="list" href="child.html">新人手册</a>
-                <a class="list" href="child.html">新人手册</a>
-                <a class="list" href="child.html">新人手册</a>
-                <a class="list" href="child.html">新人手册</a>
-                <a class="list" href="child.html">新人手册</a>
+                <a class="list" @click="onRouter('/school/child')">新人手册</a>
+                <a class="list" @click="onRouter('/school/child')">新人手册</a>
+                <a class="list" @click="onRouter('/school/child')">新人手册</a>
+                <a class="list" @click="onRouter('/school/child')">新人手册</a>
+                <a class="list" @click="onRouter('/school/child')">新人手册</a>
+                <a class="list" @click="onRouter('/school/child')">新人手册</a>
             </div>
             <div class="main">
                 <div class="main_list" v-for="(item, index) in bannerData">
-                    <a href="article.html">
+                    <a @click="onRouter('/school/article')">
                         <div class="img"><img src="../../assets/img/shool/main1.jpg" alt=""></div>
                         <div class="text">
                             <div class="name">捕手时代2019  肆月刊捕手时代2019  肆月刊捕手时代2019  肆月刊捕手时代2019  肆月刊捕手时代2019  肆月刊</div>
@@ -105,11 +105,11 @@ export default {
             background-image url('../../assets/img/shool/list1.png')
     .main
         padding 0 15px
-        margin-top .13rem
+        margin-top 10px
         .main_list
             display flex
             border-bottom solid 1px #f1f1f1
-            padding .4rem 0
+            padding 10px 0
             a
                 display inherit
                 color #000
@@ -117,7 +117,7 @@ export default {
                 border-bottom: 0
             .img
                 flex 0 0 105px
-                height 1.87rem
+                height 70px
                 img
                     display block
                     width 100%
@@ -125,21 +125,21 @@ export default {
             .text
                 flex 1
                 line-height 1.3
-                padding-left .2rem
+                padding-left 15px
                 .name
-                    font-size .4rem
+                    font-size 14px
                     font-weight 500
                     display -webkit-box
                     -webkit-box-orient vertical
                     -webkit-line-clamp 2
                     overflow hidden
-                    height 1rem
+                    height 35px
                     text-align left
                 .time
-                    height .93rem
+                    height 35px
                     display flex
                     align-items flex-end
                     color #6b6b6b
                     div
-                        margin-right .27rem
+                        margin-right 10px
 </style>
